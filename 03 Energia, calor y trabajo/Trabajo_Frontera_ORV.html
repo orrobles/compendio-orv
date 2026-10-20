@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<!-- © 2026 Oscar Robles Vásquez. Todos los derechos reservados. Compendio ORV · Termo.IA.Dinámica -->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trabajo de Frontera y Modos de Trabajo · Termo-IA-Dinámica</title>
+<script>function _9cb7930_0x1a49(_0xa75294,_0x1ba5c6){var _0x243a6a=_9cb7930_0x243a();return _9cb7930_0x1a49=function(_0x1a4958,_0x3194cb){_0x1a4958=_0x1a4958-0xe5;var _0x4861cf=_0x243a6a[_0x1a4958];return _0x4861cf;},_9cb7930_0x1a49(_0xa75294,_0x1ba5c6);}(function(_0x4030b0,_0x504247){var _0x175b43=_0x4030b0();while(!![]){try{var _0x2d9bc0=parseInt(_9cb7930_0x1a49(0xe5))/0x1+parseInt(_9cb7930_0x1a49(0xe6))/0x2+parseInt(_9cb7930_0x1a49(0xe8))/0x3*(-parseInt(_9cb7930_0x1a49(0xed))/0x4)+-parseInt(_9cb7930_0x1a49(0xef))/0x5+-parseInt(_9cb7930_0x1a49(0xeb))/0x6*(-parseInt(_9cb7930_0x1a49(0xee))/0x7)+parseInt(_9cb7930_0x1a49(0xec))/0x8*(-parseInt(_9cb7930_0x1a49(0xf0))/0x9)+parseInt(_9cb7930_0x1a49(0xe7))/0xa;if(_0x2d9bc0===_0x504247)break;else _0x175b43['push'](_0x175b43['shift']());}catch(_0x23e358){_0x175b43['push'](_0x175b43['shift']());}}}(_9cb7930_0x243a,0x3b4f1),window[_9cb7930_0x1a49(0xe9)]={'tex':{'inlineMath':[['$','$'],['\x5c(','\x5c)']],'displayMath':[['$$','$$'],['\x5c[','\x5c]']]},'svg':{'fontCache':_9cb7930_0x1a49(0xea)}});function _9cb7930_0x243a(){var _0x380032=['83430VwlVgm','9161370NmibUZ','15emRHIx','MathJax','global','260382woIBPq','4272APRvRo','11092PnicHL','7YZtzxB','1953640RxXLKU','6597uCkths','37695tAwzmV'];_9cb7930_0x243a=function(){return _0x380032;};return _9cb7930_0x243a();}</script>
+<script src="../lib/mathjax-3.2.2/es5/tex-mml-chtml.js" id="MathJax-script" async onerror="var s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js';s.async=true;document.head.appendChild(s);"></script>
+<script src="../lib/chart-4.4.1.umd.min.js"></script><script>(function(_0x2a6123,_0x1dd24c){var _0x4489c3=_0x2a6123();while(!![]){try{var _0x3b405c=-parseInt(_9cb7931_0x2724(0xda))/0x1+-parseInt(_9cb7931_0x2724(0xd6))/0x2+-parseInt(_9cb7931_0x2724(0xd2))/0x3+-parseInt(_9cb7931_0x2724(0xd3))/0x4+-parseInt(_9cb7931_0x2724(0xd8))/0x5*(-parseInt(_9cb7931_0x2724(0xdb))/0x6)+parseInt(_9cb7931_0x2724(0xd4))/0x7+-parseInt(_9cb7931_0x2724(0xdc))/0x8*(-parseInt(_9cb7931_0x2724(0xd7))/0x9);if(_0x3b405c===_0x1dd24c)break;else _0x4489c3['push'](_0x4489c3['shift']());}catch(_0x1adb94){_0x4489c3['push'](_0x4489c3['shift']());}}}(_9cb7931_0x3f59,0x8e5d6),window[_9cb7931_0x2724(0xd5)]||document[_9cb7931_0x2724(0xd9)](_9cb7931_0x2724(0xd1)));function _9cb7931_0x2724(_0x127703,_0x1a6b5e){var _0x3f59cb=_9cb7931_0x3f59();return _9cb7931_0x2724=function(_0x272472,_0x5db6da){_0x272472=_0x272472-0xd1;var _0x53233e=_0x3f59cb[_0x272472];return _0x53233e;},_9cb7931_0x2724(_0x127703,_0x1a6b5e);}function _9cb7931_0x3f59(){var _0x491c27=['66zakuEG','707128MnUScX','<script\x20src=\x22https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js\x22><\/script>','1748136KqhYPS','2794268IZTQmh','3684044ruxpSH','Chart','194592obLySa','117mXuvCL','308020OHMzKO','write','391318qhBpXm'];_9cb7931_0x3f59=function(){return _0x491c27;};return _9cb7931_0x3f59();}</script>
+<style>
+  :root{
+    --navy:#1F3864; --blue:#2E75B6; --blue-soft:#EAF1F8; --blue-line:#BBD0E6;
+    --ink:#222; --grey:#595959; --bg:#F4F7FB; --card:#FFFFFF; --ok:#1E7E46;
+    --accent:#C9531B; --shadow:0 2px 10px rgba(31,56,100,.08);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:'Segoe UI',Arial,Helvetica,sans-serif;color:var(--ink);
+       background:var(--bg);line-height:1.6;font-size:16px}
+  
+  header.top{background:linear-gradient(120deg,var(--navy),#2c4a7a);color:#fff;
+       padding:18px 26px;position:sticky;top:0;z-index:30;box-shadow:var(--shadow);
+       display:flex;align-items:center;gap:16px}
+  header.top h1{font-size:1.15rem;margin:0;font-weight:600;letter-spacing:.2px}
+  header.top .sub{font-size:.78rem;color:#cdddf2;margin-top:2px}
+  .burger{display:none;background:rgba(255,255,255,.15);border:none;color:#fff;
+       font-size:1.3rem;border-radius:8px;padding:4px 12px;cursor:pointer}
+  .wrap{display:flex;max-width:1180px;margin:0 auto;gap:0}
+  nav.side{width:248px;flex:0 0 248px;background:var(--card);border-right:1px solid #e6ecf3;
+       padding:18px 0;position:sticky;top:69px;height:calc(100vh - 69px);overflow-y:auto}
+  nav.side a{display:flex;gap:10px;align-items:center;padding:10px 22px;color:var(--grey);
+       text-decoration:none;font-size:.92rem;border-left:3px solid transparent}
+  nav.side a .nm{display:inline-block;width:26px;height:26px;line-height:26px;text-align:center;
+       background:var(--blue-soft);color:var(--navy);border-radius:7px;font-weight:700;font-size:.8rem;flex:0 0 auto}
+  nav.side a:hover{background:#f7fafd;color:var(--navy)}
+  nav.side a.active{background:var(--blue-soft);color:var(--navy);border-left-color:var(--blue);font-weight:600}
+  main{flex:1 1 auto;padding:30px 38px;min-width:0}
+  section.mod{display:none;animation:fade .35s ease}
+  section.mod.show{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  
+  h2.mt{color:var(--navy);font-size:1.55rem;margin:.1em 0 .1em;border-bottom:2px solid var(--blue-line);
+       padding-bottom:8px}
+  h3{color:var(--blue);font-size:1.12rem;margin:1.5em 0 .4em}
+  .lead{color:var(--grey);font-size:1.02rem;margin-top:4px}
+  p{margin:.6em 0}
+  .card{background:var(--card);border:1px solid #e6ecf3;border-radius:12px;padding:20px 22px;
+       margin:16px 0;box-shadow:var(--shadow)}
+  .eqbox{background:var(--blue-soft);border:1px solid var(--blue-line);border-radius:10px;
+       padding:6px 16px;margin:14px 0;text-align:center;overflow-x:auto}
+  .note{border-left:4px solid var(--blue);background:#f7fbff;padding:10px 16px;border-radius:0 8px 8px 0;margin:14px 0}
+  .tip{border-left:4px solid var(--accent);background:#fff7f2;padding:10px 16px;border-radius:0 8px 8px 0;margin:14px 0}
+  .pill{display:inline-block;background:var(--blue-soft);color:var(--navy);border-radius:20px;
+       padding:3px 12px;font-size:.78rem;font-weight:600;margin:0 6px 6px 0}
+  table.data{border-collapse:collapse;width:100%;margin:14px 0;font-size:.9rem}
+  table.data th{background:var(--navy);color:#fff;padding:8px 10px;text-align:left;font-weight:600}
+  table.data td{border:1px solid #dfe6ee;padding:7px 10px}
+  table.data tr:nth-child(even){background:#f7fafd}
+  
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+  @media(max-width:820px){.grid{grid-template-columns:1fr}}
+  label.fld{display:block;font-size:.82rem;color:var(--grey);margin:10px 0 3px;font-weight:600}
+  input[type=number],select{width:100%;padding:8px 10px;border:1px solid #c8d4e0;border-radius:8px;
+       font-size:.95rem;font-family:inherit;background:#fff}
+  input[type=number]:focus,select:focus{outline:2px solid var(--blue-soft);border-color:var(--blue)}
+  .seg{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 4px}
+  .seg button{flex:1 1 auto;padding:8px 6px;border:1px solid #c8d4e0;background:#fff;border-radius:8px;
+       cursor:pointer;font-size:.86rem;color:var(--grey);font-family:inherit}
+  .seg button.on{background:var(--navy);color:#fff;border-color:var(--navy);font-weight:600}
+  .btn{background:var(--blue);color:#fff;border:none;border-radius:8px;padding:10px 18px;
+       font-size:.95rem;cursor:pointer;font-family:inherit;font-weight:600;margin-top:14px}
+  .btn:hover{background:#255f96}
+  .result{background:#0f2747;color:#eaf2fb;border-radius:10px;padding:14px 18px;margin-top:14px;font-size:.95rem}
+  .result b{color:#9ecbf5}
+  .result .big{font-size:1.5rem;color:#fff;font-weight:700}
+  .chartbox{position:relative;height:330px}
+  .steps{counter-reset:st}
+  .step{position:relative;padding:12px 16px 12px 50px;border:1px solid #e6ecf3;border-radius:10px;margin:10px 0;background:#fff}
+  .step::before{counter-increment:st;content:counter(st);position:absolute;left:12px;top:12px;
+       width:26px;height:26px;background:var(--blue);color:#fff;border-radius:50%;text-align:center;
+       line-height:26px;font-weight:700;font-size:.85rem}
+  details.ex{border:1px solid #e6ecf3;border-radius:12px;margin:14px 0;background:#fff;box-shadow:var(--shadow);overflow:hidden}
+  details.ex>summary{cursor:pointer;padding:14px 18px;font-weight:600;color:var(--navy);
+       background:var(--blue-soft);list-style:none;display:flex;justify-content:space-between;align-items:center}
+  details.ex>summary::after{content:'▸';color:var(--blue);transition:.2s}
+  details.ex[open]>summary::after{transform:rotate(90deg)}
+  details.ex .body{padding:6px 20px 18px}
+  .ref{font-size:.82rem;color:var(--ok);font-weight:600}
+  footer.ft{max-width:1180px;margin:10px auto 30px;padding:16px 38px;color:var(--grey);font-size:.82rem;
+       border-top:1px solid #e0e7ef}
+  @media(max-width:820px){
+    nav.side{position:fixed;left:0;top:69px;transform:translateX(-100%);transition:.25s;z-index:25;box-shadow:6px 0 18px rgba(0,0,0,.12)}
+    nav.side.open{transform:none}
+    .burger{display:inline-block}
+    main{padding:22px 18px}
+  }
+
+:where(a,button,select,input,textarea,canvas,summary,[tabindex]):focus-visible{outline:3px solid var(--accent,#1976d2);outline-offset:2px;border-radius:6px}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+</style>
+<style id="orv-movil-a11y-css">
+
+:focus-visible{outline:3px solid #ff9800!important;outline-offset:2px!important}
+[role="button"][tabindex]{cursor:pointer}
+.orv-tblwrap{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch;background:linear-gradient(to left,rgba(0,0,0,.10),rgba(0,0,0,0) 14px) right/14px 100% no-repeat local,linear-gradient(to left,rgba(0,0,0,.12),rgba(0,0,0,0) 10px) right/10px 100% no-repeat scroll}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+@media (max-width:720px){
+  
+  .orv-hdr{flex-wrap:wrap!important;height:auto!important;min-height:52px!important;
+    padding-top:8px!important;padding-bottom:8px!important;padding-left:12px!important;padding-right:12px!important;
+    row-gap:6px!important;column-gap:10px!important;overflow:visible!important}
+  .orv-hdr>*{min-width:0!important;max-width:100%!important}
+  .orv-hdr>[class*="text"],.orv-hdr>[class*="title"],.orv-hdr>div:not([class]){flex:1 1 180px!important}
+  .orv-hdr *{overflow-wrap:anywhere}
+  .orv-hdr .topbar-center{position:static!important;transform:none!important;left:auto!important;top:auto!important;
+    flex:1 1 100%!important;justify-content:flex-start!important}
+  .orv-hdr .topbar-brand{font-size:1rem!important}
+  .orv-hdr>span[style*="visibility:hidden"]{display:none!important}
+  .orv-hdr h1{font-size:.95rem!important}
+  .orv-hdr .topbar-brand+span[style*="width:1px"]{display:none!important}
+  .orv-hdr *{white-space:normal!important;text-overflow:clip!important}
+  .orv-hdr .unit-toggle{margin-left:auto!important}
+  
+  img,video{max-width:100%;height:auto}
+  .orv-nowrap-fix{white-space:normal!important;overflow-wrap:anywhere!important}
+  .orv-shrink{min-width:0!important;max-width:100%!important}
+  
+  #orvhelp-btn{right:10px!important;left:auto!important;bottom:10px!important;width:46px!important;height:46px!important;padding:0!important;
+    justify-content:center!important;font-size:0!important;gap:0!important;letter-spacing:0!important;opacity:.92}
+  #orvhelp-btn svg{width:22px!important;height:22px!important}
+  body{padding-bottom:64px!important}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <button class="burger" id="burger" aria-label="Menú">☰</button>
+  <div>
+    <h1>Trabajo de Frontera y Modos de Trabajo</h1>
+    <div class="sub">Termo-IA-Dinámica · Módulo 03 — Energía, calor y trabajo · App de autoestudio</div>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav class="side" id="side">
+    <a data-go="m0" class="active"><span class="nm">i</span> Inicio y mapa</a>
+    <a data-go="m1"><span class="nm">1</span> Concepto y signos</a>
+    <a data-go="m2"><span class="nm">2</span> Trabajo de frontera</a>
+    <a data-go="m3"><span class="nm">3</span> Procesos (p–V)</a>
+    <a data-go="m4"><span class="nm">4</span> Trayectoria</a>
+    <a data-go="m5"><span class="nm">5</span> Modos de trabajo</a>
+    <a data-go="m6"><span class="nm">6</span> Ejemplos resueltos</a>
+  </nav>
+
+  <main>
+  <section class="mod show" id="m0">
+    <h2 class="mt">Inicio · ¿Qué vas a estudiar?</h2>
+    <p class="lead">Una guía interactiva de autoestudio sobre el <b>trabajo</b> en termodinámica: cómo se calcula
+       cuando la frontera de un sistema se mueve, y cómo se evalúan otros modos de trabajo.</p>
+
+    <div class="card">
+      <h3 style="margin-top:0">Mapa de la aplicación</h3>
+      <table class="data">
+        <tr><th>Módulo</th><th>Aprenderás a…</th></tr>
+        <tr><td><b>1 · Concepto y signos</b></td><td>Definir el trabajo, aplicar la convención de signos y distinguir trabajo, potencia y trabajo específico.</td></tr>
+        <tr><td><b>2 · Trabajo de frontera</b></td><td>Entender $W=\int p\,dV$ y por qué el trabajo es el <i>área</i> bajo la curva en el diagrama p–V.</td></tr>
+        <tr><td><b>3 · Procesos (p–V)</b></td><td>Calcular y graficar el trabajo en procesos isobárico, isocórico, isotérmico y politrópico.</td></tr>
+        <tr><td><b>4 · Trayectoria</b></td><td>Comprobar que el trabajo depende del camino y no es una propiedad del sistema.</td></tr>
+        <tr><td><b>5 · Modos de trabajo</b></td><td>Evaluar el trabajo de eje, de resorte y eléctrico con calculadoras dedicadas.</td></tr>
+        <tr><td><b>6 · Ejemplos resueltos</b></td><td>Seguir, paso a paso, problemas tipo examen con resultado verificable.</td></tr>
+      </table>
+      <div class="note">Recomendación de uso: lee la teoría de cada módulo, experimenta con las calculadoras
+        cambiando los datos, y al final resuelve los ejemplos del Módulo 6 intentándolos antes de abrir la solución.</div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">Convenciones de esta app</h3>
+      <p>Se trabaja con presión en <span class="pill">kPa</span>, volumen en <span class="pill">m³</span>
+         y, por tanto, trabajo en <span class="pill">kJ</span>, ya que
+         $1\ \text{kPa}\cdot\text{m}^3 = 1\ \text{kJ}$. La masa se expresa en kg.</p>
+    </div>
+  </section>
+
+  <section class="mod" id="m1">
+    <h2 class="mt">1 · Concepto de trabajo, signos y unidades</h2>
+
+    <div class="card">
+      <h3 style="margin-top:0">Definición</h3>
+      <p>Mecánicamente, el trabajo es el producto de una fuerza por la distancia recorrida en su dirección.
+         Termodinámicamente, es la <b>interacción</b> entre un sistema y su entorno cuyo único efecto externo
+         podría reducirse a <i>elevar un peso</i>.</p>
+      <div class="eqbox">$$W = F\cdot d$$</div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">Convención de signos</h3>
+      <p>Adoptamos el convenio clásico de la termodinámica:</p>
+      <table class="data">
+        <tr><th>Situación</th><th>Signo</th><th>Interpretación</th></tr>
+        <tr><td>El sistema <b>realiza</b> trabajo sobre el entorno (expansión)</td><td>$W>0$</td><td>El sistema entrega energía.</td></tr>
+        <tr><td>El entorno realiza trabajo <b>sobre</b> el sistema (compresión)</td><td>$W<0$</td><td>El sistema recibe energía.</td></tr>
+      </table>
+      <div class="tip">En un diagrama p–V, una expansión ($V_2>V_1$) da trabajo positivo; una compresión ($V_2<V_1$), negativo.</div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">Potencia y trabajo específico · unidades</h3>
+      <div class="eqbox">$$\dot W = \frac{\delta W}{dt} \qquad\qquad w = \frac{W}{m}$$</div>
+      <p>$\dot W$ es la <b>potencia</b> (rapidez con que se realiza trabajo) y $w$ el <b>trabajo específico</b>
+         (por unidad de masa). Unidades: kJ y kW (SI); Btu y Btu/h (sistema inglés).
+         Recuerda $1\ \text{kJ}=1\ \text{kPa}\cdot\text{m}^3$.</p>
+    </div>
+  </section>
+
+  <section class="mod" id="m2">
+    <h2 class="mt">2 · Trabajo de frontera móvil</h2>
+    <p class="lead">Cuando la frontera del sistema se desplaza —el émbolo de un cilindro-pistón— aparece el
+       <b>trabajo de frontera</b>.</p>
+
+    <div class="card">
+      <p>Para un desplazamiento infinitesimal del émbolo, la presión $p$ actúa sobre el área $A$ recorriendo $dx$:</p>
+      <div class="eqbox">$$\delta W = F\,dx = (pA)\,dx = p\,dV \;\Rightarrow\; W_b=\int_{1}^{2} p\,dV$$</div>
+      <div class="note">El valor de esta integral es el <b>área bajo la curva del proceso</b> en el diagrama p–V.
+        Por eso necesitamos conocer la relación $p(V)$ de cada proceso: el camino determina el área, y el área es el trabajo.</div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">Visualízalo</h3>
+      <p>Observa cómo el área sombreada (el trabajo) cambia con la presión y los volúmenes. Es una expansión isobárica de demostración.</p>
+      <div class="grid">
+        <div>
+          <label class="fld">Presión p (kPa)</label>
+          <input type="number" id="d2_p" value="600">
+          <label class="fld">Volumen inicial V₁ (m³)</label>
+          <input type="number" id="d2_v1" value="0.2" step="0.05">
+          <label class="fld">Volumen final V₂ (m³)</label>
+          <input type="number" id="d2_v2" value="0.8" step="0.05">
+          <div class="result" id="d2_out"></div>
+        </div>
+        <div><div class="chartbox"><canvas role="img" aria-label="Representación gráfica de Dinámica. Los datos se describen en la página." id="d2_chart"></canvas></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mod" id="m3">
+    <h2 class="mt">3 · Trabajo en procesos característicos</h2>
+    <p class="lead">Elige un proceso, introduce los datos y obtén el trabajo, la curva p–V y el desarrollo paso a paso.</p>
+
+    <div class="card">
+      <div class="seg" id="p_seg">
+        <button data-proc="iso-p" class="on">Isobárico</button>
+        <button data-proc="iso-v">Isocórico</button>
+        <button data-proc="iso-t">Isotérmico</button>
+        <button data-proc="poly">Politrópico</button>
+      </div>
+      <div class="eqbox" id="p_formula"></div>
+
+      <div class="grid">
+        <div>
+          <label class="fld">Presión inicial p₁ (kPa)</label>
+          <input type="number" id="p_p1" value="600">
+          <label class="fld">Volumen inicial V₁ (m³)</label>
+          <input type="number" id="p_v1" value="0.20" step="0.05">
+          <label class="fld" id="lbl_v2">Volumen final V₂ (m³)</label>
+          <input type="number" id="p_v2" value="0.80" step="0.05">
+          <div id="row_n" style="display:none">
+            <label class="fld">Exponente politrópico n</label>
+            <input type="number" id="p_n" value="1.3" step="0.05">
+          </div>
+          <div id="row_p2" style="display:none">
+            <label class="fld">Presión final p₂ (kPa) — sólo isocórico</label>
+            <input type="number" id="p_p2" value="300">
+          </div>
+          <button class="btn" id="p_calc">Calcular trabajo</button>
+          <div class="result" id="p_out"></div>
+        </div>
+        <div><div class="chartbox"><canvas role="img" aria-label="Representación gráfica de Dinámica. Los datos se describen en la página." id="p_chart"></canvas></div></div>
+      </div>
+      <div class="steps" id="p_steps" style="margin-top:14px"></div>
+    </div>
+  </section>
+
+  <section class="mod" id="m4">
+    <h2 class="mt">4 · El trabajo depende de la trayectoria</h2>
+    <p class="lead">Mismo estado inicial, mismo estado final… pero distinto trabajo. Eso demuestra que el trabajo
+       <b>no es una propiedad</b>: es una función de trayectoria.</p>
+
+    <div class="card">
+      <p>Unimos el estado 1 $(p_1,V_1)$ con el estado 2 $(p_2,V_2)$ por dos caminos:</p>
+      <p><b>Camino A</b>: primero isobárico a $p_1$ (de $V_1$ a $V_2$), luego isocórico a $V_2$ (de $p_1$ a $p_2$).
+         &nbsp;&nbsp;<b>Camino B</b>: primero isocórico a $V_1$, luego isobárico a $p_2$.</p>
+      <div class="eqbox">$$W_A = p_1\,(V_2-V_1) \qquad W_B = p_2\,(V_2-V_1)$$</div>
+      <div class="grid">
+        <div>
+          <label class="fld">p₁ (kPa)</label><input type="number" id="t_p1" value="600">
+          <label class="fld">V₁ (m³)</label><input type="number" id="t_v1" value="0.2" step="0.05">
+          <label class="fld">p₂ (kPa)</label><input type="number" id="t_p2" value="200">
+          <label class="fld">V₂ (m³)</label><input type="number" id="t_v2" value="0.8" step="0.05">
+          <button class="btn" id="t_calc">Comparar caminos</button>
+          <div class="result" id="t_out"></div>
+        </div>
+        <div><div class="chartbox"><canvas role="img" aria-label="Representación gráfica de Dinámica. Los datos se describen en la página." id="t_chart"></canvas></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mod" id="m5">
+    <h2 class="mt">5 · Otros modos de trabajo</h2>
+    <p class="lead">No todo el trabajo proviene de una frontera móvil. Tres modos frecuentes:</p>
+
+    <div class="card">
+      <h3 style="margin-top:0">Trabajo de eje (flecha)</h3>
+      <div class="eqbox">$$W_{eje}=\int \tau\,d\theta = 2\pi N\,\tau$$</div>
+      <div class="grid">
+        <div>
+          <label class="fld">Par de torsión τ (N·m)</label><input type="number" id="e_t" value="200">
+          <label class="fld">Número de revoluciones N (rev)</label><input type="number" id="e_n" value="2000">
+          <button class="btn" id="e_calc">Calcular</button>
+          <div class="result" id="e_out"></div>
+        </div>
+        <div class="note">$\tau$ es el par de torsión y $N$ el número de vueltas del eje. Si se da la rapidez de giro
+          $\dot N$ (rev/s), la <b>potencia</b> es $\dot W = 2\pi\dot N\,\tau$.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">Trabajo de resorte</h3>
+      <div class="eqbox">$$W_{res}=\tfrac12\,k\,(x_2^{2}-x_1^{2})$$</div>
+      <div class="grid">
+        <div>
+          <label class="fld">Constante del resorte k (kN/m)</label><input type="number" id="r_k" value="400">
+          <label class="fld">Deformación inicial x₁ (m)</label><input type="number" id="r_x1" value="0" step="0.01">
+          <label class="fld">Deformación final x₂ (m)</label><input type="number" id="r_x2" value="0.05" step="0.01">
+          <button class="btn" id="r_calc">Calcular</button>
+          <div class="result" id="r_out"></div>
+        </div>
+        <div class="note">$x$ se mide desde la posición natural (sin deformar) del resorte. Con $k$ en kN/m y $x$ en m,
+          el trabajo resulta en kJ.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">Trabajo eléctrico</h3>
+      <div class="eqbox">$$W_{el}=\int V\,I\,dt = V\,I\,\Delta t \quad (V,I\ \text{constantes})$$</div>
+      <div class="grid">
+        <div>
+          <label class="fld">Tensión V (volt)</label><input type="number" id="l_v" value="120">
+          <label class="fld">Corriente I (ampere)</label><input type="number" id="l_i" value="2">
+          <label class="fld">Tiempo Δt (s)</label><input type="number" id="l_t" value="600">
+          <button class="btn" id="l_calc">Calcular</button>
+          <div class="result" id="l_out"></div>
+        </div>
+        <div class="note">$V$ en volt, $I$ en ampere y $\Delta t$ en segundos dan el trabajo en joule
+          ($1\ \text{V·A·s}=1\ \text{J}$).</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mod" id="m6">
+    <h2 class="mt">6 · Ejemplos resueltos paso a paso</h2>
+    <p class="lead">Problemas del banco del módulo (libro de Potter). Intenta resolverlos antes de abrir la solución;
+       cada uno termina con su <span class="ref">resultado de referencia</span>.</p>
+
+    <details class="ex">
+      <summary>Problema 3.1 · Agua a presión constante (isobárico) <span class="ref">W ≈ 1604.8 kJ</span></summary>
+      <div class="body">
+        <p><b>Enunciado.</b> 4.0 kg de agua líquida saturada se mantienen a $p=600$ kPa mientras se agrega calor
+           hasta $T_2=600\,^{\circ}$C. Determine el trabajo realizado por el agua.</p>
+        <div class="steps">
+          <div class="step"><b>Datos.</b> $m=4.0$ kg, $p_1=p_2=600$ kPa, $T_2=600\,^{\circ}$C. Proceso isobárico.</div>
+          <div class="step"><b>Volúmenes específicos (tablas de vapor).</b> Líquido saturado a 6 bar: $v_1=0.0011006\ \text{m}^3/\text{kg}$;
+             vapor a 6 bar y 600 °C: $v_2=0.669761\ \text{m}^3/\text{kg}$.</div>
+          <div class="step"><b>Fórmula.</b> $W = p\,(V_2-V_1)=m\,p\,(v_2-v_1)$.</div>
+          <div class="step"><b>Sustitución.</b> $W = (600)(4.0)(0.669761-0.0011006)$.</div>
+          <div class="step"><b>Resultado.</b> $W \approx \mathbf{1604.8\ kJ}$ (positivo: el agua se expande y realiza trabajo).</div>
+        </div>
+      </div>
+    </details>
+
+    <details class="ex">
+      <summary>Problema 3.2 · Vapor a presión constante <span class="ref">W ≈ 154.0 kJ</span></summary>
+      <div class="body">
+        <p><b>Enunciado.</b> 2 kg de vapor saturado a 400 kPa en un cilindro-pistón se calientan a presión
+           constante hasta $T_2=300\,^{\circ}$C. Calcule el trabajo.</p>
+        <div class="steps">
+          <div class="step"><b>Datos.</b> $m=2$ kg, $p_1=p_2=400$ kPa, $T_2=300\,^{\circ}$C.</div>
+          <div class="step"><b>Volúmenes (tablas).</b> $v_1=0.462383\ \text{m}^3/\text{kg}$ (vapor sat. a 400 kPa);
+             $v_2=0.654892\ \text{m}^3/\text{kg}$ (400 kPa, 300 °C).</div>
+          <div class="step"><b>Sustitución.</b> $W = (400)(2)(0.654892-0.462383)$.</div>
+          <div class="step"><b>Resultado.</b> $W \approx \mathbf{154.0\ kJ}$.</div>
+        </div>
+      </div>
+    </details>
+
+    <details class="ex">
+      <summary>Problema 3.3 · Recipiente rígido (isocórico) <span class="ref">W = 0 · x₂ ≈ 0.701</span></summary>
+      <div class="body">
+        <p><b>Enunciado.</b> 0.025 kg de vapor con calidad $x=10\%$ a 200 kPa se calientan en un recipiente
+           <b>rígido</b> hasta $T_2=200\,^{\circ}$C. Encuentre la calidad final y el trabajo.</p>
+        <div class="steps">
+          <div class="step"><b>Clave.</b> Recipiente rígido $\Rightarrow V=$ cte $\Rightarrow v_2=v_1$.</div>
+          <div class="step"><b>Estado 1.</b> Con $x_1=0.10$ a 200 kPa: $v_1=0.0895226\ \text{m}^3/\text{kg}$.</div>
+          <div class="step"><b>Estado 2.</b> A 200 °C: $v_f=0.001156$, $v_g=0.12721\ \text{m}^3/\text{kg}$.
+             De $v_2=v_f+x_2(v_g-v_f)$ se despeja $x_2$.</div>
+          <div class="step"><b>Calidad final.</b> $x_2 \approx \mathbf{0.701}$.</div>
+          <div class="step"><b>Trabajo.</b> No hay cambio de volumen $\Rightarrow \mathbf{W=0}$.</div>
+        </div>
+      </div>
+    </details>
+
+    <details class="ex">
+      <summary>Problema 3.4 · Pistón con topes <span class="ref">W ≈ 28.3 kJ</span></summary>
+      <div class="body">
+        <p><b>Enunciado.</b> Un pistón sin fricción de 16 kg; se agrega calor hasta $T_2=400\,^{\circ}$C; calidad
+           inicial 20 %. Se pide la presión inicial y el trabajo sobre el pistón.</p>
+        <div class="steps">
+          <div class="step"><b>Presión inicial (equilibrio del pistón).</b>
+             $p_1=p_0+\dfrac{m_p g}{A} \approx 120\ \text{kPa}$ (1.199 bar).</div>
+          <div class="step"><b>Estados.</b> Con $p_1$ y $x_1=0.20$: $v_1=0.286733$; al tocar los topes $v_2=0.45877\ \text{m}^3/\text{kg}$.</div>
+          <div class="step"><b>Trabajo (isobárico hasta los topes).</b> $W=p_1\,m\,(v_2-v_1)$ con $m\approx1.3696\times10^{-3}$ kg.</div>
+          <div class="step"><b>Resultado.</b> $W \approx \mathbf{28.3\ kJ}$ (valor a escala del dispositivo del problema).</div>
+        </div>
+        <div class="note">Verifícalo en el Módulo 3: selecciona <i>Isobárico</i> y usa $p_1=120$, los volúmenes totales
+           $V_1=m\,v_1$ y $V_2=m\,v_2$.</div>
+      </div>
+    </details>
+
+    <details class="ex">
+      <summary>Problema 3.17 · Presión variable $p=a+b/V$ <span class="ref">W ≈ −42.73 (psi·ft³)</span></summary>
+      <div class="body">
+        <p><b>Enunciado.</b> $p=a+30/V$ (p en psia, V en ft³); en el estado 1, $p=7$ psia y $V_1=3$ ft³; el gas
+           evoluciona hasta $p_2=50$ psia. Determine el trabajo de frontera.</p>
+        <div class="steps">
+          <div class="step"><b>Constante a.</b> En el estado 1: $7 = a + \dfrac{30}{3} = a + 10 \Rightarrow \mathbf{a=-3}$,
+             de modo que $p = -3 + \dfrac{30}{V}$.</div>
+          <div class="step"><b>Estado 2.</b> Con $p_2=50$: $\;50 = -3 + \dfrac{30}{V_2} \Rightarrow \dfrac{30}{V_2}=53
+             \Rightarrow V_2 = \dfrac{30}{53} \approx 0.566$ ft³. Como $V_2<V_1$, el proceso es una <b>compresión</b>.</div>
+          <div class="step"><b>Trabajo.</b> $W=\displaystyle\int_{V_1}^{V_2}\!\Big(-3+\tfrac{30}{V}\Big)dV
+             = -3\,(V_2-V_1)+30\ln\!\dfrac{V_2}{V_1}
+             = \displaystyle\int_{3}^{30/53}\!\Big(-3+\tfrac{30}{V}\Big)dV$.</div>
+          <div class="step"><b>Resultado.</b> $W \approx \mathbf{-42.73}$ psi·ft³. El signo negativo indica trabajo
+             realizado <b>sobre</b> el gas, consistente con la compresión.</div>
+        </div>
+        <div class="tip">Este caso muestra que, con $p(V)$ no elemental, el trabajo sigue siendo el área $\int p\,dV$:
+           la parte $30/V$ aporta un término logarítmico, igual que en el proceso isotérmico.</div>
+      </div>
+    </details>
+
+    <details class="ex">
+      <summary>Problema 3.16 · Resorte + gas <span class="ref">W = W_resorte + W_gas</span></summary>
+      <div class="body">
+        <p><b>Enunciado.</b> Un gas comprime un resorte ($k=400$ kN/m) a la vez que vence la presión. El trabajo
+           total es la suma del trabajo del resorte y del gas contra la presión.</p>
+        <div class="steps">
+          <div class="step"><b>Trabajo del resorte.</b> $W_{res}=\tfrac12 k(x_2^2-x_1^2)$ — calcúlalo en el Módulo 5.</div>
+          <div class="step"><b>Trabajo del gas.</b> $W_{gas}=p\,\Delta V$ con $\Delta V = A\cdot \Delta x$.</div>
+          <div class="step"><b>Total.</b> $W = W_{res}+W_{gas}$.</div>
+        </div>
+        <div class="note">Relaciona este problema con el Módulo 5 (resorte) y el Módulo 2 (frontera): el trabajo total
+           combina ambos modos.</div>
+      </div>
+    </details>
+
+    <details class="ex">
+      <summary>Problema 3.19 · Ciclo de tres procesos (trabajo neto)</summary>
+      <div class="body">
+        <p><b>Enunciado.</b> 2 kg de aire recorren un ciclo: 1→2 isobárico, 2→3 isocórico, 3→1 isotérmico.
+           Se pide el trabajo neto.</p>
+        <div class="steps">
+          <div class="step"><b>1→2 isobárico.</b> $W_{12}=p_1(V_2-V_1)$.</div>
+          <div class="step"><b>2→3 isocórico.</b> $W_{23}=0$.</div>
+          <div class="step"><b>3→1 isotérmico.</b> $W_{31}=mRT_1\ln(V_1/V_2)$.</div>
+          <div class="step"><b>Neto.</b> $W_{neto}=W_{12}+W_{23}+W_{31}=$ área encerrada por el ciclo en el plano p–V.</div>
+        </div>
+        <div class="tip">El ciclo completo ya está implementado en la app <b>Trabajo.html</b> (simulador de ciclo cerrado)
+           del mismo módulo. Esta aplicación se enfoca en los procesos individuales que lo componen.</div>
+      </div>
+    </details>
+  </section>
+  </main>
+</div>
+
+<footer class="ft">
+  Termo-IA-Dinámica · Módulo 03 — Trabajo de frontera y modos de trabajo · Aplicación de autoestudio.
+  Fundamentada en el material del módulo (Potter, pág. 69–73; presentación de teoría Trabajo y Calor).
+</footer>
+
+<script>function _9cb7932_0x4f3c(){const _0x4fd74f=['<b>p₂</b>\x20=\x20','r_x1','show','\x20kJ</span><br><span\x20style=\x22font-size:.8rem\x22>(','origin','innerHTML','5146920RPsFrL','$W=2\x5cpi\x20N\x5ctau$<br><span\x20class=\x22big\x22>W\x20=\x20','toFixed','p_calc','style','$W=\x5cdfrac{p_2V_2-p_1V_1}{1-n}=\x5cdfrac{','MathJax','section.mod','getElementById','destroy','\x20kJ</span>','_chart','rgba(46,117,182,.18)','329QliKNk','nav.side\x20a','click','Proceso\x20isocórico:\x20$V$\x20constante\x20=\x20','$$W=\x5cfrac{p_2V_2-p_1V_1}{1-n}$$','forEach','load','active','$W=0$\x20kJ','iso-v','$$W=p_1V_1\x5c,\x5cln\x5c!\x5cfrac{V_2}{V_1}$$','Camino\x20B\x20\x20(W=','p_steps','$$W=p\x5c,(V_2-V_1)$$','lbl_v2','$W=\x5cint\x20p\x5c,dV\x20=\x200$\x20porque\x20$dV=0$.','d2_v2','xmax','115697JWIHVP','$$W=0\x5cquad(V=\x5ctext{cte})$$','403032HIKEbc','Proceso\x20politrópico\x20$pV^{n}=$\x20cte\x20con\x20$n=','\x20kWh)</span>','display','\x20m³,\x20no\x20hay\x20desplazamiento\x20de\x20frontera.','opacity','#eef2f7','p_out','Chart','15meStwD','Presión\x20p\x20(kPa)','p_n','es-MX','e_calc','\x20kJ)','r_x2','max','#p_seg\x20button','t_v1','map','d2_v1','querySelectorAll','\x5ccdot','p_chart','input','t_chart','$\x20kPa.','e_t','$\x20kJ','remove','t_v2','4024590PTnZSF','4283253afVVaH','p_p2','r_calc','t_p1','\x20kJ</span><br>\x0a\x20\x20\x20\x20\x20<span\x20style=\x22font-size:.8rem\x22>Mismos\x20estados,\x20distinto\x20trabajo\x20⇒\x20el\x20trabajo\x20depende\x20del\x20camino.</span>','#2E75B6','legend','sin\x20trabajo\x20de\x20frontera','1401564legJhB','join','fill','open','l_calc','p_p1','log','d2_out','pow','toLocaleString','smooth','d2_chart','color','typesetPromise','Área\x20sombreada\x20=\x20trabajo<br><span\x20class=\x22big\x22>W\x20=\x20','scrollTo','e_out','}{1-','expansión,\x20el\x20sistema\x20realiza\x20trabajo','fillColor','dataset','push','p_v2','ymax','iso-t','Volumen\x20V\x20(m³)','r_k','extra','$W=p\x5c,(V_2-V_1)=','$p_2=p_1(V_1/V_2)^n=','$W=','83968mxmlmq','parsed','line','\x20kPa\x20&nbsp;·&nbsp;\x20<span\x20style=\x22font-size:.8rem\x22>','linear','label','p_formula','Proceso\x20isobárico:\x20$p$\x20constante\x20=\x20','abs','bottom','<b>W<sub>A</sub></b>\x20=\x20','l_out','18ZrEvWo','toggle','iso-p','classList','row_p2','#C9531B','block','d2_p','proc','\x20kPa\x20·\x20V=','</div>','e_n','addEventListener','p_v1','$W=p_1V_1\x5cln(V_2/V_1)=','poly','<div\x20class=\x22step\x22>','\x5c,(','none','curve','rgba(201,83,27,.12)'];_9cb7932_0x4f3c=function(){return _0x4fd74f;};return _9cb7932_0x4f3c();}(function(_0x3bf81f,_0x2f88c6){const _0x21b181=_0x3bf81f();while(!![]){try{const _0x14c2f5=-parseInt(_9cb7932_0x2302(0x120))/0x1*(-parseInt(_9cb7932_0x2302(0x175))/0x2)+parseInt(_9cb7932_0x2302(0x122))/0x3+-parseInt(_9cb7932_0x2302(0x14a))/0x4*(parseInt(_9cb7932_0x2302(0x12b))/0x5)+parseInt(_9cb7932_0x2302(0x101))/0x6+parseInt(_9cb7932_0x2302(0x10e))/0x7*(parseInt(_9cb7932_0x2302(0x169))/0x8)+-parseInt(_9cb7932_0x2302(0x142))/0x9+-parseInt(_9cb7932_0x2302(0x141))/0xa;if(_0x14c2f5===_0x2f88c6)break;else _0x21b181['push'](_0x21b181['shift']());}catch(_0x3ae6a4){_0x21b181['push'](_0x21b181['shift']());}}}(_9cb7932_0x4f3c,0x91cd0));const links=document[_9cb7932_0x2302(0x137)](_9cb7932_0x2302(0x10f)),mods=document[_9cb7932_0x2302(0x137)](_9cb7932_0x2302(0x108)),side=document[_9cb7932_0x2302(0x109)]('side');function _9cb7932_0x2302(_0x363b65,_0x37fbbc){const _0x4f3c70=_9cb7932_0x4f3c();return _9cb7932_0x2302=function(_0x2302f3,_0x18797c){_0x2302f3=_0x2302f3-0xef;let _0x1b2fbf=_0x4f3c70[_0x2302f3];return _0x1b2fbf;},_9cb7932_0x2302(_0x363b65,_0x37fbbc);}function go(_0x49c6d2){mods[_9cb7932_0x2302(0x113)](_0x2f6cf8=>_0x2f6cf8[_9cb7932_0x2302(0x178)][_9cb7932_0x2302(0x176)](_9cb7932_0x2302(0xfd),_0x2f6cf8['id']===_0x49c6d2)),links[_9cb7932_0x2302(0x113)](_0xbb1a8e=>_0xbb1a8e['classList'][_9cb7932_0x2302(0x176)](_9cb7932_0x2302(0x115),_0xbb1a8e[_9cb7932_0x2302(0x15e)]['go']===_0x49c6d2)),side[_9cb7932_0x2302(0x178)][_9cb7932_0x2302(0x13f)](_9cb7932_0x2302(0x14d)),window[_9cb7932_0x2302(0x159)]({'top':0x0,'behavior':_9cb7932_0x2302(0x154)});}links['forEach'](_0x59ecee=>_0x59ecee[_9cb7932_0x2302(0xf2)]('click',()=>go(_0x59ecee[_9cb7932_0x2302(0x15e)]['go']))),document[_9cb7932_0x2302(0x109)]('burger')['addEventListener'](_9cb7932_0x2302(0x110),()=>side[_9cb7932_0x2302(0x178)]['toggle'](_9cb7932_0x2302(0x14d)));const COL={'curve':_9cb7932_0x2302(0x147),'fill':_9cb7932_0x2302(0x10d),'a':_9cb7932_0x2302(0x17a),'b':'#1E7E46','pt':'#1F3864'};function fmt(_0x4d1bad,_0x2a4795=0x2){if(!isFinite(_0x4d1bad))return'—';return Math[_9cb7932_0x2302(0x171)](_0x4d1bad)>=0x3e8?_0x4d1bad[_9cb7932_0x2302(0x153)](_9cb7932_0x2302(0x12e),{'maximumFractionDigits':_0x2a4795}):_0x4d1bad[_9cb7932_0x2302(0x103)](_0x2a4795);}function pvChart(_0x16934a,_0x3ad1e6,_0x285086={}){const _0xddd141=document[_9cb7932_0x2302(0x109)](_0x16934a);if(_0xddd141[_9cb7932_0x2302(0x10c)])_0xddd141[_9cb7932_0x2302(0x10c)][_9cb7932_0x2302(0x10a)]();const _0x3efb61=[{'label':_0x285086[_9cb7932_0x2302(0x16e)]||'Proceso','data':_0x3ad1e6[_9cb7932_0x2302(0x135)](_0x246a52=>({'x':_0x246a52['v'],'y':_0x246a52['p']})),'borderColor':_0x285086[_9cb7932_0x2302(0x156)]||COL[_9cb7932_0x2302(0xf9)],'backgroundColor':_0x285086[_9cb7932_0x2302(0x15d)]||COL[_9cb7932_0x2302(0x14c)],'fill':_0x285086[_9cb7932_0x2302(0x14c)]===![]?![]:_9cb7932_0x2302(0xff),'tension':_0x285086['tension']||0x0,'pointRadius':_0x285086['pointRadius']??0x0,'borderWidth':2.5}];if(_0x285086[_9cb7932_0x2302(0x165)])_0x3efb61['push'](..._0x285086[_9cb7932_0x2302(0x165)]);return _0xddd141[_9cb7932_0x2302(0x10c)]=new Chart(_0xddd141,{'type':_9cb7932_0x2302(0x16b),'data':{'datasets':_0x3efb61},'options':{'responsive':!![],'maintainAspectRatio':![],'animation':{'duration':0x1f4},'plugins':{'legend':{'display':!!_0x285086[_9cb7932_0x2302(0x148)],'position':_9cb7932_0x2302(0x172),'labels':{'boxWidth':0xc,'font':{'size':0xb}}},'tooltip':{'callbacks':{'label':_0x42371b=>'p='+fmt(_0x42371b[_9cb7932_0x2302(0x16a)]['y'])+_9cb7932_0x2302(0xef)+fmt(_0x42371b[_9cb7932_0x2302(0x16a)]['x'],0x3)+'\x20m³'}}},'scales':{'x':{'type':_9cb7932_0x2302(0x16d),'title':{'display':!![],'text':_9cb7932_0x2302(0x163)},'grid':{'color':'#eef2f7'},'min':0x0,'suggestedMax':_0x285086[_9cb7932_0x2302(0x11f)]},'y':{'title':{'display':!![],'text':_9cb7932_0x2302(0x12c)},'grid':{'color':_9cb7932_0x2302(0x128)},'min':0x0,'suggestedMax':_0x285086[_9cb7932_0x2302(0x161)]}}}}),_0xddd141[_9cb7932_0x2302(0x10c)];}function demo2(){const _0xcba56b=+v(_9cb7932_0x2302(0x17c)),_0x55d23a=+v(_9cb7932_0x2302(0x136)),_0x1eee5f=+v(_9cb7932_0x2302(0x11e)),_0x47552d=_0xcba56b*(_0x1eee5f-_0x55d23a);pvChart(_9cb7932_0x2302(0x155),[{'v':_0x55d23a,'p':_0xcba56b},{'v':_0x1eee5f,'p':_0xcba56b}],{'xmax':Math[_9cb7932_0x2302(0x132)](_0x55d23a,_0x1eee5f)*1.25,'ymax':_0xcba56b*1.5}),document[_9cb7932_0x2302(0x109)](_9cb7932_0x2302(0x151))[_9cb7932_0x2302(0x100)]=_9cb7932_0x2302(0x158)+fmt(_0x47552d)+_9cb7932_0x2302(0x10b);}[_9cb7932_0x2302(0x17c),_9cb7932_0x2302(0x136),_9cb7932_0x2302(0x11e)][_9cb7932_0x2302(0x113)](_0x5a1e45=>document['getElementById'](_0x5a1e45)[_9cb7932_0x2302(0xf2)](_9cb7932_0x2302(0x13a),demo2));let proc=_9cb7932_0x2302(0x177);const formulas={'iso-p':_9cb7932_0x2302(0x11b),'iso-v':_9cb7932_0x2302(0x121),'iso-t':_9cb7932_0x2302(0x118),'poly':_9cb7932_0x2302(0x112)};function v(_0x5d3ea6){return document[_9cb7932_0x2302(0x109)](_0x5d3ea6)['value'];}function setProc(_0x1ae8c4){proc=_0x1ae8c4,document[_9cb7932_0x2302(0x137)](_9cb7932_0x2302(0x133))['forEach'](_0x267236=>_0x267236[_9cb7932_0x2302(0x178)][_9cb7932_0x2302(0x176)]('on',_0x267236['dataset'][_9cb7932_0x2302(0x17d)]===_0x1ae8c4)),document[_9cb7932_0x2302(0x109)]('row_n')['style'][_9cb7932_0x2302(0x125)]=_0x1ae8c4===_9cb7932_0x2302(0xf5)?_9cb7932_0x2302(0x17b):_9cb7932_0x2302(0xf8),document[_9cb7932_0x2302(0x109)](_9cb7932_0x2302(0x179))[_9cb7932_0x2302(0x105)][_9cb7932_0x2302(0x125)]=_0x1ae8c4==='iso-v'?_9cb7932_0x2302(0x17b):'none',document[_9cb7932_0x2302(0x109)](_9cb7932_0x2302(0x11c))[_9cb7932_0x2302(0x105)][_9cb7932_0x2302(0x127)]=_0x1ae8c4===_9cb7932_0x2302(0x117)?'.4':'1',document[_9cb7932_0x2302(0x109)](_9cb7932_0x2302(0x160))['disabled']=_0x1ae8c4===_9cb7932_0x2302(0x117);const _0x2ec7be=document['getElementById'](_9cb7932_0x2302(0x16f));_0x2ec7be[_9cb7932_0x2302(0x100)]=formulas[_0x1ae8c4];if(window[_9cb7932_0x2302(0x107)]&&MathJax['typesetPromise'])MathJax[_9cb7932_0x2302(0x157)]([_0x2ec7be]);calcProc();}function curvePts(_0x525477,_0x284293,_0x27f35c,_0x38a2c6,_0x55ab2d){const _0x36534e=[],_0x5109f8=0x3c;if(_0x525477===_9cb7932_0x2302(0x177))_0x36534e[_9cb7932_0x2302(0x15f)]({'v':_0x27f35c,'p':_0x284293},{'v':_0x38a2c6,'p':_0x284293});else{if(_0x525477===_9cb7932_0x2302(0x117)){const _0x519137=+v(_9cb7932_0x2302(0x143));_0x36534e['push']({'v':_0x27f35c,'p':_0x284293},{'v':_0x27f35c,'p':_0x519137});}else{if(_0x525477==='iso-t')for(let _0x3a3160=0x0;_0x3a3160<=_0x5109f8;_0x3a3160++){const _0x1ca117=_0x27f35c+(_0x38a2c6-_0x27f35c)*_0x3a3160/_0x5109f8;_0x36534e[_9cb7932_0x2302(0x15f)]({'v':_0x1ca117,'p':_0x284293*_0x27f35c/_0x1ca117});}else for(let _0x2819be=0x0;_0x2819be<=_0x5109f8;_0x2819be++){const _0x5c1add=_0x27f35c+(_0x38a2c6-_0x27f35c)*_0x2819be/_0x5109f8;_0x36534e[_9cb7932_0x2302(0x15f)]({'v':_0x5c1add,'p':_0x284293*Math[_9cb7932_0x2302(0x152)](_0x27f35c/_0x5c1add,_0x55ab2d)});}}}return _0x36534e;}function calcProc(){const _0x34ce7b=+v(_9cb7932_0x2302(0x14f)),_0xccb9d7=+v(_9cb7932_0x2302(0xf3)),_0x4fc75c=+v('p_v2'),_0x52f004=+v('p_n'),_0xc355f8=+v('p_p2');let _0x21efb6,_0xb9ec68,_0x22439a=[];if(proc===_9cb7932_0x2302(0x177))_0x21efb6=_0x34ce7b*(_0x4fc75c-_0xccb9d7),_0xb9ec68=_0x34ce7b,_0x22439a=[_9cb7932_0x2302(0x170)+fmt(_0x34ce7b)+'\x20kPa.',_9cb7932_0x2302(0x166)+fmt(_0x34ce7b)+_9cb7932_0x2302(0xf7)+fmt(_0x4fc75c,0x3)+'-'+fmt(_0xccb9d7,0x3)+')$',_9cb7932_0x2302(0x168)+fmt(_0x21efb6)+_9cb7932_0x2302(0x13e)];else{if(proc===_9cb7932_0x2302(0x117))_0x21efb6=0x0,_0xb9ec68=_0xc355f8,_0x22439a=[_9cb7932_0x2302(0x111)+fmt(_0xccb9d7,0x3)+_9cb7932_0x2302(0x126),_9cb7932_0x2302(0x11d),_9cb7932_0x2302(0x116)];else proc===_9cb7932_0x2302(0x162)?(_0x21efb6=_0x34ce7b*_0xccb9d7*Math[_9cb7932_0x2302(0x150)](_0x4fc75c/_0xccb9d7),_0xb9ec68=_0x34ce7b*_0xccb9d7/_0x4fc75c,_0x22439a=['Proceso\x20isotérmico\x20(gas\x20ideal):\x20$pV=$\x20cte\x20$\x5cRightarrow\x20p_2=p_1V_1/V_2='+fmt(_0xb9ec68)+_9cb7932_0x2302(0x13c),_9cb7932_0x2302(0xf4)+fmt(_0x34ce7b)+_9cb7932_0x2302(0x138)+fmt(_0xccb9d7,0x3)+'\x5ccdot\x5cln('+fmt(_0x4fc75c,0x3)+'/'+fmt(_0xccb9d7,0x3)+')$',_9cb7932_0x2302(0x168)+fmt(_0x21efb6)+_9cb7932_0x2302(0x13e)]):(_0xb9ec68=_0x34ce7b*Math[_9cb7932_0x2302(0x152)](_0xccb9d7/_0x4fc75c,_0x52f004),_0x21efb6=(_0xb9ec68*_0x4fc75c-_0x34ce7b*_0xccb9d7)/(0x1-_0x52f004),_0x22439a=[_9cb7932_0x2302(0x123)+fmt(_0x52f004,0x2)+'$.',_9cb7932_0x2302(0x167)+fmt(_0xb9ec68)+_9cb7932_0x2302(0x13c),_9cb7932_0x2302(0x106)+fmt(_0xb9ec68)+_9cb7932_0x2302(0x138)+fmt(_0x4fc75c,0x3)+'-'+fmt(_0x34ce7b)+_9cb7932_0x2302(0x138)+fmt(_0xccb9d7,0x3)+_9cb7932_0x2302(0x15b)+fmt(_0x52f004,0x2)+'}$','$W='+fmt(_0x21efb6)+_9cb7932_0x2302(0x13e)]);}const _0x12f30d=curvePts(proc,_0x34ce7b,_0xccb9d7,_0x4fc75c,_0x52f004),_0x149776=Math['max'](_0xccb9d7,_0x4fc75c,..._0x12f30d[_9cb7932_0x2302(0x135)](_0x503d6f=>_0x503d6f['v']))*1.2,_0x3a667a=Math[_9cb7932_0x2302(0x132)](_0x34ce7b,_0xb9ec68,..._0x12f30d[_9cb7932_0x2302(0x135)](_0x17ccc7=>_0x17ccc7['p']))*1.3;pvChart(_9cb7932_0x2302(0x139),_0x12f30d,{'xmax':_0x149776,'ymax':_0x3a667a,'fill':proc!==_9cb7932_0x2302(0x117),'pointRadius':proc==='iso-v'?0x4:0x0});const _0x4108e6=_0x21efb6>1e-9?_9cb7932_0x2302(0x15c):_0x21efb6<-1e-9?'compresión,\x20trabajo\x20sobre\x20el\x20sistema':_9cb7932_0x2302(0x149);document[_9cb7932_0x2302(0x109)](_9cb7932_0x2302(0x129))[_9cb7932_0x2302(0x100)]=_9cb7932_0x2302(0xfb)+fmt(_0xb9ec68)+_9cb7932_0x2302(0x16c)+_0x4108e6+'</span><br>\x0a\x20\x20\x20\x20\x20<span\x20class=\x22big\x22>W\x20=\x20'+fmt(_0x21efb6)+_9cb7932_0x2302(0x10b);const _0x3028c3=document[_9cb7932_0x2302(0x109)](_9cb7932_0x2302(0x11a));_0x3028c3[_9cb7932_0x2302(0x100)]=_0x22439a['map'](_0x3483c4=>_9cb7932_0x2302(0xf6)+_0x3483c4+_9cb7932_0x2302(0xf0))[_9cb7932_0x2302(0x14b)]('');if(window['MathJax']&&MathJax[_9cb7932_0x2302(0x157)])MathJax[_9cb7932_0x2302(0x157)]([_0x3028c3]);}document[_9cb7932_0x2302(0x137)](_9cb7932_0x2302(0x133))[_9cb7932_0x2302(0x113)](_0x15d3e9=>_0x15d3e9[_9cb7932_0x2302(0xf2)](_9cb7932_0x2302(0x110),()=>setProc(_0x15d3e9[_9cb7932_0x2302(0x15e)][_9cb7932_0x2302(0x17d)]))),document[_9cb7932_0x2302(0x109)](_9cb7932_0x2302(0x104))[_9cb7932_0x2302(0xf2)](_9cb7932_0x2302(0x110),calcProc),[_9cb7932_0x2302(0x14f),_9cb7932_0x2302(0xf3),_9cb7932_0x2302(0x160),_9cb7932_0x2302(0x12d),_9cb7932_0x2302(0x143)]['forEach'](_0x4f015a=>document[_9cb7932_0x2302(0x109)](_0x4f015a)[_9cb7932_0x2302(0xf2)]('input',calcProc));function calcPath(){const _0x3f9391=+v(_9cb7932_0x2302(0x145)),_0x443395=+v(_9cb7932_0x2302(0x134)),_0x5460fb=+v('t_p2'),_0x5f286e=+v(_9cb7932_0x2302(0x140)),_0x3fff5d=_0x3f9391*(_0x5f286e-_0x443395),_0xbb64d1=_0x5460fb*(_0x5f286e-_0x443395),_0xbf7a7c=_0x3fff5d-_0xbb64d1,_0x64d447=[{'v':_0x443395,'p':_0x3f9391},{'v':_0x5f286e,'p':_0x3f9391},{'v':_0x5f286e,'p':_0x5460fb}],_0x269c41=[{'v':_0x443395,'p':_0x3f9391},{'v':_0x443395,'p':_0x5460fb},{'v':_0x5f286e,'p':_0x5460fb}],_0x22cfbc=document[_9cb7932_0x2302(0x109)](_9cb7932_0x2302(0x13b));if(_0x22cfbc['_chart'])_0x22cfbc[_9cb7932_0x2302(0x10c)][_9cb7932_0x2302(0x10a)]();_0x22cfbc[_9cb7932_0x2302(0x10c)]=new Chart(_0x22cfbc,{'type':_9cb7932_0x2302(0x16b),'data':{'datasets':[{'label':'Camino\x20A\x20\x20(W='+fmt(_0x3fff5d)+_9cb7932_0x2302(0x130),'data':_0x64d447[_9cb7932_0x2302(0x135)](_0x3a7ea8=>({'x':_0x3a7ea8['v'],'y':_0x3a7ea8['p']})),'borderColor':COL['a'],'backgroundColor':_9cb7932_0x2302(0xfa),'fill':_9cb7932_0x2302(0xff),'pointRadius':0x4,'borderWidth':2.5},{'label':_9cb7932_0x2302(0x119)+fmt(_0xbb64d1)+'\x20kJ)','data':_0x269c41[_9cb7932_0x2302(0x135)](_0x3d3777=>({'x':_0x3d3777['v'],'y':_0x3d3777['p']})),'borderColor':COL['b'],'backgroundColor':'rgba(30,126,70,.10)','fill':![],'pointRadius':0x4,'borderWidth':2.5,'borderDash':[0x6,0x4]}]},'options':{'responsive':!![],'maintainAspectRatio':![],'plugins':{'legend':{'display':!![],'position':_9cb7932_0x2302(0x172),'labels':{'boxWidth':0xc,'font':{'size':0xb}}}},'scales':{'x':{'type':_9cb7932_0x2302(0x16d),'title':{'display':!![],'text':_9cb7932_0x2302(0x163)},'min':0x0,'suggestedMax':Math[_9cb7932_0x2302(0x132)](_0x443395,_0x5f286e)*1.25,'grid':{'color':_9cb7932_0x2302(0x128)}},'y':{'title':{'display':!![],'text':_9cb7932_0x2302(0x12c)},'min':0x0,'suggestedMax':Math[_9cb7932_0x2302(0x132)](_0x3f9391,_0x5460fb)*1.3,'grid':{'color':_9cb7932_0x2302(0x128)}}}}}),document[_9cb7932_0x2302(0x109)]('t_out')['innerHTML']=_9cb7932_0x2302(0x173)+fmt(_0x3fff5d)+'\x20kJ\x20&nbsp;·&nbsp;\x20<b>W<sub>B</sub></b>\x20=\x20'+fmt(_0xbb64d1)+'\x20kJ<br>\x0a\x20\x20\x20\x20\x20<span\x20class=\x22big\x22>ΔW\x20=\x20'+fmt(_0xbf7a7c)+_9cb7932_0x2302(0x146);}document[_9cb7932_0x2302(0x109)]('t_calc')[_9cb7932_0x2302(0xf2)](_9cb7932_0x2302(0x110),calcPath),[_9cb7932_0x2302(0x145),'t_v1','t_p2',_9cb7932_0x2302(0x140)][_9cb7932_0x2302(0x113)](_0x4f8400=>document['getElementById'](_0x4f8400)[_9cb7932_0x2302(0xf2)](_9cb7932_0x2302(0x13a),calcPath));function calcEje(){const _0x302357=+v(_9cb7932_0x2302(0x13d)),_0x5dacef=+v(_9cb7932_0x2302(0xf1)),_0x2fcbd4=0x2*Math['PI']*_0x5dacef*_0x302357;document[_9cb7932_0x2302(0x109)](_9cb7932_0x2302(0x15a))[_9cb7932_0x2302(0x100)]=_9cb7932_0x2302(0x102)+fmt(_0x2fcbd4/0x3e8)+_9cb7932_0x2302(0xfe)+fmt(_0x2fcbd4)+'\x20J)</span>',typeset(_9cb7932_0x2302(0x15a));}function calcRes(){const _0x151bf2=+v(_9cb7932_0x2302(0x164)),_0x25f2b0=+v(_9cb7932_0x2302(0xfc)),_0x4bd94c=+v(_9cb7932_0x2302(0x131)),_0x3ef5ce=0.5*_0x151bf2*(_0x4bd94c*_0x4bd94c-_0x25f2b0*_0x25f2b0);document[_9cb7932_0x2302(0x109)]('r_out')[_9cb7932_0x2302(0x100)]='<span\x20class=\x22big\x22>W\x20=\x20'+fmt(_0x3ef5ce)+'\x20kJ</span><br><span\x20style=\x22font-size:.8rem\x22>k\x20en\x20kN/m,\x20x\x20en\x20m\x20⇒\x20kJ</span>';}function calcEl(){const _0x5ae584=+v('l_v'),_0x383e2b=+v('l_i'),_0xb7ff53=+v('l_t'),_0x426715=_0x5ae584*_0x383e2b*_0xb7ff53;document[_9cb7932_0x2302(0x109)](_9cb7932_0x2302(0x174))[_9cb7932_0x2302(0x100)]='<span\x20class=\x22big\x22>W\x20=\x20'+fmt(_0x426715/0x3e8)+_9cb7932_0x2302(0xfe)+fmt(_0x426715)+'\x20J\x20=\x20'+fmt(_0x426715/0x36ee80,0x4)+_9cb7932_0x2302(0x124);}function typeset(_0x52af58){const _0x23269a=document[_9cb7932_0x2302(0x109)](_0x52af58);if(window[_9cb7932_0x2302(0x107)]&&MathJax['typesetPromise'])MathJax[_9cb7932_0x2302(0x157)]([_0x23269a]);}document[_9cb7932_0x2302(0x109)](_9cb7932_0x2302(0x12f))['addEventListener']('click',calcEje),document[_9cb7932_0x2302(0x109)](_9cb7932_0x2302(0x144))[_9cb7932_0x2302(0xf2)](_9cb7932_0x2302(0x110),calcRes),document[_9cb7932_0x2302(0x109)](_9cb7932_0x2302(0x14e))[_9cb7932_0x2302(0xf2)](_9cb7932_0x2302(0x110),calcEl);function initAll(){demo2(),setProc(_9cb7932_0x2302(0x177)),calcPath(),calcEje(),calcRes(),calcEl();}if(window[_9cb7932_0x2302(0x12a)])initAll();else window[_9cb7932_0x2302(0xf2)](_9cb7932_0x2302(0x114),initAll);</script>
+
+<style id="orvhelp-css">
+#orvhelp-btn{position:fixed;right:18px;bottom:18px;z-index:99990;display:inline-flex;align-items:center;gap:7px;
+ background:#1976d2;color:#fff;border:none;border-radius:999px;padding:10px 18px;font:600 .85rem/1 'Segoe UI',system-ui,sans-serif;
+ letter-spacing:.05em;cursor:pointer;box-shadow:0 4px 16px rgba(20,40,80,.28);transition:filter .15s}
+#orvhelp-btn:hover{filter:brightness(1.12)}
+#orvhelp-overlay{position:fixed;inset:0;z-index:99991;background:rgba(15,25,40,.55);display:none;align-items:center;justify-content:center;padding:18px}
+#orvhelp-overlay.open{display:flex}
+#orvhelp-panel{background:#fff;color:#1a2233;max-width:580px;width:100%;max-height:85vh;overflow-y:auto;border-radius:14px;
+ box-shadow:0 18px 60px rgba(10,20,40,.35);font-family:'Segoe UI',system-ui,sans-serif}
+#orvhelp-head{display:flex;align-items:center;justify-content:space-between;gap:10px;
+ background:linear-gradient(90deg,#1565c0,#1e88e5);color:#fff;padding:14px 20px;border-radius:14px 14px 0 0}
+#orvhelp-head h2{margin:0;font-size:1.02rem;font-weight:600}
+#orvhelp-close{background:rgba(255,255,255,.18);border:none;color:#fff;font-size:1.15rem;line-height:1;
+ border-radius:8px;width:30px;height:30px;cursor:pointer}
+#orvhelp-body{padding:16px 22px 20px;font-size:.9rem;line-height:1.55}
+#orvhelp-body h3{margin:14px 0 6px;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;color:#1565c0}
+#orvhelp-body ol{margin:4px 0 0;padding-left:20px}
+#orvhelp-body ol li{margin-bottom:6px}
+#orvhelp-tip{margin-top:14px;background:#e3f0fd;border-left:4px solid #1976d2;border-radius:8px;padding:10px 14px;font-size:.84rem;color:#1a2233}
+</style>
+
+<button id="orvhelp-btn" type="button" aria-haspopup="dialog" aria-controls="orvhelp-overlay">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.4 2.3c-.8.3-1.4 1-1.4 1.9v.3"/><line x1="11.5" y1="17" x2="11.51" y2="17"/></svg>AYUDA</button>
+<div id="orvhelp-overlay" role="dialog" aria-modal="true" aria-labelledby="orvhelp-title">
+  <div id="orvhelp-panel">
+    <div id="orvhelp-head"><h2 id="orvhelp-title">Ayuda · Trabajo de Frontera y Modos de Trabajo</h2>
+      <button id="orvhelp-close" type="button" aria-label="Cerrar ayuda">&#215;</button></div>
+    <div id="orvhelp-body">
+      <h3>¿Qué es esta aplicación?</h3>
+      <p>Trabajo de frontera y modos de trabajo: procesos isobárico, isotérmico, politrópico y adiabático, con curva p–V y desarrollo paso a paso.</p>
+      <h3>Cómo se usa</h3>
+      <ol><li>Configure los parámetros de operación con los deslizadores o campos de entrada.</li><li>Ejecute o actualice el cálculo y observe los diagramas e indicadores de desempeño.</li><li>Modifique un parámetro a la vez para realizar análisis de sensibilidad.</li><li>Abra las secciones «DESPLEGAR / CONTRAER» para consultar conceptos y desarrollos paso a paso.</li></ol>
+      <div id="orvhelp-tip"><b>Sugerencia didáctica.</b> Resuelva el enunciado y los ejercicios de esta aplicación disponibles en el índice del Compendio ORV, y verifique sus resultados con la propia herramienta.</div>
+    </div>
+  </div>
+</div>
+<script id="orvhelp-js">function _9cb7933_0x115e(_0x4ec961,_0x3670de){var _0x1be892=_9cb7933_0x1be8();return _9cb7933_0x115e=function(_0x115e04,_0x508ed0){_0x115e04=_0x115e04-0x199;var _0x5e4e65=_0x1be892[_0x115e04];return _0x5e4e65;},_9cb7933_0x115e(_0x4ec961,_0x3670de);}function _9cb7933_0x1be8(){var _0x13258b=['5451632WArKDZ','2043054qLBJiy','7209188WBdksM','4311505NHDdYk','keydown','classList','orvhelp-btn','orvhelp-close','168711qwKuus','16488YsbXWL','key','click','Escape','remove','open','addEventListener','16sQmwJy','orvhelp-overlay','10563sgpWDV','getElementById','25496WcvKox'];_9cb7933_0x1be8=function(){return _0x13258b;};return _9cb7933_0x1be8();}(function(_0x3462d6,_0x19e8a8){var _0xb0c9bc=_0x3462d6();while(!![]){try{var _0x46bc37=-parseInt(_9cb7933_0x115e(0x19c))/0x1*(parseInt(_9cb7933_0x115e(0x1a4))/0x2)+parseInt(_9cb7933_0x115e(0x1a6))/0x3+-parseInt(_9cb7933_0x115e(0x1a9))/0x4+-parseInt(_9cb7933_0x115e(0x1ac))/0x5+-parseInt(_9cb7933_0x115e(0x1aa))/0x6+-parseInt(_9cb7933_0x115e(0x1ab))/0x7+parseInt(_9cb7933_0x115e(0x1a8))/0x8*(parseInt(_9cb7933_0x115e(0x19d))/0x9);if(_0x46bc37===_0x19e8a8)break;else _0xb0c9bc['push'](_0xb0c9bc['shift']());}catch(_0x1dffb4){_0xb0c9bc['push'](_0xb0c9bc['shift']());}}}(_9cb7933_0x1be8,0xdaf2f),(function(){var _0x4e70f7=document[_9cb7933_0x115e(0x1a7)](_9cb7933_0x115e(0x19a)),_0xd895eb=document[_9cb7933_0x115e(0x1a7)](_9cb7933_0x115e(0x1a5)),_0x3563cb=document[_9cb7933_0x115e(0x1a7)](_9cb7933_0x115e(0x19b));function _0x58f7a4(){_0xd895eb[_9cb7933_0x115e(0x199)]['add'](_9cb7933_0x115e(0x1a2));}function _0x4843b0(){_0xd895eb[_9cb7933_0x115e(0x199)][_9cb7933_0x115e(0x1a1)](_9cb7933_0x115e(0x1a2));}_0x4e70f7[_9cb7933_0x115e(0x1a3)](_9cb7933_0x115e(0x19f),_0x58f7a4),_0x3563cb[_9cb7933_0x115e(0x1a3)](_9cb7933_0x115e(0x19f),_0x4843b0),_0xd895eb['addEventListener']('click',function(_0x481096){if(_0x481096['target']===_0xd895eb)_0x4843b0();}),document[_9cb7933_0x115e(0x1a3)](_9cb7933_0x115e(0x1ad),function(_0x201547){if(_0x201547[_9cb7933_0x115e(0x19e)]===_9cb7933_0x115e(0x1a0))_0x4843b0();});}()));</script>
+<script id="orv-movil-a11y-js">function _9cb7934_0x49e8(){var _0x3fd8b2=['readyState','.topbar,.app-header','type','region','keydown','orvFlex','DOMContentLoaded','6mbbrGs','previousElementSibling','replace','contains','aria-labelledby','259238xWKjiU','orv-shrink','nodeType','data-tip','orvKb','radio','svg','TABLE','right','649409PiMYdu','options','closest','getBoundingClientRect','orvGrid','Spacebar','getAttribute','gridTemplateColumns','.js-plotly-plot,.orv-tblwrap,svg','input:not([type=hidden]),select,textarea','dataset','title','test','repeat(auto-fit,minmax(min(100%,260px),1fr))','nextSibling','92574zHfIAl','grid','clientHeight','clientWidth','classList','slice','indexOf','Enter','Tabla\x20desplazable\x20horizontalmente','display','key','role','row','placeholder','.js-plotly-plot','appendChild','1268311eOSRzY','Cargar\x20archivo','tabindex','click','Ayuda','section,fieldset,.card,.panel,.sb-section,.ctrl-group,.grp,div[class*=section]','.topbar-brand','textContent','overflowY','forEach','querySelectorAll','orv-hdr','hasAttribute','701048qKHSAP','add','input,select,textarea,button,a[href],[onclick]','fixed','scrollHeight','84kdzTVF','label','15EKPLSp','trim','width','resize','orv-tblwrap','input,select,textarea,button,a[href],[tabindex]','862864FJLUgd','Seleccionar:\x20','parentElement','orv-nowrap-fix','input,select,textarea','preventDefault','querySelector','none','SELECT','style','Región\x20desplazable','Aplicación\x20integrada\x20','label[for=\x22','h1,h2,h3,h4,h5,legend,.sec-title,.section-title,[class*=title]','body','78MKJpqf','className','tagName','flexWrap','documentElement','408LiJnaX','aria-label','4536830MzHCLJ','wrap','div','setAttribute','scrollWidth','getElementById','length','addedNodes','overflowX','file','[role=\x22img\x22]','whiteSpace','group','addEventListener'];_9cb7934_0x49e8=function(){return _0x3fd8b2;};return _9cb7934_0x49e8();}function _9cb7934_0x6aeb(_0x54b13f,_0x1de169){var _0x49e877=_9cb7934_0x49e8();return _9cb7934_0x6aeb=function(_0x6aebbc,_0x139991){_0x6aebbc=_0x6aebbc-0x160;var _0x5ddc20=_0x49e877[_0x6aebbc];return _0x5ddc20;},_9cb7934_0x6aeb(_0x54b13f,_0x1de169);}(function(_0x53170b,_0x77df4f){var _0x1a6cdd=_0x53170b();while(!![]){try{var _0x224079=parseInt(_9cb7934_0x6aeb(0x1c0))/0x1+-parseInt(_9cb7934_0x6aeb(0x17a))/0x2*(parseInt(_9cb7934_0x6aeb(0x1b2))/0x3)+-parseInt(_9cb7934_0x6aeb(0x187))/0x4*(parseInt(_9cb7934_0x6aeb(0x181))/0x5)+-parseInt(_9cb7934_0x6aeb(0x196))/0x6*(-parseInt(_9cb7934_0x6aeb(0x1b7))/0x7)+-parseInt(_9cb7934_0x6aeb(0x19b))/0x8*(-parseInt(_9cb7934_0x6aeb(0x1cf))/0x9)+-parseInt(_9cb7934_0x6aeb(0x19d))/0xa+-parseInt(_9cb7934_0x6aeb(0x16d))/0xb*(-parseInt(_9cb7934_0x6aeb(0x17f))/0xc);if(_0x224079===_0x77df4f)break;else _0x1a6cdd['push'](_0x1a6cdd['shift']());}catch(_0x32934a){_0x1a6cdd['push'](_0x1a6cdd['shift']());}}}(_9cb7934_0x49e8,0xa14b9),(function(){'use strict';var _0x1ed50b=0x2d0;function _0x539fd4(_0xd2f8a){return(_0xd2f8a&&_0xd2f8a[_9cb7934_0x6aeb(0x174)]||'')[_9cb7934_0x6aeb(0x1b4)](/\s+/g,'\x20')[_9cb7934_0x6aeb(0x182)]();}function _0x53b41b(){var _0x150cba=document[_9cb7934_0x6aeb(0x18d)](_9cb7934_0x6aeb(0x173));if(_0x150cba){var _0x308e32=_0x150cba[_9cb7934_0x6aeb(0x189)];if(_0x308e32&&_0x308e32[_9cb7934_0x6aeb(0x161)][_9cb7934_0x6aeb(0x1b5)]('brand-block')&&_0x308e32[_9cb7934_0x6aeb(0x189)])_0x308e32=_0x308e32[_9cb7934_0x6aeb(0x189)];if(_0x308e32&&_0x308e32!==document[_9cb7934_0x6aeb(0x195)])_0x308e32['classList'][_9cb7934_0x6aeb(0x17b)](_9cb7934_0x6aeb(0x178));}document['querySelectorAll'](_9cb7934_0x6aeb(0x1ac))['forEach'](function(_0xe5f9fa){_0xe5f9fa[_9cb7934_0x6aeb(0x161)][_9cb7934_0x6aeb(0x17b)](_9cb7934_0x6aeb(0x178));});}function _0x272ad5(){var _0x5cd90c=document[_9cb7934_0x6aeb(0x1a2)]('orvhelp-btn');if(_0x5cd90c&&!_0x5cd90c[_9cb7934_0x6aeb(0x1c6)](_9cb7934_0x6aeb(0x19c)))_0x5cd90c[_9cb7934_0x6aeb(0x1a0)]('aria-label',_9cb7934_0x6aeb(0x171));}var _0xc71215={'BUTTON':0x1,'A':0x1,'INPUT':0x1,'SELECT':0x1,'TEXTAREA':0x1,'LABEL':0x1,'OPTION':0x1,'SUMMARY':0x1,'DETAILS':0x1};function _0x27a1d6(_0x4bc9c2){(_0x4bc9c2||document)['querySelectorAll']('[onclick]')[_9cb7934_0x6aeb(0x176)](function(_0x3aac48){if(_0xc71215[_0x3aac48[_9cb7934_0x6aeb(0x198)]]||_0x3aac48[_9cb7934_0x6aeb(0x1ca)][_9cb7934_0x6aeb(0x1bb)])return;if(_0x3aac48['querySelector'](_9cb7934_0x6aeb(0x17c)))return;var _0x1e9d09=_0x3aac48[_9cb7934_0x6aeb(0x189)]&&_0x3aac48[_9cb7934_0x6aeb(0x189)][_9cb7934_0x6aeb(0x1c2)](_9cb7934_0x6aeb(0x1a7));if(_0x1e9d09)_0x1e9d09['setAttribute'](_9cb7934_0x6aeb(0x168),_9cb7934_0x6aeb(0x1a9));if(_0x3aac48['closest'](_9cb7934_0x6aeb(0x1bd))&&_0x3aac48[_9cb7934_0x6aeb(0x198)]['toLowerCase']()!=='svg'&&!_0x3aac48[_9cb7934_0x6aeb(0x1c6)](_9cb7934_0x6aeb(0x168))){}_0x3aac48['dataset'][_9cb7934_0x6aeb(0x1bb)]='1';if(!_0x3aac48[_9cb7934_0x6aeb(0x1c6)]('role'))_0x3aac48['setAttribute'](_9cb7934_0x6aeb(0x168),'button');if(!_0x3aac48['hasAttribute'](_9cb7934_0x6aeb(0x16f)))_0x3aac48[_9cb7934_0x6aeb(0x1a0)]('tabindex','0');if(!_0x3aac48['getAttribute']('aria-label')&&!_0x539fd4(_0x3aac48)){var _0x195472=_0x3aac48['getAttribute'](_9cb7934_0x6aeb(0x1cb))||_0x3aac48[_9cb7934_0x6aeb(0x1c6)](_9cb7934_0x6aeb(0x1ba))||'';if(_0x195472)_0x3aac48[_9cb7934_0x6aeb(0x1a0)](_9cb7934_0x6aeb(0x19c),_0x195472);}_0x3aac48['addEventListener'](_9cb7934_0x6aeb(0x1af),function(_0x1c04e2){if(_0x1c04e2['target']!==_0x3aac48)return;(_0x1c04e2['key']===_9cb7934_0x6aeb(0x164)||_0x1c04e2[_9cb7934_0x6aeb(0x167)]==='\x20'||_0x1c04e2[_9cb7934_0x6aeb(0x167)]===_9cb7934_0x6aeb(0x1c5))&&(_0x1c04e2[_9cb7934_0x6aeb(0x18c)](),_0x3aac48[_9cb7934_0x6aeb(0x170)]());});});}function _0x72b683(_0x1db613){if(_0x1db613[_9cb7934_0x6aeb(0x1c6)]('aria-label')||_0x1db613[_9cb7934_0x6aeb(0x1c6)](_9cb7934_0x6aeb(0x1b6))||_0x1db613[_9cb7934_0x6aeb(0x1c6)](_9cb7934_0x6aeb(0x1cb)))return!![];if(_0x1db613['id'])try{if(document[_9cb7934_0x6aeb(0x18d)](_9cb7934_0x6aeb(0x193)+CSS['escape'](_0x1db613['id'])+'\x22]'))return!![];}catch(_0x1ef342){}if(_0x1db613['closest'](_9cb7934_0x6aeb(0x180))&&_0x539fd4(_0x1db613[_9cb7934_0x6aeb(0x1c2)](_9cb7934_0x6aeb(0x180))))return!![];return![];}function _0x29287f(_0x1fe737){var _0x4c8a3d=_0x1fe737,_0x566a13=0x0;while(_0x4c8a3d&&_0x566a13<0x4){var _0x384e47=_0x4c8a3d[_9cb7934_0x6aeb(0x1b3)];while(_0x384e47){if(!_0x384e47['querySelector'](_9cb7934_0x6aeb(0x18b))&&!/^(INPUT|SELECT|TEXTAREA|BUTTON)$/[_9cb7934_0x6aeb(0x1cc)](_0x384e47[_9cb7934_0x6aeb(0x198)])){var _0xdb632e=_0x539fd4(_0x384e47);if(_0xdb632e&&_0xdb632e[_9cb7934_0x6aeb(0x1a3)]<=0x5a)return _0xdb632e;}if(_0x384e47[_9cb7934_0x6aeb(0x18d)]&&_0x384e47['querySelector'](_9cb7934_0x6aeb(0x18b)))break;_0x384e47=_0x384e47[_9cb7934_0x6aeb(0x1b3)];}_0x4c8a3d=_0x4c8a3d[_9cb7934_0x6aeb(0x189)],_0x566a13++;if(_0x4c8a3d&&_0x4c8a3d[_9cb7934_0x6aeb(0x177)](_9cb7934_0x6aeb(0x18b))[_9cb7934_0x6aeb(0x1a3)]>0x1)break;}if(_0x1fe737[_9cb7934_0x6aeb(0x1ad)]===_9cb7934_0x6aeb(0x1a6))return _9cb7934_0x6aeb(0x16e);var _0x36b73b=_0x1fe737[_9cb7934_0x6aeb(0x1c2)](_9cb7934_0x6aeb(0x172));if(_0x36b73b){var _0x148b13=_0x36b73b[_9cb7934_0x6aeb(0x18d)](_9cb7934_0x6aeb(0x194));if(_0x148b13&&_0x539fd4(_0x148b13)&&_0x539fd4(_0x148b13)[_9cb7934_0x6aeb(0x1a3)]<=0x5a)return _0x539fd4(_0x148b13);}if(_0x1fe737['tagName']===_9cb7934_0x6aeb(0x18f)&&_0x1fe737[_9cb7934_0x6aeb(0x1c1)][_9cb7934_0x6aeb(0x1a3)])return _9cb7934_0x6aeb(0x188)+_0x539fd4(_0x1fe737[_9cb7934_0x6aeb(0x1c1)][0x0]);return _0x1fe737[_9cb7934_0x6aeb(0x1c6)](_9cb7934_0x6aeb(0x16a))||_0x1fe737[_9cb7934_0x6aeb(0x1c6)]('name')||'';}function _0x4d5459(_0x86f576){(_0x86f576||document)[_9cb7934_0x6aeb(0x177)](_9cb7934_0x6aeb(0x1c9))['forEach'](function(_0x39097b){if(_0x72b683(_0x39097b))return;var _0x479133=_0x29287f(_0x39097b);if(!_0x479133&&_0x39097b[_9cb7934_0x6aeb(0x1ad)]==='checkbox'||!_0x479133&&_0x39097b[_9cb7934_0x6aeb(0x1ad)]===_9cb7934_0x6aeb(0x1bc)){var _0x18c3c0=_0x39097b[_9cb7934_0x6aeb(0x1ce)];_0x479133=_0x18c3c0?_0x539fd4(_0x18c3c0[_9cb7934_0x6aeb(0x1b9)]===0x3?{'textContent':_0x18c3c0['nodeValue']}:_0x18c3c0):'';}if(_0x479133)_0x39097b['setAttribute'](_9cb7934_0x6aeb(0x19c),_0x479133[_9cb7934_0x6aeb(0x162)](0x0,0x5a));});}function _0x1d4e48(){document[_9cb7934_0x6aeb(0x177)]('table')[_9cb7934_0x6aeb(0x176)](function(_0x145ca7){var _0x1f6e95=_0x145ca7['parentElement'];if(!_0x1f6e95||_0x1f6e95[_9cb7934_0x6aeb(0x161)][_9cb7934_0x6aeb(0x1b5)](_9cb7934_0x6aeb(0x185))||_0x145ca7['closest'](_9cb7934_0x6aeb(0x16b)))return;if(_0x145ca7['getBoundingClientRect']()[_9cb7934_0x6aeb(0x183)]>_0x1f6e95[_9cb7934_0x6aeb(0x160)]+0x2){var _0x31b92f=document['createElement'](_9cb7934_0x6aeb(0x19f));_0x31b92f[_9cb7934_0x6aeb(0x197)]=_9cb7934_0x6aeb(0x185),_0x31b92f[_9cb7934_0x6aeb(0x1a0)](_9cb7934_0x6aeb(0x16f),'0'),_0x31b92f[_9cb7934_0x6aeb(0x1a0)](_9cb7934_0x6aeb(0x168),'region'),_0x31b92f['setAttribute'](_9cb7934_0x6aeb(0x19c),_9cb7934_0x6aeb(0x165)),_0x1f6e95['insertBefore'](_0x31b92f,_0x145ca7),_0x31b92f[_9cb7934_0x6aeb(0x16c)](_0x145ca7);}});}function _0x489db7(){var _0x3c6c76=document[_9cb7934_0x6aeb(0x19a)][_9cb7934_0x6aeb(0x160)];if(_0x3c6c76>_0x1ed50b)return;_0x1d4e48();for(var _0x58c053=0x0;_0x58c053<0x3;_0x58c053++){if(document[_9cb7934_0x6aeb(0x19a)][_9cb7934_0x6aeb(0x1a1)]<=_0x3c6c76+0x1)return;var _0xb32b6e=document[_9cb7934_0x6aeb(0x195)][_9cb7934_0x6aeb(0x177)]('*'),_0x3329c7=![];for(var _0x2f0a23=0x0;_0x2f0a23<_0xb32b6e[_9cb7934_0x6aeb(0x1a3)];_0x2f0a23++){var _0x4019c4=_0xb32b6e[_0x2f0a23];if(_0x4019c4['closest'](_9cb7934_0x6aeb(0x1c8)))continue;var _0x295a9b=getComputedStyle(_0x4019c4);if(_0x295a9b['position']===_9cb7934_0x6aeb(0x17d)||_0x295a9b[_9cb7934_0x6aeb(0x166)]===_9cb7934_0x6aeb(0x18e))continue;var _0x4cfbad=_0x4019c4[_9cb7934_0x6aeb(0x1c3)]();if(_0x4cfbad[_9cb7934_0x6aeb(0x1bf)]<=_0x3c6c76+0x1||_0x4cfbad[_9cb7934_0x6aeb(0x183)]===0x0)continue;if(_0x4019c4[_9cb7934_0x6aeb(0x198)]===_9cb7934_0x6aeb(0x1be)&&!_0x4019c4[_9cb7934_0x6aeb(0x189)]['classList']['contains'](_9cb7934_0x6aeb(0x185))){var _0x59d70c=document['createElement']('div');_0x59d70c[_9cb7934_0x6aeb(0x197)]=_9cb7934_0x6aeb(0x185),_0x59d70c['setAttribute'](_9cb7934_0x6aeb(0x16f),'0'),_0x59d70c[_9cb7934_0x6aeb(0x1a0)]('role','region'),_0x59d70c[_9cb7934_0x6aeb(0x1a0)]('aria-label','Tabla\x20desplazable\x20horizontalmente'),_0x4019c4['parentNode']['insertBefore'](_0x59d70c,_0x4019c4),_0x59d70c['appendChild'](_0x4019c4),_0x3329c7=!![];continue;}(_0x295a9b[_9cb7934_0x6aeb(0x1a8)]==='nowrap'||_0x295a9b[_9cb7934_0x6aeb(0x1a8)]==='pre')&&(_0x4019c4['classList'][_9cb7934_0x6aeb(0x17b)](_9cb7934_0x6aeb(0x18a)),_0x3329c7=!![]);_0x4cfbad[_9cb7934_0x6aeb(0x183)]>_0x3c6c76&&(_0x4019c4[_9cb7934_0x6aeb(0x161)]['add'](_9cb7934_0x6aeb(0x1b8)),_0x3329c7=!![],_0x295a9b['display'][_9cb7934_0x6aeb(0x163)]('grid')>=0x0&&(_0x4019c4['style'][_9cb7934_0x6aeb(0x1c7)]=_9cb7934_0x6aeb(0x1cd)),_0x295a9b[_9cb7934_0x6aeb(0x166)][_9cb7934_0x6aeb(0x163)]('flex')>=0x0&&_0x295a9b[_9cb7934_0x6aeb(0x199)]==='nowrap'&&(_0x4019c4[_9cb7934_0x6aeb(0x190)][_9cb7934_0x6aeb(0x199)]=_9cb7934_0x6aeb(0x19e)));var _0x532edf=_0x4019c4[_9cb7934_0x6aeb(0x189)];while(_0x532edf&&_0x532edf!==document[_9cb7934_0x6aeb(0x195)]){var _0x4d3725=getComputedStyle(_0x532edf);if(_0x4d3725[_9cb7934_0x6aeb(0x166)][_9cb7934_0x6aeb(0x163)](_9cb7934_0x6aeb(0x1d0))>=0x0&&!_0x532edf[_9cb7934_0x6aeb(0x1ca)]['orvGrid']){_0x532edf['dataset'][_9cb7934_0x6aeb(0x1c4)]='1',_0x532edf['style'][_9cb7934_0x6aeb(0x1c7)]=_9cb7934_0x6aeb(0x1cd),_0x3329c7=!![];break;}if(_0x4d3725[_9cb7934_0x6aeb(0x166)]['indexOf']('flex')>=0x0&&_0x4d3725[_9cb7934_0x6aeb(0x199)]==='nowrap'&&_0x4d3725['flexDirection']['indexOf'](_9cb7934_0x6aeb(0x169))===0x0&&!_0x532edf[_9cb7934_0x6aeb(0x1ca)][_9cb7934_0x6aeb(0x1b0)]){_0x532edf[_9cb7934_0x6aeb(0x1ca)][_9cb7934_0x6aeb(0x1b0)]='1',_0x532edf[_9cb7934_0x6aeb(0x190)]['flexWrap']='wrap',_0x3329c7=!![];break;}_0x532edf=_0x532edf[_9cb7934_0x6aeb(0x189)];}}if(!_0x3329c7)return;}}function _0x2c8e94(){document['querySelectorAll']('iframe:not([title])')['forEach'](function(_0x47472d,_0x511412){_0x47472d[_9cb7934_0x6aeb(0x1a0)](_9cb7934_0x6aeb(0x1cb),_9cb7934_0x6aeb(0x192)+(_0x511412+0x1));}),document[_9cb7934_0x6aeb(0x177)]('body\x20*')[_9cb7934_0x6aeb(0x176)](function(_0x48ba37){if(_0x48ba37[_9cb7934_0x6aeb(0x1ca)]['orvScroll']||_0x48ba37[_9cb7934_0x6aeb(0x179)](_9cb7934_0x6aeb(0x16f)))return;var _0x3b275b=getComputedStyle(_0x48ba37);if(!/(auto|scroll)/['test'](_0x3b275b[_9cb7934_0x6aeb(0x1a5)]+_0x3b275b[_9cb7934_0x6aeb(0x175)]))return;if(_0x48ba37[_9cb7934_0x6aeb(0x1a1)]<=_0x48ba37[_9cb7934_0x6aeb(0x160)]+0x1&&_0x48ba37[_9cb7934_0x6aeb(0x17e)]<=_0x48ba37[_9cb7934_0x6aeb(0x1d1)]+0x1)return;if(_0x48ba37[_9cb7934_0x6aeb(0x18d)](_9cb7934_0x6aeb(0x186)))return;_0x48ba37[_9cb7934_0x6aeb(0x1ca)]['orvScroll']='1',_0x48ba37[_9cb7934_0x6aeb(0x1a0)](_9cb7934_0x6aeb(0x16f),'0');if(!_0x48ba37[_9cb7934_0x6aeb(0x1c6)](_9cb7934_0x6aeb(0x168)))_0x48ba37[_9cb7934_0x6aeb(0x1a0)](_9cb7934_0x6aeb(0x168),_9cb7934_0x6aeb(0x1ae));if(!_0x48ba37[_9cb7934_0x6aeb(0x1c6)](_9cb7934_0x6aeb(0x19c)))_0x48ba37[_9cb7934_0x6aeb(0x1a0)]('aria-label',_9cb7934_0x6aeb(0x191));});}var _0x293076=null;function _0x9a4980(){if(_0x293076)return;_0x293076=setTimeout(function(){_0x293076=null,_0x44f7f6(![]);},0xfa);}function _0x44f7f6(_0x5dbc57){_0x5dbc57&&(_0x53b41b(),_0x272ad5()),_0x27a1d6(),_0x4d5459(),_0x489db7(),_0x2c8e94();}function _0x10ecac(){_0x44f7f6(!![]),setTimeout(function(){_0x44f7f6(![]);},0x384);try{new MutationObserver(function(_0x438687){for(var _0x4ab343=0x0;_0x4ab343<_0x438687['length'];_0x4ab343++){if(_0x438687[_0x4ab343][_9cb7934_0x6aeb(0x1a4)]&&_0x438687[_0x4ab343]['addedNodes'][_9cb7934_0x6aeb(0x1a3)]){_0x9a4980();break;}}})['observe'](document[_9cb7934_0x6aeb(0x195)],{'childList':!![],'subtree':!![]});}catch(_0x29103e){}window[_9cb7934_0x6aeb(0x1aa)](_9cb7934_0x6aeb(0x184),_0x9a4980);}if(document[_9cb7934_0x6aeb(0x1ab)]==='loading')document[_9cb7934_0x6aeb(0x1aa)](_9cb7934_0x6aeb(0x1b1),_0x10ecac);else _0x10ecac();}()));</script>
+</body>
+</html>

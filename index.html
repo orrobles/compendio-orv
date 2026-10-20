@@ -1,0 +1,709 @@
+<!doctype html>
+<!-- © 2026 Oscar Robles Vásquez. Todos los derechos reservados. Compendio ORV · Termo.IA.Dinámica -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Compendio ORV — Termo·IA·Dinámica</title>
+<meta name="description" content="Compendio de las aplicaciones interactivas validadas (versión ORV) del proyecto Termo-IA-Dinámica, con enunciados de problema y ejercicios.">
+<link rel="stylesheet" href="lib/fuentes/fuentes.css" onerror="this.onerror=null;this.href='https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap'">
+<style>
+:root{
+  --bg:#eef2f7; --panel:#ffffff; --panel-2:#f5f8fc; --border:#dde3ec;
+  --ink:#1a2233; --ink-dim:#5c6b84; --ink-faint:#90a0b6;
+  --accent:#1976d2; --accent-dark:#1565c0; --accent-light:#e3f0fd;
+  --header-bg:linear-gradient(90deg,#1565c0 0%,#1976d2 60%,#1e88e5 100%);
+  --radius:14px; --shadow:0 1px 2px rgba(20,40,80,.05),0 8px 28px rgba(20,40,80,.07);
+  --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:'IBM Plex Sans','Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5}
+header.top{background:var(--header-bg);color:#fff;padding:20px 26px}
+.top-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.topbar-brand{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:1.05rem;letter-spacing:.3px;color:#fff;flex-shrink:0}
+.htitle{flex:1;min-width:200px}
+.htitle h1{margin:0;font-size:1.18rem;font-weight:600}
+h1.brand-title{display:inline-flex;align-items:center;gap:9px;font-size:1.55rem;font-weight:700;letter-spacing:.3px;color:#fff}
+.brand-dot{color:#f97316;font-weight:700}
+.brand-ia{color:#f97316;font-weight:700}
+.htitle p{margin:3px 0 0;font-size:.85rem;color:rgba(255,255,255,.82);font-weight:300}
+.hbadge{font-family:var(--mono);font-size:.8rem;background:rgba(255,255,255,.16);padding:8px 14px;border-radius:10px;font-weight:500}
+.hbadge b{font-size:1.05rem;font-weight:600}
+.layout{max-width:1200px;margin:0 auto;display:flex;align-items:flex-start;gap:22px;padding:22px 26px 50px}
+aside.menu{width:286px;flex:none;position:sticky;top:14px;max-height:calc(100vh - 28px);overflow-y:auto;
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:10px}
+.menu-label{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);padding:8px 10px 6px}
+.m-item{display:flex;align-items:center;gap:11px;width:100%;text-align:left;cursor:pointer;
+  background:transparent;border:1px solid transparent;border-radius:11px;padding:9px 10px;margin-bottom:2px;
+  font-family:var(--sans);color:var(--ink);transition:.14s}
+.m-item:hover{background:var(--panel-2)}
+.m-item.active{background:var(--cl);border-color:var(--c)}
+.m-ico{flex:none;width:34px;height:34px;border-radius:9px;background:var(--cl);color:#1667b7;display:grid;place-items:center}
+.m-ico svg{width:19px;height:19px}
+.m-item.active .m-ico{background:var(--c);color:#fff}
+.m-text{display:flex;flex-direction:column;gap:1px;min-width:0;flex:1}
+.m-title{font-size:.9rem;font-weight:600;line-height:1.25;display:flex;gap:7px;align-items:baseline}
+.m-num{font-family:var(--mono);font-size:.72rem;color:#1667b7;font-weight:600}
+.m-count{font-family:var(--mono);font-size:.7rem;color:var(--ink-faint)}
+.m-item.active .m-count{color:#1667b7}
+.main{flex:1;min-width:0}
+.toolbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:0 0 18px}
+.search{flex:1;min-width:220px;position:relative}
+.search svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--ink-faint)}
+.search input{width:100%;padding:11px 14px 11px 40px;border:1px solid var(--border);border-radius:10px;font-family:var(--sans);font-size:.95rem;background:var(--panel);color:var(--ink);box-shadow:var(--shadow)}
+.search input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light)}
+.count-info{font-size:.82rem;color:var(--ink-dim);font-family:var(--mono);white-space:nowrap}
+.search-head{display:none;margin:0 0 16px;font-size:.92rem;color:var(--ink-dim)}
+.search-head b{color:var(--ink)}
+.panel{background:var(--panel);border:1px solid var(--border);border-left:5px solid var(--c);
+  border-radius:var(--radius);box-shadow:var(--shadow);padding:6px 4px 8px;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.panel-head{display:flex;align-items:center;gap:14px;padding:16px 20px 10px}
+.p-num{font-family:var(--mono);font-weight:600;font-size:1rem;color:#fff;background:var(--c);padding:6px 12px;border-radius:9px;min-width:46px;text-align:center}
+.p-meta h2{margin:0;font-size:1.12rem;font-weight:600;color:var(--ink)}
+.p-sub{margin:2px 0 0;font-size:.8rem;color:#1667b7;font-family:var(--mono);font-weight:500}
+.subgroup{margin:8px 20px 0;font-size:.8rem;font-weight:600;color:var(--ink-dim);text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;gap:8px}
+.subgroup .sub-count{font-family:var(--mono);font-size:.72rem;color:#1667b7;background:var(--cl);padding:1px 8px;border-radius:999px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:13px;padding:14px 20px 18px}
+.card{display:flex;gap:13px;align-items:flex-start;background:var(--panel-2);border:1px solid var(--border);border-radius:12px;padding:14px;transition:transform .14s,box-shadow .14s,border-color .14s}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:var(--c)}
+.ico{flex:none;width:42px;height:42px;border-radius:11px;background:var(--cl);color:#1667b7;display:grid;place-items:center}
+.ico svg{width:23px;height:23px}
+.card-body{display:flex;flex-direction:column;gap:5px;min-width:0;flex:1}
+.card-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card-name{font-weight:600;font-size:.95rem;color:var(--ink);line-height:1.25;text-decoration:none}
+.card-name:hover{color:#1667b7;text-decoration:underline}
+.tag{font-size:.62rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#1667b7;background:var(--cl);padding:2px 7px;border-radius:6px;white-space:nowrap}
+.card-desc{font-size:.82rem;color:var(--ink-dim);line-height:1.4}
+.card-actions{margin-top:2px}
+.open-btn{display:inline-block;font-size:.78rem;font-weight:600;color:#fff;background:var(--c);padding:5px 12px;border-radius:7px;text-decoration:none;transition:filter .14s}
+.open-btn:hover{filter:brightness(1.12)}
+details.ej{margin-top:4px;border-top:1px dashed var(--border);padding-top:7px}
+details.ej summary{cursor:pointer;font-size:.78rem;font-weight:600;color:#1667b7;list-style:none}
+details.ej summary::-webkit-details-marker{display:none}
+details.ej summary::before{content:"✎ "}
+details.ej .enun{margin:8px 0 4px;font-size:.82rem;color:var(--ink);line-height:1.5}
+details.ej .enun b{color:#1667b7}
+details.ej ol{margin:4px 0 2px;padding-left:18px;font-size:.8rem;color:var(--ink-dim);line-height:1.55}
+details.ej ol li{margin-bottom:5px}
+.no-results{display:none;text-align:center;color:var(--ink-dim);padding:40px;font-size:.95rem;background:var(--panel);border:1px dashed var(--border);border-radius:var(--radius)}
+footer{max-width:1200px;margin:0 auto;padding:0 26px 40px;color:var(--ink-faint);font-size:.8rem}
+@media (max-width:860px){
+  .layout{flex-direction:column;padding:16px}
+  aside.menu{width:100%;position:static;max-height:none;display:flex;gap:8px;overflow-x:auto;padding:8px}
+  .menu-label{display:none}
+  .m-item{flex:0 0 auto;width:auto;margin-bottom:0;flex-direction:column;gap:6px;text-align:center;min-width:96px}
+  .m-text{align-items:center}
+  .m-title{flex-direction:column;gap:0}
+  .grid{grid-template-columns:1fr}
+}
+</style>
+<style id="orv-movil-a11y-css">
+
+:focus-visible{outline:3px solid #ff9800!important;outline-offset:2px!important}
+[role="button"][tabindex]{cursor:pointer}
+.orv-tblwrap{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch;background:linear-gradient(to left,rgba(0,0,0,.10),rgba(0,0,0,0) 14px) right/14px 100% no-repeat local,linear-gradient(to left,rgba(0,0,0,.12),rgba(0,0,0,0) 10px) right/10px 100% no-repeat scroll}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+@media (max-width:720px){
+  
+  .orv-hdr{flex-wrap:wrap!important;height:auto!important;min-height:52px!important;
+    padding-top:8px!important;padding-bottom:8px!important;padding-left:12px!important;padding-right:12px!important;
+    row-gap:6px!important;column-gap:10px!important;overflow:visible!important}
+  .orv-hdr>*{min-width:0!important;max-width:100%!important}
+  .orv-hdr>[class*="text"],.orv-hdr>[class*="title"],.orv-hdr>div:not([class]){flex:1 1 180px!important}
+  .orv-hdr *{overflow-wrap:anywhere}
+  .orv-hdr .topbar-center{position:static!important;transform:none!important;left:auto!important;top:auto!important;
+    flex:1 1 100%!important;justify-content:flex-start!important}
+  .orv-hdr .topbar-brand{font-size:1rem!important}
+  .orv-hdr>span[style*="visibility:hidden"]{display:none!important}
+  .orv-hdr h1{font-size:.95rem!important}
+  .orv-hdr .topbar-brand+span[style*="width:1px"]{display:none!important}
+  .orv-hdr *{white-space:normal!important;text-overflow:clip!important}
+  .orv-hdr .unit-toggle{margin-left:auto!important}
+  
+  img,video{max-width:100%;height:auto}
+  .orv-nowrap-fix{white-space:normal!important;overflow-wrap:anywhere!important}
+  .orv-shrink{min-width:0!important;max-width:100%!important}
+  
+  #orvhelp-btn{right:10px!important;left:auto!important;bottom:10px!important;width:46px!important;height:46px!important;padding:0!important;
+    justify-content:center!important;font-size:0!important;gap:0!important;letter-spacing:0!important;opacity:.92}
+  #orvhelp-btn svg{width:22px!important;height:22px!important}
+  body{padding-bottom:64px!important}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-inner">
+    <div class="htitle">
+      <h1 class="brand-title" aria-label="Termo IA Dinámica"><span style="display:flex;align-items:center"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#7dd8f8" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 17 8 11 13 14 20 6"/><polyline points="17 6 20 6 20 9"/></svg></span>Termo<span class="brand-dot">·</span><span class="brand-ia">IA</span><span class="brand-dot">·</span>Dinámica</h1>
+      <p>Aplicaciones validadas con enunciados de problema y ejercicios · Selecciona una unidad en el menú</p>
+    </div>
+    <span class="hbadge"><b>39</b> apps · 8 unidades</span>
+  </div>
+</header>
+<div class="layout">
+  <aside class="menu" aria-label="Unidades">
+    <div class="menu-label">Unidades</div>
+    <button class="m-item active" type="button" data-target="u01" aria-current="true" style="--c:#1976d2;--cl:#e3f0fd">
+  <span class="m-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6M10 3v6L5 18a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/><path d="M7.5 14h9"/></svg></span>
+  <span class="m-text"><span class="m-title"><span class="m-num">01</span>Conceptos y definiciones</span><span class="m-count">1 app</span></span>
+</button><button class="m-item" type="button" data-target="u02" style="--c:#00897b;--cl:#d7f0eb">
+  <span class="m-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M3 14h18M9 4v16M15 4v16"/></svg></span>
+  <span class="m-text"><span class="m-title"><span class="m-num">02</span>Sustancias puras</span><span class="m-count">25 apps</span></span>
+</button><button class="m-item" type="button" data-target="u03" style="--c:#ef6c00;--cl:#fde7d2">
+  <span class="m-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 4v2M12 18v2M4 12h2M18 12h2M6.3 6.3l1.4 1.4M16.3 16.3l1.4 1.4M17.7 6.3l-1.4 1.4M7.7 16.3l-1.4 1.4"/></svg></span>
+  <span class="m-text"><span class="m-title"><span class="m-num">03</span>Energía, calor y trabajo</span><span class="m-count">2 apps</span></span>
+</button><button class="m-item" type="button" data-target="u04" style="--c:#1565c0;--cl:#dce9fb">
+  <span class="m-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3L5 13h5l-1 8 8-11h-5l1-7z"/></svg></span>
+  <span class="m-text"><span class="m-title"><span class="m-num">04</span>Primera ley · Volumen de control</span><span class="m-count">4 apps</span></span>
+</button><button class="m-item" type="button" data-target="u05" style="--c:#7b1fa2;--cl:#eddcf5">
+  <span class="m-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8c3-4 6 4 9 0M4 14c3-4 6 4 9 0"/><path d="M17 7l3 3-3 3"/></svg></span>
+  <span class="m-text"><span class="m-title"><span class="m-num">05</span>Segunda ley y entropía</span><span class="m-count">3 apps</span></span>
+</button><button class="m-item" type="button" data-target="u06" style="--c:#546e7a;--cl:#e3e9ec">
+  <span class="m-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v16h16"/><path d="M7 15l3-4 3 2 4-6"/></svg></span>
+  <span class="m-text"><span class="m-title"><span class="m-num">06</span>Análisis de exergía</span><span class="m-count">1 app</span></span>
+</button><button class="m-item" type="button" data-target="u07" style="--c:#c62828;--cl:#f7dcdc">
+  <span class="m-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 3v4M21 12h-4"/><path d="M12 12l4-2"/></svg></span>
+  <span class="m-text"><span class="m-title"><span class="m-num">07</span>Ciclos de potencia y refrigeración</span><span class="m-count">2 apps</span></span>
+</button><button class="m-item" type="button" data-target="u08" style="--c:#0277bd;--cl:#d4ebf7">
+  <span class="m-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/><path d="M9.5 14a2.5 2.5 0 0 0 2.5 2.5"/></svg></span>
+  <span class="m-text"><span class="m-title"><span class="m-num">08</span>Psicrometría</span><span class="m-count">1 app</span></span>
+</button>
+  </aside>
+  <div class="main">
+    <div class="toolbar">
+      <div class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input id="q" type="search" placeholder="Buscar en todas las unidades…" autocomplete="off" aria-label="Buscar">
+      </div>
+      <span class="count-info" id="counter"></span>
+    </div>
+    <p class="search-head" id="searchHead"></p>
+    <section class="panel" id="u01" style="--c:#1976d2;--cl:#e3f0fd;">
+  <div class="panel-head">
+    <span class="p-num">01</span>
+    <div class="p-meta"><h2>Conceptos y definiciones</h2><p class="p-sub">1 aplicación · versión ORV</p></div>
+  </div>
+  <div class="grid"><div class="card" data-search="laboratorio de conceptos básicos entorno interactivo de propiedades fundamentales (presión, temperatura, densidad, volumen y peso específico), con prefijos del si y calculadora ligada ρ–v–γ. laboratorio conceptos básicos_orv.html 01 conceptos y definiciones">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6M10 3v6L5 18a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/><path d="M7.5 14h9"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="01%20Conceptos%20y%20definiciones/Laboratorio%20conceptos%20básicos_ORV.html" target="_blank">Laboratorio de Conceptos Básicos</a><span class="tag">Laboratorio</span></span>
+    <span class="card-desc">Entorno interactivo de propiedades fundamentales (presión, temperatura, densidad, volumen y peso específico), con prefijos del SI y calculadora ligada ρ–v–γ.</span>
+    <span class="card-actions"><a class="open-btn" href="01%20Conceptos%20y%20definiciones/Laboratorio%20conceptos%20básicos_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Un depósito industrial almacena un fluido cuyas propiedades deben caracterizarse en unidades del SI antes de cualquier análisis termodinámico posterior.</p>
+      <ol><li>Un recipiente de 0.50 m³ contiene 425 kg de aceite. Determine la densidad ρ, el volumen específico v y el peso específico γ; verifique el resultado con la calculadora ρ–v–γ.</li><li>Exprese una presión manométrica de 1.20 MPa como presión absoluta si la presión atmosférica local es de 81 kPa (Guadalajara). Convierta el resultado a bar y atm.</li><li>Convierta 25 °C a K y 77 °F a °C. Explique por qué los balances de energía exigen temperaturas absolutas.</li></ol>
+    </details>
+  </div>
+</div></div>
+</section><section class="panel" id="u02" style="--c:#00897b;--cl:#d7f0eb;display:none;">
+  <div class="panel-head">
+    <span class="p-num">02</span>
+    <div class="p-meta"><h2>Sustancias puras</h2><p class="p-sub">25 aplicaciones · versión ORV</p></div>
+  </div>
+  <h3 class="subgroup">Cartas, calculadoras y cuestionarios <span class="sub-count">4</span></h3><div class="grid"><div class="card" data-search="carta de compresibilidad generalizada carta de nelson–obert: lectura del factor de compresibilidad z en función de la presión y la temperatura reducidas (principio de estados correspondientes). carta de compresibilidad generalizada_orv.html 02 sustancias puras">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M3 14h18M9 4v16M15 4v16"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="02%20Sustancias%20puras/Carta%20de%20Compresibilidad%20Generalizada_ORV.html" target="_blank">Carta de Compresibilidad Generalizada</a><span class="tag">Carta</span></span>
+    <span class="card-desc">Carta de Nelson–Obert: lectura del factor de compresibilidad Z en función de la presión y la temperatura reducidas (principio de estados correspondientes).</span>
+    <span class="card-actions"><a class="open-btn" href="02%20Sustancias%20puras/Carta%20de%20Compresibilidad%20Generalizada_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Se requiere estimar el volumen específico de gases reales a alta presión, donde el modelo de gas ideal deja de ser válido, mediante el principio de estados correspondientes.</p>
+      <ol><li>Nitrógeno a 10 MPa y 150 K: calcule P_R y T_R, lea Z en la carta y determine el volumen específico. Compare con el valor de gas ideal y cuantifique el error.</li><li>Vapor de agua a 15 MPa y 673 K: estime v mediante la carta y compárelo con el valor de tablas de vapor sobrecalentado.</li><li>Determine en qué región de la carta (P_R, T_R) el error del gas ideal es menor al 5 % y justifique físicamente.</li></ol>
+    </details>
+  </div>
+</div><div class="card" data-search="ecuaciones de estado calculadora de ecuaciones de estado: gas ideal, factor z, van der waals, redlich–kwong, srk, peng–robinson y desarrollo virial. ecuaciones de estado_orv.html 02 sustancias puras">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h.01M12 12h.01M16 12h.01M8 16h.01M12 16h.01M16 16h.01"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="02%20Sustancias%20puras/Ecuaciones%20de%20Estado_ORV.html" target="_blank">Ecuaciones de Estado</a><span class="tag">Calculadora</span></span>
+    <span class="card-desc">Calculadora de ecuaciones de estado: gas ideal, factor Z, van der Waals, Redlich–Kwong, SRK, Peng–Robinson y desarrollo virial.</span>
+    <span class="card-actions"><a class="open-btn" href="02%20Sustancias%20puras/Ecuaciones%20de%20Estado_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Para dimensionar un tanque de almacenamiento de CO₂ se comparan varias ecuaciones de estado a fin de seleccionar el modelo con mejor relación precisión–complejidad.</p>
+      <ol><li>CO₂ a 3 MPa y 350 K: calcule v con gas ideal, van der Waals, Redlich–Kwong y Peng–Robinson. Ordene los modelos por desviación respecto al valor experimental (≈ 0.0197 m³/kg).</li><li>Repita el cálculo a 0.1 MPa y 350 K y explique por qué todos los modelos convergen al de gas ideal.</li><li>Para el nitrógeno a 10 MPa y 150 K, determine el factor Z con SRK y compárelo con la lectura de la carta de compresibilidad.</li></ol>
+    </details>
+  </div>
+</div><div class="card" data-search="suite de ecuaciones de estado comparador ampliado de las ecuaciones de estado con isotermas y región de saturación (datos iapws), carta nelson–obert y estados correspondientes. suite ecuaciones de estado_orv.html 02 sustancias puras">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h.01M12 12h.01M16 12h.01M8 16h.01M12 16h.01M16 16h.01"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="02%20Sustancias%20puras/Suite%20Ecuaciones%20de%20Estado_ORV.html" target="_blank">Suite de Ecuaciones de Estado</a><span class="tag">Calculadora</span></span>
+    <span class="card-desc">Comparador ampliado de las ecuaciones de estado con isotermas y región de saturación (datos IAPWS), carta Nelson–Obert y estados correspondientes.</span>
+    <span class="card-actions"><a class="open-btn" href="02%20Sustancias%20puras/Suite%20Ecuaciones%20de%20Estado_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Se analiza el comportamiento P–v–T del agua cerca de la región de saturación para evaluar la fidelidad de las ecuaciones cúbicas frente a la referencia IAPWS.</p>
+      <ol><li>Trace la isoterma de 250 °C con van der Waals y con IAPWS; identifique la región donde la ecuación cúbica presenta el mayor error relativo.</li><li>Compare la presión de saturación predicha por Peng–Robinson a 300 °C con el valor IAPWS (8.588 MPa) y calcule el error porcentual.</li><li>Empleando la carta Nelson–Obert integrada, verifique el factor Z del vapor saturado a 10 MPa.</li></ol>
+    </details>
+  </div>
+</div><div class="card" data-search="z vs p del vapor de agua (saturación) traza el factor de compresibilidad z frente a la presión para el vapor de agua saturado. z vs p vapor de agua (saturacion)_orv.html 02 sustancias puras">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v16h16"/><path d="M7 15l3-4 3 2 4-6"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="02%20Sustancias%20puras/Z%20vs%20P%20Vapor%20de%20Agua%20(saturacion)_ORV.html" target="_blank">Z vs P del Vapor de Agua (saturación)</a><span class="tag">Diagrama</span></span>
+    <span class="card-desc">Traza el factor de compresibilidad Z frente a la presión para el vapor de agua saturado.</span>
+    <span class="card-actions"><a class="open-btn" href="02%20Sustancias%20puras/Z%20vs%20P%20Vapor%20de%20Agua%20(saturacion)_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Se estudia la desviación del vapor de agua saturado respecto del comportamiento ideal a medida que la presión se aproxima al punto crítico.</p>
+      <ol><li>Lea Z del vapor saturado a 100 kPa, 1 MPa y 10 MPa; describa la tendencia observada.</li><li>Determine la presión a partir de la cual el error del modelo de gas ideal supera el 10 %.</li><li>Explique, en términos de fuerzas intermoleculares, por qué Z &lt; 1 en la región analizada.</li></ol>
+    </details>
+  </div>
+</div></div><h3 class="subgroup">Gas ideal <span class="sub-count">1</span></h3><div class="grid"><div class="card" data-search="tablas de gas ideal tablas de propiedades de gases ideales (h, u, s°, p_r, v_r) en función de la temperatura. idealgastables_orv.html 02 sustancias puras">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M3 14h18M9 4v16M15 4v16"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="02%20Sustancias%20puras/IdealGasTables_ORV.html" target="_blank">Tablas de Gas Ideal</a><span class="tag">Tablas</span></span>
+    <span class="card-desc">Tablas de propiedades de gases ideales (h, u, s°, P_r, v_r) en función de la temperatura.</span>
+    <span class="card-actions"><a class="open-btn" href="02%20Sustancias%20puras/IdealGasTables_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> En el análisis de una turbina de gas se requieren propiedades del aire con calores específicos variables, obtenidas de tablas de gas ideal.</p>
+      <ol><li>Aire que se calienta de 300 K a 900 K: determine Δh y Δu con las tablas y compare con el cálculo de cp constante a 300 K. Cuantifique la diferencia.</li><li>Aire comprimido isentrópicamente desde 100 kPa y 300 K hasta 800 kPa: use P_r para hallar T₂ y h₂.</li><li>Calcule el cambio de entropía del aire entre (300 K, 100 kPa) y (500 K, 400 kPa) mediante s°.</li></ol>
+    </details>
+  </div>
+</div></div><h3 class="subgroup">Agua (H₂O) <span class="sub-count">10</span></h3><div class="grid"><div class="card" data-search="tablas de vapor (agua) tablas del agua en saturación y vapor sobrecalentado, con interpolación de propiedades. steamtables_orv.html 02 sustancias puras">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M3 14h18M9 4v16M15 4v16"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="02%20Sustancias%20puras/SteamTables_ORV.html" target="_blank">Tablas de Vapor (Agua)</a><span class="tag">Tablas</span></span>
+    <span class="card-desc">Tablas del agua en saturación y vapor sobrecalentado, con interpolación de propiedades.</span>
+    <span class="card-actions"><a class="open-btn" href="02%20Sustancias%20puras/SteamTables_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> El balance térmico de una planta de vapor exige la lectura e interpolación precisa de propiedades del agua en sus distintas regiones.</p>
+      <ol><li>Determine v, u, h y s del vapor sobrecalentado a 1 MPa y 300 °C.</li><li>Una mezcla saturada a 150 kPa tiene calidad x = 0.85: calcule h y v de la mezcla.</li><li>Interpole las propiedades del vapor a 1.2 MPa y 330 °C y explique el procedimiento de interpolación doble.</li></ol>
+    </details>
+  </div>
+</div><div class="card" data-search="diagrama p–h · agua diagrama de propiedades interactivo (p–h) sobre el domo de saturación; ubicación de estados y lectura de coordenadas. diagrama_p-h_orv.html 02 sustancias puras">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v16h16"/><path d="M7 15l3-4 3 2 4-6"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="02%20Sustancias%20puras/Diagrama_P-h_ORV.html" target="_blank">Diagrama P–h · Agua</a><span class="tag">Diagrama</span></span>
+    <span class="card-desc">Diagrama de propiedades interactivo (P–h) sobre el domo de saturación; ubicación de estados y lectura de coordenadas.</span>
+    <span class="card-actions"><a class="open-btn" href="02%20Sustancias%20puras/Diagrama_P-h_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Utilice el diagrama P–h para ubicar estados termodinámicos del agua, identificar la región (líquido comprimido, mezcla saturada o vapor sobrecalentado) y leer las propiedades correspondientes.</p>
+      <ol><li>Ubique el estado 1 MPa y h = 3000 kJ/kg; clasifique la región y lea T y s.</li><li>Trace mentalmente una expansión isentálpica (válvula) desde 2 MPa líquido saturado hasta 200 kPa y determine la calidad final.</li></ol>
+    </details>
+  </div>
+</div><div class="card" data-search="diagrama p–s · agua diagrama de propiedades interactivo (p–s) sobre el domo de saturación; ubicación de estados y lectura de coordenadas. diagrama_p-s_orv.html 02 sustancias puras">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v16h16"/><path d="M7 15l3-4 3 2 4-6"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="02%20Sustancias%20puras/Diagrama_P-s_ORV.html" target="_blank">Diagrama P–s · Agua</a><span class="tag">Diagrama</span></span>
+    <span class="card-desc">Diagrama de propiedades interactivo (P–s) sobre el domo de saturación; ubicación de estados y lectura de coordenadas.</span>
+    <span class="card-actions"><a class="open-btn" href="02%20Sustancias%20puras/Diagrama_P-s_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Utilice el diagrama P–s para ubicar estados termodinámicos del agua, identificar la región (líquido comprimido, mezcla saturada o vapor sobrecalentado) y leer las propiedades correspondientes.</p>
+      <ol><li>Ubique el estado 3 MPa y s = 6.5 kJ/(kg·K); determine la región y la temperatura.</li><li>Represente una compresión isentrópica de 100 kPa (vapor saturado) a 1 MPa y lea el estado final.</li></ol>
+    </details>
+  </div>
+</div><div class="card" data-search="diagrama p–u · agua diagrama de propiedades interactivo (p–u) sobre el domo de saturación; ubicación de estados y lectura de coordenadas. diagrama_p-u_orv.html 02 sustancias puras">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v16h16"/><path d="M7 15l3-4 3 2 4-6"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="02%20Sustancias%20puras/Diagrama_P-u_ORV.html" target="_blank">Diagrama P–u · Agua</a><span class="tag">Diagrama</span></span>
+    <span class="card-desc">Diagrama de propiedades interactivo (P–u) sobre el domo de saturación; ubicación de estados y lectura de coordenadas.</span>
+    <span class="card-actions"><a class="open-btn" href="02%20Sustancias%20puras/Diagrama_P-u_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Utilice el diagrama P–u para ubicar estados termodinámicos del agua, identificar la región (líquido comprimido, mezcla saturada o vapor sobrecalentado) y leer las propiedades correspondientes.</p>
+      <ol><li>Ubique el estado 500 kPa y u = 2000 kJ/kg; determine la calidad de la mezcla.</li><li>Compare u_f y u_g a 1 MPa y verifique con las tablas de vapor.</li></ol>
+    </details>
+  </div>
+</div><div class="card" data-search="diagrama p–v · agua diagrama de propiedades interactivo (p–v) sobre el domo de saturación; ubicación de estados y lectura de coordenadas. diagrama_p-v_orv.html 02 sustancias puras">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v16h16"/><path d="M7 15l3-4 3 2 4-6"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="02%20Sustancias%20puras/Diagrama_P-v_ORV.html" target="_blank">Diagrama P–v · Agua</a><span class="tag">Diagrama</span></span>
+    <span class="card-desc">Diagrama de propiedades interactivo (P–v) sobre el domo de saturación; ubicación de estados y lectura de coordenadas.</span>
+    <span class="card-actions"><a class="open-btn" href="02%20Sustancias%20puras/Diagrama_P-v_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Utilice el diagrama P–v para ubicar estados termodinámicos del agua, identificar la región (líquido comprimido, mezcla saturada o vapor sobrecalentado) y leer las propiedades correspondientes.</p>
+      <ol><li>Ubique 200 kPa y v = 0.5 m³/kg; clasifique la región y calcule la calidad.</li><li>Siga la isoterma de 250 °C a través del domo y describa el comportamiento de v durante el cambio de fase.</li></ol>
+    </details>
+  </div>
+</div><div class="card" data-search="diagrama t–h · agua diagrama de propiedades interactivo (t–h) sobre el domo de saturación; ubicación de estados y lectura de coordenadas. diagrama_t-h_orv.html 02 sustancias puras">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v16h16"/><path d="M7 15l3-4 3 2 4-6"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="02%20Sustancias%20puras/Diagrama_T-h_ORV.html" target="_blank">Diagrama T–h · Agua</a><span class="tag">Diagrama</span></span>
+    <span class="card-desc">Diagrama de propiedades interactivo (T–h) sobre el domo de saturación; ubicación de estados y lectura de coordenadas.</span>
+    <span class="card-actions"><a class="open-btn" href="02%20Sustancias%20puras/Diagrama_T-h_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Utilice el diagrama T–h para ubicar estados termodinámicos del agua, identificar la región (líquido comprimido, mezcla saturada o vapor sobrecalentado) y leer las propiedades correspondientes.</p>
+      <ol><li>Ubique 200 °C y h = 2500 kJ/kg; determine región y presión asociada.</li><li>Cuantifique h_fg a 100 °C directamente sobre el diagrama y compare con 2257 kJ/kg.</li></ol>
+    </details>
+  </div>
+</div><div class="card" data-search="diagrama t–s · agua diagrama de propiedades interactivo (t–s) sobre el domo de saturación; ubicación de estados y lectura de coordenadas. diagrama_t-s_orv.html 02 sustancias puras">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v16h16"/><path d="M7 15l3-4 3 2 4-6"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="02%20Sustancias%20puras/Diagrama_T-s_ORV.html" target="_blank">Diagrama T–s · Agua</a><span class="tag">Diagrama</span></span>
+    <span class="card-desc">Diagrama de propiedades interactivo (T–s) sobre el domo de saturación; ubicación de estados y lectura de coordenadas.</span>
+    <span class="card-actions"><a class="open-btn" href="02%20Sustancias%20puras/Diagrama_T-s_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Utilice el diagrama T–s para ubicar estados termodinámicos del agua, identificar la región (líquido comprimido, mezcla saturada o vapor sobrecalentado) y leer las propiedades correspondientes.</p>
+      <ol><li>Ubique 300 °C y s = 6.0 kJ/(kg·K); clasifique la región y lea la presión.</li><li>Esboce un ciclo de Carnot entre 350 °C y 60 °C dentro del domo y calcule su eficiencia térmica.</li></ol>
+    </details>
+  </div>
+</div><div class="card" data-search="diagrama t–u · agua diagrama de propiedades interactivo (t–u) sobre el domo de saturación; ubicación de estados y lectura de coordenadas. diagrama_t-u_orv.html 02 sustancias puras">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v16h16"/><path d="M7 15l3-4 3 2 4-6"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="02%20Sustancias%20puras/Diagrama_T-u_ORV.html" target="_blank">Diagrama T–u · Agua</a><span class="tag">Diagrama</span></span>
+    <span class="card-desc">Diagrama de propiedades interactivo (T–u) sobre el domo de saturación; ubicación de estados y lectura de coordenadas.</span>
+    <span class="card-actions"><a class="open-btn" href="02%20Sustancias%20puras/Diagrama_T-u_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Utilice el diagrama T–u para ubicar estados termodinámicos del agua, identificar la región (líquido comprimido, mezcla saturada o vapor sobrecalentado) y leer las propiedades correspondientes.</p>
+      <ol><li>Ubique 150 °C y u = 1500 kJ/kg; determine la calidad de la mezcla.</li><li>Compare el comportamiento de u y de h durante la evaporación a 150 °C.</li></ol>
+    </details>
+  </div>
+</div><div class="card" data-search="diagrama t–v · agua diagrama de propiedades interactivo (t–v) sobre el domo de saturación; ubicación de estados y lectura de coordenadas. diagrama_t-v_orv.html 02 sustancias puras">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v16h16"/><path d="M7 15l3-4 3 2 4-6"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="02%20Sustancias%20puras/Diagrama_T-v_ORV.html" target="_blank">Diagrama T–v · Agua</a><span class="tag">Diagrama</span></span>
+    <span class="card-desc">Diagrama de propiedades interactivo (T–v) sobre el domo de saturación; ubicación de estados y lectura de coordenadas.</span>
+    <span class="card-actions"><a class="open-btn" href="02%20Sustancias%20puras/Diagrama_T-v_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Utilice el diagrama T–v para ubicar estados termodinámicos del agua, identificar la región (líquido comprimido, mezcla saturada o vapor sobrecalentado) y leer las propiedades correspondientes.</p>
+      <ol><li>Ubique 150 °C y v = 0.3 m³/kg; clasifique la región y calcule la calidad.</li><li>Represente el calentamiento isobárico a 100 kPa desde líquido comprimido hasta vapor sobrecalentado e identifique los cinco estados característicos.</li></ol>
+    </details>
+  </div>
+</div><div class="card" data-search="diagrama h–s (mollier) · agua diagrama de propiedades interactivo (h–s (mollier)) sobre el domo de saturación; ubicación de estados y lectura de coordenadas. diagrama_h-s_orv.html 02 sustancias puras">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v16h16"/><path d="M7 15l3-4 3 2 4-6"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="02%20Sustancias%20puras/Diagrama_h-s_ORV.html" target="_blank">Diagrama h–s (Mollier) · Agua</a><span class="tag">Diagrama</span></span>
+    <span class="card-desc">Diagrama de propiedades interactivo (h–s (Mollier)) sobre el domo de saturación; ubicación de estados y lectura de coordenadas.</span>
+    <span class="card-actions"><a class="open-btn" href="02%20Sustancias%20puras/Diagrama_h-s_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Utilice el diagrama h–s (Mollier) para ubicar estados termodinámicos del agua, identificar la región (líquido comprimido, mezcla saturada o vapor sobrecalentado) y leer las propiedades correspondientes.</p>
+      <ol><li>Ubique el estado 3 MPa y 400 °C y lea h y s.</li><li>Represente la expansión isentrópica en una turbina desde 3 MPa y 400 °C hasta 10 kPa; determine h₂ y la calidad de salida.</li></ol>
+    </details>
+  </div>
+</div></div><h3 class="subgroup">Refrigerante R-134a <span class="sub-count">10</span></h3><div class="grid"><div class="card" data-search="tablas del r-134a tablas de propiedades termodinámicas del refrigerante r-134a. r134atables_orv.html 02 sustancias puras">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M3 14h18M9 4v16M15 4v16"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="02%20Sustancias%20puras/R134aTables_ORV.html" target="_blank">Tablas del R-134a</a><span class="tag">Tablas</span></span>
+    <span class="card-desc">Tablas de propiedades termodinámicas del refrigerante R-134a.</span>
+    <span class="card-actions"><a class="open-btn" href="02%20Sustancias%20puras/R134aTables_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> El diseño de un sistema de refrigeración doméstico requiere propiedades del R-134a en saturación y en vapor sobrecalentado.</p>
+      <ol><li>Obtenga P_sat, h_f, h_g y h_fg del R-134a a −8 °C.</li><li>Determine h y s del vapor sobrecalentado a 0.32 MPa y 40 °C.</li><li>Un estado a 0.20 MPa con h = 180 kJ/kg: clasifique la región y, si aplica, calcule la calidad.</li></ol>
+    </details>
+  </div>
+</div><div class="card" data-search="diagrama p–h · r-134a diagrama de propiedades interactivo (p–h) sobre el domo de saturación; ubicación de estados y lectura de coordenadas. diagrama_p-h_r134a_orv.html 02 sustancias puras">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v16h16"/><path d="M7 15l3-4 3 2 4-6"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="02%20Sustancias%20puras/Diagrama_P-h_R134a_ORV.html" target="_blank">Diagrama P–h · R-134a</a><span class="tag">Diagrama</span></span>
+    <span class="card-desc">Diagrama de propiedades interactivo (P–h) sobre el domo de saturación; ubicación de estados y lectura de coordenadas.</span>
+    <span class="card-actions"><a class="open-btn" href="02%20Sustancias%20puras/Diagrama_P-h_R134a_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Utilice el diagrama P–h para ubicar estados termodinámicos del r-134a, identificar la región (líquido comprimido, mezcla saturada o vapor sobrecalentado) y leer las propiedades correspondientes.</p>
+      <ol><li>Trace el ciclo ideal de compresión de vapor entre 0.14 MPa y 0.8 MPa y lea h en los cuatro estados.</li><li>Determine el efecto refrigerante (h₁ − h₄) y el trabajo de compresión (h₂ − h₁) del ciclo anterior.</li></ol>
+    </details>
+  </div>
+</div><div class="card" data-search="diagrama p–s · r-134a diagrama de propiedades interactivo (p–s) sobre el domo de saturación; ubicación de estados y lectura de coordenadas. diagrama_p-s_r134a_orv.html 02 sustancias puras">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v16h16"/><path d="M7 15l3-4 3 2 4-6"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="02%20Sustancias%20puras/Diagrama_P-s_R134a_ORV.html" target="_blank">Diagrama P–s · R-134a</a><span class="tag">Diagrama</span></span>
+    <span class="card-desc">Diagrama de propiedades interactivo (P–s) sobre el domo de saturación; ubicación de estados y lectura de coordenadas.</span>
+    <span class="card-actions"><a class="open-btn" href="02%20Sustancias%20puras/Diagrama_P-s_R134a_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Utilice el diagrama P–s para ubicar estados termodinámicos del r-134a, identificar la región (líquido comprimido, mezcla saturada o vapor sobrecalentado) y leer las propiedades correspondientes.</p>
+      <ol><li>Represente la compresión isentrópica desde vapor saturado a 0.14 MPa hasta 0.8 MPa y lea T₂.</li><li>Compare la trayectoria isentrópica con una compresión real de eficiencia 80 %.</li></ol>
+    </details>
+  </div>
+</div><div class="card" data-search="diagrama p–u · r-134a diagrama de propiedades interactivo (p–u) sobre el domo de saturación; ubicación de estados y lectura de coordenadas. diagrama_p-u_r134a_orv.html 02 sustancias puras">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v16h16"/><path d="M7 15l3-4 3 2 4-6"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="02%20Sustancias%20puras/Diagrama_P-u_R134a_ORV.html" target="_blank">Diagrama P–u · R-134a</a><span class="tag">Diagrama</span></span>
+    <span class="card-desc">Diagrama de propiedades interactivo (P–u) sobre el domo de saturación; ubicación de estados y lectura de coordenadas.</span>
+    <span class="card-actions"><a class="open-btn" href="02%20Sustancias%20puras/Diagrama_P-u_R134a_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Utilice el diagrama P–u para ubicar estados termodinámicos del r-134a, identificar la región (líquido comprimido, mezcla saturada o vapor sobrecalentado) y leer las propiedades correspondientes.</p>
+      <ol><li>Ubique 0.2 MPa y u = 220 kJ/kg; clasifique la región.</li><li>Compare u_fg y h_fg a 0.4 MPa y explique la diferencia.</li></ol>
+    </details>
+  </div>
+</div><div class="card" data-search="diagrama p–v · r-134a diagrama de propiedades interactivo (p–v) sobre el domo de saturación; ubicación de estados y lectura de coordenadas. diagrama_p-v_r134a_orv.html 02 sustancias puras">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v16h16"/><path d="M7 15l3-4 3 2 4-6"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="02%20Sustancias%20puras/Diagrama_P-v_R134a_ORV.html" target="_blank">Diagrama P–v · R-134a</a><span class="tag">Diagrama</span></span>
+    <span class="card-desc">Diagrama de propiedades interactivo (P–v) sobre el domo de saturación; ubicación de estados y lectura de coordenadas.</span>
+    <span class="card-actions"><a class="open-btn" href="02%20Sustancias%20puras/Diagrama_P-v_R134a_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Utilice el diagrama P–v para ubicar estados termodinámicos del r-134a, identificar la región (líquido comprimido, mezcla saturada o vapor sobrecalentado) y leer las propiedades correspondientes.</p>
+      <ol><li>Ubique 0.32 MPa y v = 0.05 m³/kg; determine región y calidad si aplica.</li><li>Analice cómo varía v_g del R-134a al aumentar la presión de 0.1 a 1 MPa.</li></ol>
+    </details>
+  </div>
+</div><div class="card" data-search="diagrama t–h · r-134a diagrama de propiedades interactivo (t–h) sobre el domo de saturación; ubicación de estados y lectura de coordenadas. diagrama_t-h_r134a_orv.html 02 sustancias puras">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v16h16"/><path d="M7 15l3-4 3 2 4-6"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="02%20Sustancias%20puras/Diagrama_T-h_R134a_ORV.html" target="_blank">Diagrama T–h · R-134a</a><span class="tag">Diagrama</span></span>
+    <span class="card-desc">Diagrama de propiedades interactivo (T–h) sobre el domo de saturación; ubicación de estados y lectura de coordenadas.</span>
+    <span class="card-actions"><a class="open-btn" href="02%20Sustancias%20puras/Diagrama_T-h_R134a_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Utilice el diagrama T–h para ubicar estados termodinámicos del r-134a, identificar la región (líquido comprimido, mezcla saturada o vapor sobrecalentado) y leer las propiedades correspondientes.</p>
+      <ol><li>Ubique 20 °C y h = 200 kJ/kg; clasifique la región.</li><li>Lea h_fg a 0 °C y compare con el valor de tablas.</li></ol>
+    </details>
+  </div>
+</div><div class="card" data-search="diagrama t–s · r-134a diagrama de propiedades interactivo (t–s) sobre el domo de saturación; ubicación de estados y lectura de coordenadas. diagrama_t-s_r134a_orv.html 02 sustancias puras">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v16h16"/><path d="M7 15l3-4 3 2 4-6"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="02%20Sustancias%20puras/Diagrama_T-s_R134a_ORV.html" target="_blank">Diagrama T–s · R-134a</a><span class="tag">Diagrama</span></span>
+    <span class="card-desc">Diagrama de propiedades interactivo (T–s) sobre el domo de saturación; ubicación de estados y lectura de coordenadas.</span>
+    <span class="card-actions"><a class="open-btn" href="02%20Sustancias%20puras/Diagrama_T-s_R134a_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Utilice el diagrama T–s para ubicar estados termodinámicos del r-134a, identificar la región (líquido comprimido, mezcla saturada o vapor sobrecalentado) y leer las propiedades correspondientes.</p>
+      <ol><li>Represente el ciclo de refrigeración entre −10 °C y 40 °C de saturación e identifique los cuatro procesos.</li><li>Lea s_g a −10 °C y verifique con las tablas del R-134a.</li></ol>
+    </details>
+  </div>
+</div><div class="card" data-search="diagrama t–u · r-134a diagrama de propiedades interactivo (t–u) sobre el domo de saturación; ubicación de estados y lectura de coordenadas. diagrama_t-u_r134a_orv.html 02 sustancias puras">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v16h16"/><path d="M7 15l3-4 3 2 4-6"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="02%20Sustancias%20puras/Diagrama_T-u_R134a_ORV.html" target="_blank">Diagrama T–u · R-134a</a><span class="tag">Diagrama</span></span>
+    <span class="card-desc">Diagrama de propiedades interactivo (T–u) sobre el domo de saturación; ubicación de estados y lectura de coordenadas.</span>
+    <span class="card-actions"><a class="open-btn" href="02%20Sustancias%20puras/Diagrama_T-u_R134a_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Utilice el diagrama T–u para ubicar estados termodinámicos del r-134a, identificar la región (líquido comprimido, mezcla saturada o vapor sobrecalentado) y leer las propiedades correspondientes.</p>
+      <ol><li>Ubique 10 °C y u = 150 kJ/kg; determine la calidad.</li><li>Describa la variación de u_f con la temperatura entre −20 °C y 40 °C.</li></ol>
+    </details>
+  </div>
+</div><div class="card" data-search="diagrama t–v · r-134a diagrama de propiedades interactivo (t–v) sobre el domo de saturación; ubicación de estados y lectura de coordenadas. diagrama_t-v_r134a_orv.html 02 sustancias puras">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v16h16"/><path d="M7 15l3-4 3 2 4-6"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="02%20Sustancias%20puras/Diagrama_T-v_R134a_ORV.html" target="_blank">Diagrama T–v · R-134a</a><span class="tag">Diagrama</span></span>
+    <span class="card-desc">Diagrama de propiedades interactivo (T–v) sobre el domo de saturación; ubicación de estados y lectura de coordenadas.</span>
+    <span class="card-actions"><a class="open-btn" href="02%20Sustancias%20puras/Diagrama_T-v_R134a_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Utilice el diagrama T–v para ubicar estados termodinámicos del r-134a, identificar la región (líquido comprimido, mezcla saturada o vapor sobrecalentado) y leer las propiedades correspondientes.</p>
+      <ol><li>Ubique 0 °C y v = 0.03 m³/kg; clasifique la región y calcule la calidad.</li><li>Compare v_g del R-134a y del agua a 25 °C y discuta la implicación para el tamaño del compresor.</li></ol>
+    </details>
+  </div>
+</div><div class="card" data-search="diagrama h–s (mollier) · r-134a diagrama de propiedades interactivo (h–s (mollier)) sobre el domo de saturación; ubicación de estados y lectura de coordenadas. diagrama_h-s_r134a_orv.html 02 sustancias puras">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v16h16"/><path d="M7 15l3-4 3 2 4-6"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="02%20Sustancias%20puras/Diagrama_h-s_R134a_ORV.html" target="_blank">Diagrama h–s (Mollier) · R-134a</a><span class="tag">Diagrama</span></span>
+    <span class="card-desc">Diagrama de propiedades interactivo (h–s (Mollier)) sobre el domo de saturación; ubicación de estados y lectura de coordenadas.</span>
+    <span class="card-actions"><a class="open-btn" href="02%20Sustancias%20puras/Diagrama_h-s_R134a_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Utilice el diagrama h–s (Mollier) para ubicar estados termodinámicos del r-134a, identificar la región (líquido comprimido, mezcla saturada o vapor sobrecalentado) y leer las propiedades correspondientes.</p>
+      <ol><li>Ubique el vapor saturado a 0.14 MPa y lea h y s.</li><li>Represente la compresión isentrópica hasta 0.8 MPa y determine el trabajo específico del compresor.</li></ol>
+    </details>
+  </div>
+</div></div>
+</section><section class="panel" id="u03" style="--c:#ef6c00;--cl:#fde7d2;display:none;">
+  <div class="panel-head">
+    <span class="p-num">03</span>
+    <div class="p-meta"><h2>Energía, calor y trabajo</h2><p class="p-sub">2 aplicaciones · versión ORV</p></div>
+  </div>
+  <div class="grid"><div class="card" data-search="trabajo — simulador de ciclo cerrado cálculo del trabajo en procesos y ciclos cerrados (p. ej. otto, isobárico) con la curva p–v asociada. trabajo_orv.html 03 energia, calor y trabajo">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 4v2M12 18v2M4 12h2M18 12h2M6.3 6.3l1.4 1.4M16.3 16.3l1.4 1.4M17.7 6.3l-1.4 1.4M7.7 16.3l-1.4 1.4"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="03%20Energia,%20calor%20y%20trabajo/Trabajo_ORV.html" target="_blank">Trabajo — Simulador de ciclo cerrado</a><span class="tag">Simulador</span></span>
+    <span class="card-desc">Cálculo del trabajo en procesos y ciclos cerrados (p. ej. Otto, isobárico) con la curva p–V asociada.</span>
+    <span class="card-actions"><a class="open-btn" href="03%20Energia,%20calor%20y%20trabajo/Trabajo_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Un gas confinado en un dispositivo cilindro–émbolo describe un ciclo cerrado; se desea evaluar el trabajo neto como el área encerrada en el plano p–V.</p>
+      <ol><li>Configure un ciclo de tres procesos (isobárico, isócoro y regreso lineal) y determine el trabajo neto del ciclo; verifique que coincide con el área encerrada.</li><li>En el ciclo Otto predefinido, identifique en qué procesos el trabajo es positivo, negativo o nulo, y justifique.</li><li>Duplique la relación de compresión del ciclo y analice el efecto sobre el trabajo neto.</li></ol>
+    </details>
+  </div>
+</div><div class="card" data-search="trabajo de frontera y modos de trabajo trabajo de frontera y modos de trabajo: procesos isobárico, isotérmico, politrópico y adiabático, con curva p–v y desarrollo paso a paso. trabajo_frontera_orv.html 03 energia, calor y trabajo">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 4v2M12 18v2M4 12h2M18 12h2M6.3 6.3l1.4 1.4M16.3 16.3l1.4 1.4M17.7 6.3l-1.4 1.4M7.7 16.3l-1.4 1.4"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="03%20Energia,%20calor%20y%20trabajo/Trabajo_Frontera_ORV.html" target="_blank">Trabajo de Frontera y Modos de Trabajo</a><span class="tag">Simulador</span></span>
+    <span class="card-desc">Trabajo de frontera y modos de trabajo: procesos isobárico, isotérmico, politrópico y adiabático, con curva p–V y desarrollo paso a paso.</span>
+    <span class="card-actions"><a class="open-btn" href="03%20Energia,%20calor%20y%20trabajo/Trabajo_Frontera_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Aire contenido en un cilindro–émbolo se comprime mediante distintos procesos de cuasiequilibrio; se comparan los trabajos de frontera resultantes.</p>
+      <ol><li>Comprima aire desde 100 kPa y 0.040 m³ hasta 0.010 m³ con n = 1.3; calcule W_b y verifique con el desarrollo paso a paso de la aplicación.</li><li>Repita la compresión de forma isotérmica y adiabática (k = 1.4); ordene los tres procesos según el trabajo requerido y explique el resultado con las curvas p–V.</li><li>Para una expansión isobárica a 200 kPa desde 0.02 m³ hasta 0.05 m³, calcule W_b y clasifíquelo como trabajo hecho por o sobre el sistema.</li></ol>
+    </details>
+  </div>
+</div></div>
+</section><section class="panel" id="u04" style="--c:#1565c0;--cl:#dce9fb;display:none;">
+  <div class="panel-head">
+    <span class="p-num">04</span>
+    <div class="p-meta"><h2>Primera ley · Volumen de control</h2><p class="p-sub">4 aplicaciones · versión ORV</p></div>
+  </div>
+  <div class="grid"><div class="card" data-search="primera ley · sistemas cerrados balance de energía en sistemas cerrados (q, w, δu) para gas ideal en procesos isócoro, isóbaro, isotermo, adiabático y politrópico. 1era ley termodinamica_orv.html 04 primera ley y volumen de control">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3L5 13h5l-1 8 8-11h-5l1-7z"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="04%20Primera%20ley%20y%20volumen%20de%20control/1era%20ley%20termodinamica_ORV.html" target="_blank">Primera Ley · Sistemas Cerrados</a><span class="tag">Interactivo</span></span>
+    <span class="card-desc">Balance de energía en sistemas cerrados (Q, W, ΔU) para gas ideal en procesos isócoro, isóbaro, isotermo, adiabático y politrópico.</span>
+    <span class="card-actions"><a class="open-btn" href="04%20Primera%20ley%20y%20volumen%20de%20control/1era%20ley%20termodinamica_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Aire encerrado en un dispositivo cilindro–émbolo intercambia calor y trabajo con el entorno; se aplica la primera ley para cerrar el balance de energía.</p>
+      <ol><li>Aire a 100 kPa y 300 K se calienta isobáricamente hasta 500 K (m = 0.5 kg): determine Q, W y ΔU, y verifique el balance Q = W + ΔU.</li><li>Repita el proceso a volumen constante y compare el calor requerido; relacione la diferencia con cp y cv.</li><li>En una compresión adiabática desde 100 kPa y 300 K hasta 800 kPa, determine T₂ y el trabajo, y explique por qué Q = 0 no implica ΔT = 0.</li></ol>
+    </details>
+  </div>
+</div><div class="card" data-search="ciclo de compresión de vapor / bomba de calor simulador del ciclo de compresión de vapor y bomba de calor: parámetros de operación e indicadores de desempeño (cop). ciclo refrigeracion_orv.html 04 primera ley y volumen de control">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3L5 13h5l-1 8 8-11h-5l1-7z"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="07%20Ciclos%20de%20potencia%20y%20refrigeracion/Ciclo%20refrigeracion_ORV.html" target="_blank">Ciclo de Compresión de Vapor / Bomba de Calor</a><span class="tag">Simulador</span></span>
+    <span class="card-desc">Simulador del ciclo de compresión de vapor y bomba de calor: parámetros de operación e indicadores de desempeño (COP). Abre la copia única ubicada en la unidad 07.</span>
+    <span class="card-actions"><a class="open-btn" href="07%20Ciclos%20de%20potencia%20y%20refrigeracion/Ciclo%20refrigeracion_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Un refrigerador con R-134a opera entre las presiones de evaporación y condensación típicas de un equipo doméstico; se evalúa su desempeño energético.</p>
+      <ol><li>Configure el ciclo entre 0.14 MPa y 0.8 MPa: determine el efecto refrigerante, el trabajo del compresor y el COP.</li><li>Aumente la presión de condensación a 1.0 MPa y cuantifique la degradación del COP.</li><li>Opere el mismo ciclo como bomba de calor y verifique que COP_BC = COP_R + 1.</li></ol>
+    </details>
+  </div>
+</div><div class="card" data-search="cyclepad web · volumen de control simulador de ciclos por volúmenes de control (turbina, compresor, bomba, caldera, condensador, intercambiador, mezclador) con biblioteca de diseños y análisis de sensibilidad. vol control ciclo termodinamico_orv.html 04 primera ley y volumen de control">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3L5 13h5l-1 8 8-11h-5l1-7z"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="04%20Primera%20ley%20y%20volumen%20de%20control/Vol%20control%20ciclo%20termodinamico_ORV.html" target="_blank">CyclePad Web · Volumen de Control</a><span class="tag">Simulador</span></span>
+    <span class="card-desc">Simulador de ciclos por volúmenes de control (turbina, compresor, bomba, caldera, condensador, intercambiador, mezclador) con biblioteca de diseños y análisis de sensibilidad.</span>
+    <span class="card-actions"><a class="open-btn" href="04%20Primera%20ley%20y%20volumen%20de%20control/Vol%20control%20ciclo%20termodinamico_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Una planta de vapor se modela como una red de volúmenes de control en régimen estacionario; se aplican balances de masa y energía a cada componente.</p>
+      <ol><li>Modele una turbina adiabática con vapor de 6 MPa y 500 °C a la entrada y 50 kPa a la salida; determine el trabajo específico y la potencia para 10 kg/s.</li><li>Construya el ciclo Rankine simple de la biblioteca y verifique que el balance global de energía se cierra (Q_in = W_neto + Q_out).</li><li>Realice un análisis de sensibilidad de la potencia neta frente a la presión de caldera y reporte la tendencia.</li></ol>
+    </details>
+  </div>
+</div><div class="card" data-search="diagrama cp, cv, k (tabla a-20) diagrama de los calores específicos cp, cv y la razón k de gases ideales en función de la temperatura. cp-cv-k_orv.html 04 primera ley y volumen de control">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v16h16"/><path d="M7 15l3-4 3 2 4-6"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="04%20Primera%20ley%20y%20volumen%20de%20control/cp-cv-k_ORV.html" target="_blank">Diagrama cp, cv, k (Tabla A-20)</a><span class="tag">Diagrama</span></span>
+    <span class="card-desc">Diagrama de los calores específicos cp, cv y la razón k de gases ideales en función de la temperatura.</span>
+    <span class="card-actions"><a class="open-btn" href="04%20Primera%20ley%20y%20volumen%20de%20control/cp-cv-k_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Se estudia la dependencia de los calores específicos del aire con la temperatura y su efecto sobre los balances de energía.</p>
+      <ol><li>Lea cp del aire a 300 K y a 1000 K; calcule el error de asumir cp constante en un calentamiento entre ambas temperaturas.</li><li>Verifique gráficamente que cp − cv = R en todo el intervalo mostrado.</li><li>Analice la variación de k con la temperatura y su efecto sobre la relación T₂/T₁ de una compresión isentrópica.</li></ol>
+    </details>
+  </div>
+</div></div>
+</section><section class="panel" id="u05" style="--c:#7b1fa2;--cl:#eddcf5;display:none;">
+  <div class="panel-head">
+    <span class="p-num">05</span>
+    <div class="p-meta"><h2>Segunda ley y entropía</h2><p class="p-sub">3 aplicaciones · versión ORV</p></div>
+  </div>
+  <div class="grid"><div class="card" data-search="balance de entropía (entropía aplicada) balance y generación de entropía con cálculo de eficiencias isentrópicas (turbina, compresor, tobera). balance entropia_orv.html 05 segunda ley y entropia">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8c3-4 6 4 9 0M4 14c3-4 6 4 9 0"/><path d="M17 7l3 3-3 3"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="05%20Segunda%20ley%20y%20entropia/Balance%20entropia_ORV.html" target="_blank">Balance de Entropía (Entropía Aplicada)</a><span class="tag">Simulador</span></span>
+    <span class="card-desc">Balance y generación de entropía con cálculo de eficiencias isentrópicas (turbina, compresor, tobera).</span>
+    <span class="card-actions"><a class="open-btn" href="05%20Segunda%20ley%20y%20entropia/Balance%20entropia_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Los equipos reales de una planta generan entropía; se cuantifica S_gen y la eficiencia isentrópica de cada dispositivo.</p>
+      <ol><li>Una turbina adiabática recibe vapor a 3 MPa y 400 °C y descarga a 50 kPa con eficiencia isentrópica de 85 %: determine el trabajo real, el estado de salida y S_gen.</li><li>Un compresor lleva aire de 100 kPa y 300 K a 600 kPa con eficiencia de 80 %: calcule el trabajo real y la generación de entropía.</li><li>Demuestre con la aplicación que S_gen → 0 cuando la eficiencia isentrópica → 100 %.</li></ol>
+    </details>
+  </div>
+</div><div class="card" data-search="simulador del ciclo de carnot laboratorio virtual del ciclo de carnot con diagramas t–s y p–v interactivos. ciclo carnot_orv.html 05 segunda ley y entropia">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8c3-4 6 4 9 0M4 14c3-4 6 4 9 0"/><path d="M17 7l3 3-3 3"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="05%20Segunda%20ley%20y%20entropia/Ciclo%20Carnot_ORV.html" target="_blank">Simulador del Ciclo de Carnot</a><span class="tag">Simulador</span></span>
+    <span class="card-desc">Laboratorio virtual del ciclo de Carnot con diagramas T–s y P–v interactivos.</span>
+    <span class="card-actions"><a class="open-btn" href="05%20Segunda%20ley%20y%20entropia/Ciclo%20Carnot_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Se analiza el ciclo de Carnot como límite superior de eficiencia entre dos reservorios térmicos dados.</p>
+      <ol><li>Configure el ciclo entre 500 K y 300 K: verifique que η = 1 − T_L/T_H = 40 % y localice los cuatro procesos en el diagrama T–s.</li><li>Cuantifique el efecto de reducir T_L de 300 K a 280 K sobre la eficiencia y compárelo con elevar T_H en la misma proporción.</li><li>Explique por qué el área encerrada en T–s equivale al trabajo neto del ciclo.</li></ol>
+    </details>
+  </div>
+</div><div class="card" data-search="ciclo de compresión de vapor / bomba de calor (2ª ley) simulador del ciclo de compresión de vapor y bomba de calor, reutilizado en el contexto de la segunda ley. ciclo refrigeracion_orv.html 05 segunda ley y entropia">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8c3-4 6 4 9 0M4 14c3-4 6 4 9 0"/><path d="M17 7l3 3-3 3"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="07%20Ciclos%20de%20potencia%20y%20refrigeracion/Ciclo%20refrigeracion_ORV.html" target="_blank">Ciclo de Compresión de Vapor / Bomba de Calor (2ª ley)</a><span class="tag">Simulador</span></span>
+    <span class="card-desc">Simulador del ciclo de compresión de vapor y bomba de calor, reutilizado en el contexto de la segunda ley. Abre la copia única ubicada en la unidad 07.</span>
+    <span class="card-actions"><a class="open-btn" href="07%20Ciclos%20de%20potencia%20y%20refrigeracion/Ciclo%20refrigeracion_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Se contrasta el COP real del ciclo de compresión de vapor con el COP de Carnot operando entre las mismas temperaturas.</p>
+      <ol><li>Para el ciclo entre −10 °C y 40 °C de saturación, calcule COP_real y COP_Carnot; determine la eficiencia de segunda ley.</li><li>Identifique el proceso del ciclo que más entropía genera (sugerencia: la válvula de expansión) y justifique.</li><li>Proponga y evalúe en el simulador una modificación que aumente la eficiencia de segunda ley.</li></ol>
+    </details>
+  </div>
+</div></div>
+</section><section class="panel" id="u06" style="--c:#546e7a;--cl:#e3e9ec;display:none;">
+  <div class="panel-head">
+    <span class="p-num">06</span>
+    <div class="p-meta"><h2>Análisis de exergía</h2><p class="p-sub">1 aplicación · versión ORV</p></div>
+  </div>
+  <div class="grid"><div class="card" data-search="análisis de exergía cálculo de exergía, trabajo reversible y destrucción de exergía (irreversibilidad) respecto a un ambiente de referencia. analisis de exergia_orv.html 06 analisis de exergia">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v16h16"/><path d="M7 15l3-4 3 2 4-6"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="06%20Analisis%20de%20exergia/Analisis%20de%20Exergia_ORV.html" target="_blank">Análisis de Exergía</a><span class="tag">Simulador</span></span>
+    <span class="card-desc">Cálculo de exergía, trabajo reversible y destrucción de exergía (irreversibilidad) respecto a un ambiente de referencia.</span>
+    <span class="card-actions"><a class="open-btn" href="06%20Analisis%20de%20exergia/Analisis%20de%20Exergia_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Con un ambiente de referencia a 25 °C y 100 kPa, se evalúa el potencial de trabajo de corrientes de vapor y la irreversibilidad de equipos reales.</p>
+      <ol><li>Determine la exergía de flujo del vapor a 3 MPa y 400 °C respecto al ambiente de referencia.</li><li>Una turbina expande dicho vapor hasta 50 kPa con eficiencia isentrópica de 85 %: calcule el trabajo reversible, el trabajo real y la exergía destruida.</li><li>Verifique que la exergía destruida es igual a T₀·S_gen y discuta la relación entre ambos enfoques.</li></ol>
+    </details>
+  </div>
+</div></div>
+</section><section class="panel" id="u07" style="--c:#c62828;--cl:#f7dcdc;display:none;">
+  <div class="panel-head">
+    <span class="p-num">07</span>
+    <div class="p-meta"><h2>Ciclos de potencia y refrigeración</h2><p class="p-sub">2 aplicaciones · versión ORV</p></div>
+  </div>
+  <div class="grid"><div class="card" data-search="simulador del ciclo rankine laboratorio virtual del ciclo rankine de potencia de vapor (recalentamiento, regeneración/extracción y calidad del vapor). ciclo rankine_orv.html 07 ciclos de potencia y refrigeracion">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 3v4M21 12h-4"/><path d="M12 12l4-2"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="07%20Ciclos%20de%20potencia%20y%20refrigeracion/Ciclo%20Rankine_ORV.html" target="_blank">Simulador del Ciclo Rankine</a><span class="tag">Simulador</span></span>
+    <span class="card-desc">Laboratorio virtual del ciclo Rankine de potencia de vapor (recalentamiento, regeneración/extracción y calidad del vapor).</span>
+    <span class="card-actions"><a class="open-btn" href="07%20Ciclos%20de%20potencia%20y%20refrigeracion/Ciclo%20Rankine_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Una central termoeléctrica opera con un ciclo Rankine; se evalúa el efecto de las presiones de caldera y condensador y de las mejoras del ciclo.</p>
+      <ol><li>Ciclo simple con caldera a 8 MPa y 480 °C y condensador a 8 kPa: determine η_térmica, trabajo neto y calidad a la salida de la turbina.</li><li>Incorpore recalentamiento a 3 MPa hasta 480 °C y cuantifique la mejora en eficiencia y en calidad de salida.</li><li>Active la regeneración con una extracción y analice el efecto sobre η y sobre el flujo de calor en la caldera.</li></ol>
+    </details>
+  </div>
+</div><div class="card" data-search="ciclo de compresión de vapor / bomba de calor simulador del ciclo de compresión de vapor y bomba de calor (variante de este módulo). ciclo refrigeracion_orv.html 07 ciclos de potencia y refrigeracion">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 3v4M21 12h-4"/><path d="M12 12l4-2"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="07%20Ciclos%20de%20potencia%20y%20refrigeracion/Ciclo%20refrigeracion_ORV.html" target="_blank">Ciclo de Compresión de Vapor / Bomba de Calor</a><span class="tag">Simulador</span></span>
+    <span class="card-desc">Simulador del ciclo de compresión de vapor y bomba de calor (variante de este módulo).</span>
+    <span class="card-actions"><a class="open-btn" href="07%20Ciclos%20de%20potencia%20y%20refrigeracion/Ciclo%20refrigeracion_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Un sistema de refrigeración debe retirar una carga térmica dada; se dimensiona el flujo de refrigerante y se evalúa el desempeño estacional.</p>
+      <ol><li>Para una carga de refrigeración de 5 kW con el ciclo entre 0.14 MPa y 0.8 MPa, determine el flujo másico de R-134a y la potencia del compresor.</li><li>Calcule el COP como refrigerador y como bomba de calor para las mismas condiciones.</li><li>Evalúe el efecto de un subenfriamiento de 5 °C a la salida del condensador sobre el efecto refrigerante y el COP.</li></ol>
+    </details>
+  </div>
+</div></div>
+</section><section class="panel" id="u08" style="--c:#0277bd;--cl:#d4ebf7;display:none;">
+  <div class="panel-head">
+    <span class="p-num">08</span>
+    <div class="p-meta"><h2>Psicrometría</h2><p class="p-sub">1 aplicación · versión ORV</p></div>
+  </div>
+  <div class="grid"><div class="card" data-search="carta psicrométrica carta psicrométrica y acondicionamiento de aire: propiedades del aire húmedo y procesos psicrométricos. carta_psicrometrica_orv.html 08 psicrometria">
+  <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/><path d="M9.5 14a2.5 2.5 0 0 0 2.5 2.5"/></svg></span>
+  <div class="card-body">
+    <span class="card-top"><a class="card-name" href="08%20Psicrometria/Carta_Psicrometrica_ORV.html" target="_blank">Carta Psicrométrica</a><span class="tag">Carta</span></span>
+    <span class="card-desc">Carta psicrométrica y acondicionamiento de aire: propiedades del aire húmedo y procesos psicrométricos.</span>
+    <span class="card-actions"><a class="open-btn" href="08%20Psicrometria/Carta_Psicrometrica_ORV.html" target="_blank">Abrir aplicación ↗</a></span>
+    <details class="ej">
+      <summary>Enunciado y ejercicios</summary>
+      <p class="enun"><b>Enunciado.</b> Un sistema de aire acondicionado procesa aire húmedo; sus estados y procesos se resuelven sobre la carta psicrométrica a presión atmosférica.</p>
+      <ol><li>Aire a 30 °C de bulbo seco y 60 % de humedad relativa: determine ω, h, T de rocío y T de bulbo húmedo.</li><li>Ese aire se enfría hasta 14 °C con deshumidificación: represente el proceso, determine el agua condensada por kg de aire seco y el calor retirado.</li><li>Mezcle adiabáticamente dos corrientes (30 °C/60 % HR y 15 °C/80 % HR, razón 2:1) y determine el estado resultante.</li></ol>
+    </details>
+  </div>
+</div></div>
+</section>
+    <p class="no-results" id="noResults">No se encontraron aplicaciones para tu búsqueda.</p>
+  </div>
+</div>
+<footer>Compendio ORV · 40 aplicaciones interactivas · Proyecto Termo·IA·Dinámica · Generado el 3 de julio de 2026</footer>
+<script>function _f6013a0_0x12af(){var _0x2948f2=['9190fGcRMk','&lt;','3282cWhRWC','none','replace','28197OWnWnR','forEach','trim','dataset','start','call','nextElementSibling','smooth','block','querySelectorAll','1985124orwStG','4850nGjPvt','getAttribute','201343yobbgH','click','.card','363222XigkIS','\x20de\x20','slice','noResults','input','some','</b>”','setAttribute','counter','scrollIntoView','textContent','.m-item','innerHTML','innerWidth','display','removeAttribute','4203060OKFOVs','indexOf','remove','\x20aplicaciones','style','data-search','value','toggle','14BlCaZa','target','getElementById','aria-current','toLowerCase','.main','true','2572152huulzW','classList'];_f6013a0_0x12af=function(){return _0x2948f2;};return _f6013a0_0x12af();}function _f6013a0_0x230d(_0x2fee87,_0x5f180a){var _0x12af5a=_f6013a0_0x12af();return _f6013a0_0x230d=function(_0x230d84,_0x37cba2){_0x230d84=_0x230d84-0x153;var _0x31c4ad=_0x12af5a[_0x230d84];return _0x31c4ad;},_f6013a0_0x230d(_0x2fee87,_0x5f180a);}(function(_0x7eefbd,_0x62da29){var _0x11ba90=_0x7eefbd();while(!![]){try{var _0xa4c3da=-parseInt(_f6013a0_0x230d(0x16b))/0x1+-parseInt(_f6013a0_0x230d(0x16e))/0x2+-parseInt(_f6013a0_0x230d(0x168))/0x3+-parseInt(_f6013a0_0x230d(0x17e))/0x4+parseInt(_f6013a0_0x230d(0x169))/0x5*(parseInt(_f6013a0_0x230d(0x15b))/0x6)+parseInt(_f6013a0_0x230d(0x186))/0x7*(-parseInt(_f6013a0_0x230d(0x157))/0x8)+-parseInt(_f6013a0_0x230d(0x15e))/0x9*(-parseInt(_f6013a0_0x230d(0x159))/0xa);if(_0xa4c3da===_0x62da29)break;else _0x11ba90['push'](_0x11ba90['shift']());}catch(_0x52f725){_0x11ba90['push'](_0x11ba90['shift']());}}}(_f6013a0_0x12af,0xa3e78),(function(){var _0x1a0028=document['getElementById']('q'),_0x29c7a3=[][_f6013a0_0x230d(0x170)][_f6013a0_0x230d(0x163)](document[_f6013a0_0x230d(0x167)](_f6013a0_0x230d(0x179))),_0x1d06ea=[][_f6013a0_0x230d(0x170)][_f6013a0_0x230d(0x163)](document['querySelectorAll']('.panel')),_0x1c3728=[][_f6013a0_0x230d(0x170)][_f6013a0_0x230d(0x163)](document[_f6013a0_0x230d(0x167)](_f6013a0_0x230d(0x16d))),_0x48a402=[][_f6013a0_0x230d(0x170)][_f6013a0_0x230d(0x163)](document['querySelectorAll']('.subgroup')),_0xafed64=document[_f6013a0_0x230d(0x188)](_f6013a0_0x230d(0x176)),_0x3706d8=document['getElementById']('searchHead'),_0x549021=document[_f6013a0_0x230d(0x188)](_f6013a0_0x230d(0x171)),_0x1fb1b2=0x28,_0x4a78b6='u01';function _0x58e3c0(){_0x1c3728[_f6013a0_0x230d(0x15f)](function(_0x24eb6f){_0x24eb6f[_f6013a0_0x230d(0x182)][_f6013a0_0x230d(0x17c)]='';}),_0x48a402[_f6013a0_0x230d(0x15f)](function(_0x2c88a6){_0x2c88a6[_f6013a0_0x230d(0x182)][_f6013a0_0x230d(0x17c)]='';var _0x5acd0b=_0x2c88a6[_f6013a0_0x230d(0x164)];if(_0x5acd0b)_0x5acd0b[_f6013a0_0x230d(0x182)][_f6013a0_0x230d(0x17c)]='';});}function _0x34b241(_0x5ecfff){_0x58e3c0(),_0x1d06ea[_f6013a0_0x230d(0x15f)](function(_0x52b109){_0x52b109[_f6013a0_0x230d(0x182)][_f6013a0_0x230d(0x17c)]=_0x52b109['id']===_0x5ecfff?'':_f6013a0_0x230d(0x15c);}),_0x29c7a3[_f6013a0_0x230d(0x15f)](function(_0x1ddbff){var _0x1375cb=_0x1ddbff[_f6013a0_0x230d(0x161)][_f6013a0_0x230d(0x187)]===_0x5ecfff;_0x1ddbff[_f6013a0_0x230d(0x158)][_f6013a0_0x230d(0x185)]('active',_0x1375cb),_0x1375cb?_0x1ddbff[_f6013a0_0x230d(0x175)](_f6013a0_0x230d(0x153),_f6013a0_0x230d(0x156)):_0x1ddbff[_f6013a0_0x230d(0x17d)](_f6013a0_0x230d(0x153));}),_0x3706d8[_f6013a0_0x230d(0x182)][_f6013a0_0x230d(0x17c)]=_f6013a0_0x230d(0x15c),_0x549021[_f6013a0_0x230d(0x182)]['display']=_f6013a0_0x230d(0x15c),_0xafed64[_f6013a0_0x230d(0x178)]='';}function _0x26c5e8(_0x20fad7){var _0x27d333=0x0;_0x1c3728['forEach'](function(_0x29a1d8){var _0x3cd72c=_0x29a1d8[_f6013a0_0x230d(0x16a)](_f6013a0_0x230d(0x183))[_f6013a0_0x230d(0x17f)](_0x20fad7)>-0x1;_0x29a1d8[_f6013a0_0x230d(0x182)][_f6013a0_0x230d(0x17c)]=_0x3cd72c?'':_f6013a0_0x230d(0x15c);if(_0x3cd72c)_0x27d333++;}),_0x48a402[_f6013a0_0x230d(0x15f)](function(_0x1c5ad4){var _0x1d573a=_0x1c5ad4['nextElementSibling'],_0x451b3e=_0x1d573a&&[][_f6013a0_0x230d(0x170)][_f6013a0_0x230d(0x163)](_0x1d573a[_f6013a0_0x230d(0x167)]('.card'))[_f6013a0_0x230d(0x173)](function(_0x334583){return _0x334583[_f6013a0_0x230d(0x182)][_f6013a0_0x230d(0x17c)]!==_f6013a0_0x230d(0x15c);});_0x1c5ad4[_f6013a0_0x230d(0x182)][_f6013a0_0x230d(0x17c)]=_0x451b3e?'':'none';if(_0x1d573a)_0x1d573a[_f6013a0_0x230d(0x182)][_f6013a0_0x230d(0x17c)]=_0x451b3e?'':_f6013a0_0x230d(0x15c);}),_0x1d06ea[_f6013a0_0x230d(0x15f)](function(_0x60a51e){var _0x240716=[][_f6013a0_0x230d(0x170)][_f6013a0_0x230d(0x163)](_0x60a51e[_f6013a0_0x230d(0x167)](_f6013a0_0x230d(0x16d)))['some'](function(_0x4b2a13){return _0x4b2a13[_f6013a0_0x230d(0x182)][_f6013a0_0x230d(0x17c)]!==_f6013a0_0x230d(0x15c);});_0x60a51e[_f6013a0_0x230d(0x182)][_f6013a0_0x230d(0x17c)]=_0x240716?'':'none';}),_0x29c7a3['forEach'](function(_0x37e38f){_0x37e38f['classList'][_f6013a0_0x230d(0x180)]('active'),_0x37e38f[_f6013a0_0x230d(0x17d)](_f6013a0_0x230d(0x153));}),_0x3706d8[_f6013a0_0x230d(0x182)][_f6013a0_0x230d(0x17c)]='',_0x3706d8[_f6013a0_0x230d(0x17a)]='Resultados\x20para\x20“<b>'+_0x20fad7[_f6013a0_0x230d(0x15d)](/</g,_f6013a0_0x230d(0x15a))+_f6013a0_0x230d(0x174),_0x549021['style']['display']=_0x27d333?_f6013a0_0x230d(0x15c):_f6013a0_0x230d(0x166),_0xafed64['textContent']=_0x27d333+_f6013a0_0x230d(0x16f)+_0x1fb1b2+_f6013a0_0x230d(0x181);}_0x29c7a3[_f6013a0_0x230d(0x15f)](function(_0x5f3ba6){_0x5f3ba6['addEventListener'](_f6013a0_0x230d(0x16c),function(){_0x4a78b6=_0x5f3ba6['dataset'][_f6013a0_0x230d(0x187)],_0x1a0028['value']='',_0x34b241(_0x4a78b6),window[_f6013a0_0x230d(0x17b)]<0x35c&&document['querySelector'](_f6013a0_0x230d(0x155))[_f6013a0_0x230d(0x177)]({'behavior':_f6013a0_0x230d(0x165),'block':_f6013a0_0x230d(0x162)});});}),_0x1a0028['addEventListener'](_f6013a0_0x230d(0x172),function(){var _0x26e7ee=_0x1a0028[_f6013a0_0x230d(0x184)][_f6013a0_0x230d(0x160)]()[_f6013a0_0x230d(0x154)]();if(_0x26e7ee)_0x26c5e8(_0x26e7ee);else _0x34b241(_0x4a78b6);}),_0x34b241(_0x4a78b6);}()));</script>
+<script id="orv-movil-a11y-js">function _f6013a1_0x49e8(){var _0x3fd8b2=['readyState','.topbar,.app-header','type','region','keydown','orvFlex','DOMContentLoaded','6mbbrGs','previousElementSibling','replace','contains','aria-labelledby','259238xWKjiU','orv-shrink','nodeType','data-tip','orvKb','radio','svg','TABLE','right','649409PiMYdu','options','closest','getBoundingClientRect','orvGrid','Spacebar','getAttribute','gridTemplateColumns','.js-plotly-plot,.orv-tblwrap,svg','input:not([type=hidden]),select,textarea','dataset','title','test','repeat(auto-fit,minmax(min(100%,260px),1fr))','nextSibling','92574zHfIAl','grid','clientHeight','clientWidth','classList','slice','indexOf','Enter','Tabla\x20desplazable\x20horizontalmente','display','key','role','row','placeholder','.js-plotly-plot','appendChild','1268311eOSRzY','Cargar\x20archivo','tabindex','click','Ayuda','section,fieldset,.card,.panel,.sb-section,.ctrl-group,.grp,div[class*=section]','.topbar-brand','textContent','overflowY','forEach','querySelectorAll','orv-hdr','hasAttribute','701048qKHSAP','add','input,select,textarea,button,a[href],[onclick]','fixed','scrollHeight','84kdzTVF','label','15EKPLSp','trim','width','resize','orv-tblwrap','input,select,textarea,button,a[href],[tabindex]','862864FJLUgd','Seleccionar:\x20','parentElement','orv-nowrap-fix','input,select,textarea','preventDefault','querySelector','none','SELECT','style','Región\x20desplazable','Aplicación\x20integrada\x20','label[for=\x22','h1,h2,h3,h4,h5,legend,.sec-title,.section-title,[class*=title]','body','78MKJpqf','className','tagName','flexWrap','documentElement','408LiJnaX','aria-label','4536830MzHCLJ','wrap','div','setAttribute','scrollWidth','getElementById','length','addedNodes','overflowX','file','[role=\x22img\x22]','whiteSpace','group','addEventListener'];_f6013a1_0x49e8=function(){return _0x3fd8b2;};return _f6013a1_0x49e8();}function _f6013a1_0x6aeb(_0x54b13f,_0x1de169){var _0x49e877=_f6013a1_0x49e8();return _f6013a1_0x6aeb=function(_0x6aebbc,_0x139991){_0x6aebbc=_0x6aebbc-0x160;var _0x5ddc20=_0x49e877[_0x6aebbc];return _0x5ddc20;},_f6013a1_0x6aeb(_0x54b13f,_0x1de169);}(function(_0x53170b,_0x77df4f){var _0x1a6cdd=_0x53170b();while(!![]){try{var _0x224079=parseInt(_f6013a1_0x6aeb(0x1c0))/0x1+-parseInt(_f6013a1_0x6aeb(0x17a))/0x2*(parseInt(_f6013a1_0x6aeb(0x1b2))/0x3)+-parseInt(_f6013a1_0x6aeb(0x187))/0x4*(parseInt(_f6013a1_0x6aeb(0x181))/0x5)+-parseInt(_f6013a1_0x6aeb(0x196))/0x6*(-parseInt(_f6013a1_0x6aeb(0x1b7))/0x7)+-parseInt(_f6013a1_0x6aeb(0x19b))/0x8*(-parseInt(_f6013a1_0x6aeb(0x1cf))/0x9)+-parseInt(_f6013a1_0x6aeb(0x19d))/0xa+-parseInt(_f6013a1_0x6aeb(0x16d))/0xb*(-parseInt(_f6013a1_0x6aeb(0x17f))/0xc);if(_0x224079===_0x77df4f)break;else _0x1a6cdd['push'](_0x1a6cdd['shift']());}catch(_0x32934a){_0x1a6cdd['push'](_0x1a6cdd['shift']());}}}(_f6013a1_0x49e8,0xa14b9),(function(){'use strict';var _0x1ed50b=0x2d0;function _0x539fd4(_0xd2f8a){return(_0xd2f8a&&_0xd2f8a[_f6013a1_0x6aeb(0x174)]||'')[_f6013a1_0x6aeb(0x1b4)](/\s+/g,'\x20')[_f6013a1_0x6aeb(0x182)]();}function _0x53b41b(){var _0x150cba=document[_f6013a1_0x6aeb(0x18d)](_f6013a1_0x6aeb(0x173));if(_0x150cba){var _0x308e32=_0x150cba[_f6013a1_0x6aeb(0x189)];if(_0x308e32&&_0x308e32[_f6013a1_0x6aeb(0x161)][_f6013a1_0x6aeb(0x1b5)]('brand-block')&&_0x308e32[_f6013a1_0x6aeb(0x189)])_0x308e32=_0x308e32[_f6013a1_0x6aeb(0x189)];if(_0x308e32&&_0x308e32!==document[_f6013a1_0x6aeb(0x195)])_0x308e32['classList'][_f6013a1_0x6aeb(0x17b)](_f6013a1_0x6aeb(0x178));}document['querySelectorAll'](_f6013a1_0x6aeb(0x1ac))['forEach'](function(_0xe5f9fa){_0xe5f9fa[_f6013a1_0x6aeb(0x161)][_f6013a1_0x6aeb(0x17b)](_f6013a1_0x6aeb(0x178));});}function _0x272ad5(){var _0x5cd90c=document[_f6013a1_0x6aeb(0x1a2)]('orvhelp-btn');if(_0x5cd90c&&!_0x5cd90c[_f6013a1_0x6aeb(0x1c6)](_f6013a1_0x6aeb(0x19c)))_0x5cd90c[_f6013a1_0x6aeb(0x1a0)]('aria-label',_f6013a1_0x6aeb(0x171));}var _0xc71215={'BUTTON':0x1,'A':0x1,'INPUT':0x1,'SELECT':0x1,'TEXTAREA':0x1,'LABEL':0x1,'OPTION':0x1,'SUMMARY':0x1,'DETAILS':0x1};function _0x27a1d6(_0x4bc9c2){(_0x4bc9c2||document)['querySelectorAll']('[onclick]')[_f6013a1_0x6aeb(0x176)](function(_0x3aac48){if(_0xc71215[_0x3aac48[_f6013a1_0x6aeb(0x198)]]||_0x3aac48[_f6013a1_0x6aeb(0x1ca)][_f6013a1_0x6aeb(0x1bb)])return;if(_0x3aac48['querySelector'](_f6013a1_0x6aeb(0x17c)))return;var _0x1e9d09=_0x3aac48[_f6013a1_0x6aeb(0x189)]&&_0x3aac48[_f6013a1_0x6aeb(0x189)][_f6013a1_0x6aeb(0x1c2)](_f6013a1_0x6aeb(0x1a7));if(_0x1e9d09)_0x1e9d09['setAttribute'](_f6013a1_0x6aeb(0x168),_f6013a1_0x6aeb(0x1a9));if(_0x3aac48['closest'](_f6013a1_0x6aeb(0x1bd))&&_0x3aac48[_f6013a1_0x6aeb(0x198)]['toLowerCase']()!=='svg'&&!_0x3aac48[_f6013a1_0x6aeb(0x1c6)](_f6013a1_0x6aeb(0x168))){}_0x3aac48['dataset'][_f6013a1_0x6aeb(0x1bb)]='1';if(!_0x3aac48[_f6013a1_0x6aeb(0x1c6)]('role'))_0x3aac48['setAttribute'](_f6013a1_0x6aeb(0x168),'button');if(!_0x3aac48['hasAttribute'](_f6013a1_0x6aeb(0x16f)))_0x3aac48[_f6013a1_0x6aeb(0x1a0)]('tabindex','0');if(!_0x3aac48['getAttribute']('aria-label')&&!_0x539fd4(_0x3aac48)){var _0x195472=_0x3aac48['getAttribute'](_f6013a1_0x6aeb(0x1cb))||_0x3aac48[_f6013a1_0x6aeb(0x1c6)](_f6013a1_0x6aeb(0x1ba))||'';if(_0x195472)_0x3aac48[_f6013a1_0x6aeb(0x1a0)](_f6013a1_0x6aeb(0x19c),_0x195472);}_0x3aac48['addEventListener'](_f6013a1_0x6aeb(0x1af),function(_0x1c04e2){if(_0x1c04e2['target']!==_0x3aac48)return;(_0x1c04e2['key']===_f6013a1_0x6aeb(0x164)||_0x1c04e2[_f6013a1_0x6aeb(0x167)]==='\x20'||_0x1c04e2[_f6013a1_0x6aeb(0x167)]===_f6013a1_0x6aeb(0x1c5))&&(_0x1c04e2[_f6013a1_0x6aeb(0x18c)](),_0x3aac48[_f6013a1_0x6aeb(0x170)]());});});}function _0x72b683(_0x1db613){if(_0x1db613[_f6013a1_0x6aeb(0x1c6)]('aria-label')||_0x1db613[_f6013a1_0x6aeb(0x1c6)](_f6013a1_0x6aeb(0x1b6))||_0x1db613[_f6013a1_0x6aeb(0x1c6)](_f6013a1_0x6aeb(0x1cb)))return!![];if(_0x1db613['id'])try{if(document[_f6013a1_0x6aeb(0x18d)](_f6013a1_0x6aeb(0x193)+CSS['escape'](_0x1db613['id'])+'\x22]'))return!![];}catch(_0x1ef342){}if(_0x1db613['closest'](_f6013a1_0x6aeb(0x180))&&_0x539fd4(_0x1db613[_f6013a1_0x6aeb(0x1c2)](_f6013a1_0x6aeb(0x180))))return!![];return![];}function _0x29287f(_0x1fe737){var _0x4c8a3d=_0x1fe737,_0x566a13=0x0;while(_0x4c8a3d&&_0x566a13<0x4){var _0x384e47=_0x4c8a3d[_f6013a1_0x6aeb(0x1b3)];while(_0x384e47){if(!_0x384e47['querySelector'](_f6013a1_0x6aeb(0x18b))&&!/^(INPUT|SELECT|TEXTAREA|BUTTON)$/[_f6013a1_0x6aeb(0x1cc)](_0x384e47[_f6013a1_0x6aeb(0x198)])){var _0xdb632e=_0x539fd4(_0x384e47);if(_0xdb632e&&_0xdb632e[_f6013a1_0x6aeb(0x1a3)]<=0x5a)return _0xdb632e;}if(_0x384e47[_f6013a1_0x6aeb(0x18d)]&&_0x384e47['querySelector'](_f6013a1_0x6aeb(0x18b)))break;_0x384e47=_0x384e47[_f6013a1_0x6aeb(0x1b3)];}_0x4c8a3d=_0x4c8a3d[_f6013a1_0x6aeb(0x189)],_0x566a13++;if(_0x4c8a3d&&_0x4c8a3d[_f6013a1_0x6aeb(0x177)](_f6013a1_0x6aeb(0x18b))[_f6013a1_0x6aeb(0x1a3)]>0x1)break;}if(_0x1fe737[_f6013a1_0x6aeb(0x1ad)]===_f6013a1_0x6aeb(0x1a6))return _f6013a1_0x6aeb(0x16e);var _0x36b73b=_0x1fe737[_f6013a1_0x6aeb(0x1c2)](_f6013a1_0x6aeb(0x172));if(_0x36b73b){var _0x148b13=_0x36b73b[_f6013a1_0x6aeb(0x18d)](_f6013a1_0x6aeb(0x194));if(_0x148b13&&_0x539fd4(_0x148b13)&&_0x539fd4(_0x148b13)[_f6013a1_0x6aeb(0x1a3)]<=0x5a)return _0x539fd4(_0x148b13);}if(_0x1fe737['tagName']===_f6013a1_0x6aeb(0x18f)&&_0x1fe737[_f6013a1_0x6aeb(0x1c1)][_f6013a1_0x6aeb(0x1a3)])return _f6013a1_0x6aeb(0x188)+_0x539fd4(_0x1fe737[_f6013a1_0x6aeb(0x1c1)][0x0]);return _0x1fe737[_f6013a1_0x6aeb(0x1c6)](_f6013a1_0x6aeb(0x16a))||_0x1fe737[_f6013a1_0x6aeb(0x1c6)]('name')||'';}function _0x4d5459(_0x86f576){(_0x86f576||document)[_f6013a1_0x6aeb(0x177)](_f6013a1_0x6aeb(0x1c9))['forEach'](function(_0x39097b){if(_0x72b683(_0x39097b))return;var _0x479133=_0x29287f(_0x39097b);if(!_0x479133&&_0x39097b[_f6013a1_0x6aeb(0x1ad)]==='checkbox'||!_0x479133&&_0x39097b[_f6013a1_0x6aeb(0x1ad)]===_f6013a1_0x6aeb(0x1bc)){var _0x18c3c0=_0x39097b[_f6013a1_0x6aeb(0x1ce)];_0x479133=_0x18c3c0?_0x539fd4(_0x18c3c0[_f6013a1_0x6aeb(0x1b9)]===0x3?{'textContent':_0x18c3c0['nodeValue']}:_0x18c3c0):'';}if(_0x479133)_0x39097b['setAttribute'](_f6013a1_0x6aeb(0x19c),_0x479133[_f6013a1_0x6aeb(0x162)](0x0,0x5a));});}function _0x1d4e48(){document[_f6013a1_0x6aeb(0x177)]('table')[_f6013a1_0x6aeb(0x176)](function(_0x145ca7){var _0x1f6e95=_0x145ca7['parentElement'];if(!_0x1f6e95||_0x1f6e95[_f6013a1_0x6aeb(0x161)][_f6013a1_0x6aeb(0x1b5)](_f6013a1_0x6aeb(0x185))||_0x145ca7['closest'](_f6013a1_0x6aeb(0x16b)))return;if(_0x145ca7['getBoundingClientRect']()[_f6013a1_0x6aeb(0x183)]>_0x1f6e95[_f6013a1_0x6aeb(0x160)]+0x2){var _0x31b92f=document['createElement'](_f6013a1_0x6aeb(0x19f));_0x31b92f[_f6013a1_0x6aeb(0x197)]=_f6013a1_0x6aeb(0x185),_0x31b92f[_f6013a1_0x6aeb(0x1a0)](_f6013a1_0x6aeb(0x16f),'0'),_0x31b92f[_f6013a1_0x6aeb(0x1a0)](_f6013a1_0x6aeb(0x168),'region'),_0x31b92f['setAttribute'](_f6013a1_0x6aeb(0x19c),_f6013a1_0x6aeb(0x165)),_0x1f6e95['insertBefore'](_0x31b92f,_0x145ca7),_0x31b92f[_f6013a1_0x6aeb(0x16c)](_0x145ca7);}});}function _0x489db7(){var _0x3c6c76=document[_f6013a1_0x6aeb(0x19a)][_f6013a1_0x6aeb(0x160)];if(_0x3c6c76>_0x1ed50b)return;_0x1d4e48();for(var _0x58c053=0x0;_0x58c053<0x3;_0x58c053++){if(document[_f6013a1_0x6aeb(0x19a)][_f6013a1_0x6aeb(0x1a1)]<=_0x3c6c76+0x1)return;var _0xb32b6e=document[_f6013a1_0x6aeb(0x195)][_f6013a1_0x6aeb(0x177)]('*'),_0x3329c7=![];for(var _0x2f0a23=0x0;_0x2f0a23<_0xb32b6e[_f6013a1_0x6aeb(0x1a3)];_0x2f0a23++){var _0x4019c4=_0xb32b6e[_0x2f0a23];if(_0x4019c4['closest'](_f6013a1_0x6aeb(0x1c8)))continue;var _0x295a9b=getComputedStyle(_0x4019c4);if(_0x295a9b['position']===_f6013a1_0x6aeb(0x17d)||_0x295a9b[_f6013a1_0x6aeb(0x166)]===_f6013a1_0x6aeb(0x18e))continue;var _0x4cfbad=_0x4019c4[_f6013a1_0x6aeb(0x1c3)]();if(_0x4cfbad[_f6013a1_0x6aeb(0x1bf)]<=_0x3c6c76+0x1||_0x4cfbad[_f6013a1_0x6aeb(0x183)]===0x0)continue;if(_0x4019c4[_f6013a1_0x6aeb(0x198)]===_f6013a1_0x6aeb(0x1be)&&!_0x4019c4[_f6013a1_0x6aeb(0x189)]['classList']['contains'](_f6013a1_0x6aeb(0x185))){var _0x59d70c=document['createElement']('div');_0x59d70c[_f6013a1_0x6aeb(0x197)]=_f6013a1_0x6aeb(0x185),_0x59d70c['setAttribute'](_f6013a1_0x6aeb(0x16f),'0'),_0x59d70c[_f6013a1_0x6aeb(0x1a0)]('role','region'),_0x59d70c[_f6013a1_0x6aeb(0x1a0)]('aria-label','Tabla\x20desplazable\x20horizontalmente'),_0x4019c4['parentNode']['insertBefore'](_0x59d70c,_0x4019c4),_0x59d70c['appendChild'](_0x4019c4),_0x3329c7=!![];continue;}(_0x295a9b[_f6013a1_0x6aeb(0x1a8)]==='nowrap'||_0x295a9b[_f6013a1_0x6aeb(0x1a8)]==='pre')&&(_0x4019c4['classList'][_f6013a1_0x6aeb(0x17b)](_f6013a1_0x6aeb(0x18a)),_0x3329c7=!![]);_0x4cfbad[_f6013a1_0x6aeb(0x183)]>_0x3c6c76&&(_0x4019c4[_f6013a1_0x6aeb(0x161)]['add'](_f6013a1_0x6aeb(0x1b8)),_0x3329c7=!![],_0x295a9b['display'][_f6013a1_0x6aeb(0x163)]('grid')>=0x0&&(_0x4019c4['style'][_f6013a1_0x6aeb(0x1c7)]=_f6013a1_0x6aeb(0x1cd)),_0x295a9b[_f6013a1_0x6aeb(0x166)][_f6013a1_0x6aeb(0x163)]('flex')>=0x0&&_0x295a9b[_f6013a1_0x6aeb(0x199)]==='nowrap'&&(_0x4019c4[_f6013a1_0x6aeb(0x190)][_f6013a1_0x6aeb(0x199)]=_f6013a1_0x6aeb(0x19e)));var _0x532edf=_0x4019c4[_f6013a1_0x6aeb(0x189)];while(_0x532edf&&_0x532edf!==document[_f6013a1_0x6aeb(0x195)]){var _0x4d3725=getComputedStyle(_0x532edf);if(_0x4d3725[_f6013a1_0x6aeb(0x166)][_f6013a1_0x6aeb(0x163)](_f6013a1_0x6aeb(0x1d0))>=0x0&&!_0x532edf[_f6013a1_0x6aeb(0x1ca)]['orvGrid']){_0x532edf['dataset'][_f6013a1_0x6aeb(0x1c4)]='1',_0x532edf['style'][_f6013a1_0x6aeb(0x1c7)]=_f6013a1_0x6aeb(0x1cd),_0x3329c7=!![];break;}if(_0x4d3725[_f6013a1_0x6aeb(0x166)]['indexOf']('flex')>=0x0&&_0x4d3725[_f6013a1_0x6aeb(0x199)]==='nowrap'&&_0x4d3725['flexDirection']['indexOf'](_f6013a1_0x6aeb(0x169))===0x0&&!_0x532edf[_f6013a1_0x6aeb(0x1ca)][_f6013a1_0x6aeb(0x1b0)]){_0x532edf[_f6013a1_0x6aeb(0x1ca)][_f6013a1_0x6aeb(0x1b0)]='1',_0x532edf[_f6013a1_0x6aeb(0x190)]['flexWrap']='wrap',_0x3329c7=!![];break;}_0x532edf=_0x532edf[_f6013a1_0x6aeb(0x189)];}}if(!_0x3329c7)return;}}function _0x2c8e94(){document['querySelectorAll']('iframe:not([title])')['forEach'](function(_0x47472d,_0x511412){_0x47472d[_f6013a1_0x6aeb(0x1a0)](_f6013a1_0x6aeb(0x1cb),_f6013a1_0x6aeb(0x192)+(_0x511412+0x1));}),document[_f6013a1_0x6aeb(0x177)]('body\x20*')[_f6013a1_0x6aeb(0x176)](function(_0x48ba37){if(_0x48ba37[_f6013a1_0x6aeb(0x1ca)]['orvScroll']||_0x48ba37[_f6013a1_0x6aeb(0x179)](_f6013a1_0x6aeb(0x16f)))return;var _0x3b275b=getComputedStyle(_0x48ba37);if(!/(auto|scroll)/['test'](_0x3b275b[_f6013a1_0x6aeb(0x1a5)]+_0x3b275b[_f6013a1_0x6aeb(0x175)]))return;if(_0x48ba37[_f6013a1_0x6aeb(0x1a1)]<=_0x48ba37[_f6013a1_0x6aeb(0x160)]+0x1&&_0x48ba37[_f6013a1_0x6aeb(0x17e)]<=_0x48ba37[_f6013a1_0x6aeb(0x1d1)]+0x1)return;if(_0x48ba37[_f6013a1_0x6aeb(0x18d)](_f6013a1_0x6aeb(0x186)))return;_0x48ba37[_f6013a1_0x6aeb(0x1ca)]['orvScroll']='1',_0x48ba37[_f6013a1_0x6aeb(0x1a0)](_f6013a1_0x6aeb(0x16f),'0');if(!_0x48ba37[_f6013a1_0x6aeb(0x1c6)](_f6013a1_0x6aeb(0x168)))_0x48ba37[_f6013a1_0x6aeb(0x1a0)](_f6013a1_0x6aeb(0x168),_f6013a1_0x6aeb(0x1ae));if(!_0x48ba37[_f6013a1_0x6aeb(0x1c6)](_f6013a1_0x6aeb(0x19c)))_0x48ba37[_f6013a1_0x6aeb(0x1a0)]('aria-label',_f6013a1_0x6aeb(0x191));});}var _0x293076=null;function _0x9a4980(){if(_0x293076)return;_0x293076=setTimeout(function(){_0x293076=null,_0x44f7f6(![]);},0xfa);}function _0x44f7f6(_0x5dbc57){_0x5dbc57&&(_0x53b41b(),_0x272ad5()),_0x27a1d6(),_0x4d5459(),_0x489db7(),_0x2c8e94();}function _0x10ecac(){_0x44f7f6(!![]),setTimeout(function(){_0x44f7f6(![]);},0x384);try{new MutationObserver(function(_0x438687){for(var _0x4ab343=0x0;_0x4ab343<_0x438687['length'];_0x4ab343++){if(_0x438687[_0x4ab343][_f6013a1_0x6aeb(0x1a4)]&&_0x438687[_0x4ab343]['addedNodes'][_f6013a1_0x6aeb(0x1a3)]){_0x9a4980();break;}}})['observe'](document[_f6013a1_0x6aeb(0x195)],{'childList':!![],'subtree':!![]});}catch(_0x29103e){}window[_f6013a1_0x6aeb(0x1aa)](_f6013a1_0x6aeb(0x184),_0x9a4980);}if(document[_f6013a1_0x6aeb(0x1ab)]==='loading')document[_f6013a1_0x6aeb(0x1aa)](_f6013a1_0x6aeb(0x1b1),_0x10ecac);else _0x10ecac();}()));</script>
+</body>
+</html>

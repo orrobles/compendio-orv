@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<!-- © 2026 Oscar Robles Vásquez. Todos los derechos reservados. Compendio ORV · Termo.IA.Dinámica -->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tablas de Vapor — Propiedades Termodinámicas del Agua</title>
+<link rel="stylesheet" href="../lib/fuentes/fuentes.css" onerror="this.onerror=null;this.href='https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&family=Roboto:wght@400;500&display=swap'">
+<style>
+  
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    
+    --blue-deep:   #1565C0;   
+    --blue-mid:    #1976D2;   
+    --blue-light:  #BBDEFB;   
+    --blue-hover:  #1565C0;   
+    --green-dark:  #2E7D32;   
+    --green-mid:   #388E3C;   
+    --purple:      #7B1FA2;   
+    --orange:      #E65100;   
+    --red:         #C62828;   
+    --teal:        #00695C;   
+    
+    --bg-page:     #ECEFF1;   
+    --bg-panel:    #FFFFFF;   
+    --bg-row:      #F8F9FA;   
+    --text-primary:#212121;
+    --text-sec:    #546E7A;
+    --text-hint:   #556a74;
+    --border:      #CFD8DC;
+    --border-focus:#1976D2;
+    --mono: 'Roboto Mono', monospace;
+    --sans: 'Roboto', sans-serif;
+  }
+
+  body {
+    background: var(--bg-page);
+    color: var(--text-primary);
+    font-family: var(--sans);
+    font-size: 14px;
+    min-height: 100vh;
+  }
+
+  
+  .app-header {
+    background:linear-gradient(90deg,#1565c0 0%,#1976d2 60%,#1e88e5 100%);
+    padding: 0 20px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.24);
+  }
+  .app-logo {
+    width: 34px; height: 34px;
+    background: rgba(255,255,255,0.18);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px; color: #fff; font-weight: 700;
+    border: 1px solid rgba(255,255,255,0.25);
+    flex-shrink: 0;
+  }
+  .app-title {
+    font-size: 15px; font-weight: 500;
+    color: #fff; letter-spacing: 0.3px;
+  }
+  .app-sub {
+    font-size: 11px; color: rgba(255,255,255,0.72);
+    font-family: var(--mono); margin-top: 1px;
+  }
+
+  
+  .tabs {
+    display: flex;
+    background: var(--bg-panel);
+    border-bottom: 1px solid var(--border);
+    padding: 0 20px;
+    gap: 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .tab-btn {
+    background: none; border: none;
+    color: var(--text-sec);
+    font-family: var(--sans); font-size: 13px; font-weight: 500;
+    padding: 12px 18px; cursor: pointer;
+    border-bottom: 3px solid transparent;
+    letter-spacing: 0.3px;
+    transition: color 0.15s, border-color 0.15s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: #1667b7; }
+  .tab-btn.active {
+    color: #1667b7;
+    border-bottom-color: var(--blue-mid);
+  }
+
+  
+  .main { display: flex; height: calc(100vh - 97px); }
+  .panel { display: none; width: 100%; }
+  .panel.active { display: flex; }
+
+  
+  .input-zone {
+    width: 272px; min-width: 252px;
+    background: var(--bg-panel);
+    border-right: 1px solid var(--border);
+    padding: 18px 16px;
+    display: flex; flex-direction: column; gap: 16px;
+    overflow-y: auto;
+    box-shadow: 2px 0 6px rgba(0,0,0,0.05);
+  }
+
+  .zone-label {
+    font-size: 10px; font-weight: 500; letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--purple);
+    margin-bottom: 4px;
+  }
+
+  .field-group { display: flex; flex-direction: column; gap: 7px; }
+  .field-row { display: flex; gap: 6px; align-items: stretch; }
+
+  select, input[type=number] {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text-primary);
+    font-family: var(--mono);
+    font-size: 13px;
+    padding: 8px 10px;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    width: 100%;
+  }
+  select:focus, input[type=number]:focus {
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 3px rgba(25,118,210,0.12);
+  }
+  select {
+    cursor: pointer; appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23546E7A'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 10px center;
+    padding-right: 28px;
+  }
+
+  .radio-group { display: flex; gap: 6px; flex-wrap: wrap; }
+  .radio-btn {
+    flex: 1; min-width: 72px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text-sec);
+    font-family: var(--sans); font-size: 12px; font-weight: 500;
+    padding: 7px 8px; cursor: pointer; text-align: center;
+    transition: all 0.15s;
+  }
+  .radio-btn:hover {
+    border-color: var(--blue-mid);
+    color: #1667b7;
+    background: #E3F2FD;
+  }
+  .radio-btn.active {
+    background: #E3F2FD;
+    border-color: var(--blue-mid);
+    color: #1667b7;
+    box-shadow: inset 0 0 0 1px var(--blue-mid);
+  }
+
+  .calc-btn {
+    background: var(--blue-mid);
+    border: none; border-radius: 4px;
+    color: #fff; font-family: var(--sans); font-size: 13px;
+    font-weight: 500; padding: 11px;
+    cursor: pointer; width: 100%;
+    letter-spacing: 0.4px;
+    box-shadow: 0 2px 4px rgba(21,101,192,0.30);
+    transition: background 0.15s, box-shadow 0.15s;
+  }
+  .calc-btn:hover {
+    background: var(--blue-hover);
+    box-shadow: 0 3px 8px rgba(21,101,192,0.38);
+  }
+  .calc-btn:active { background: #0D47A1; }
+
+  .separator {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2px 0;
+  }
+
+  
+  .region-badge {
+    display: inline-block; font-size: 11px;
+    font-family: var(--mono); font-weight: 500;
+    padding: 4px 12px; border-radius: 12px;
+    margin-top: 4px; letter-spacing: 0.3px;
+  }
+  .r-sat   { background: #E3F2FD; color: #1565C0; border: 1px solid #90CAF9; }
+  .r-super { background: #E8F5E9; color: #1B5E20; border: 1px solid #A5D6A7; }
+  .r-comp  { background: #FFF3E0; color: #BF360C; border: 1px solid #FFCC80; }
+  .r-two   { background: #F3E5F5; color: #6A1B9A; border: 1px solid #CE93D8; }
+  .r-error { background: #FFEBEE; color: #B71C1C; border: 1px solid #EF9A9A; }
+  .r-crit  { background: #E0F7FA; color: #004D40; border: 1px solid #80CBC4; }
+  .msg-warning {
+    background: #FFF8E1; border: 1px solid #FFD54F;
+    border-radius: 4px; padding: 10px 16px;
+    color: #b33f00; font-size: 12px; line-height: 1.5;
+    margin-bottom: 14px; display: flex; gap: 8px; align-items: flex-start;
+  }
+  .msg-warning .warn-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+
+  
+  .output-zone {
+    flex: 1; padding: 20px;
+    overflow-y: auto;
+    background: var(--bg-page);
+  }
+
+  .output-table {
+    width: 100%; border-collapse: collapse;
+    font-family: var(--mono); font-size: 13px;
+    background: var(--bg-panel);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+  }
+  .output-table th {
+    text-align: left; padding: 10px 16px;
+    background: var(--blue-deep);
+    color: rgba(255,255,255,0.92);
+    font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+    font-family: var(--sans); font-weight: 500;
+    border-bottom: none;
+    position: sticky; top: 0;
+  }
+  .output-table th:last-child { text-align: right; }
+  .output-table td {
+    padding: 10px 16px;
+    border-bottom: 1px solid #ECEFF1;
+    color: var(--text-primary);
+  }
+  .output-table td:first-child {
+    color: var(--text-sec);
+    font-family: var(--sans); font-size: 13px;
+    font-weight: 500;
+  }
+  .output-table td:last-child {
+    text-align: right;
+    color: #1667b7;
+    font-weight: 500;
+  }
+  .output-table td.unit-col {
+    color: var(--text-hint); font-size: 11px; text-align: right;
+  }
+  .output-table tr:nth-child(even) td { background: var(--bg-row); }
+  .output-table tr:hover td { background: #E3F2FD; }
+
+  .empty-state {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    height: 100%; color: var(--text-hint);
+    gap: 12px; font-size: 13px;
+  }
+  .empty-icon {
+    font-size: 40px; opacity: 0.45;
+  }
+  .empty-state strong { color: var(--text-sec); }
+
+  .msg-error {
+    background: #FFEBEE; border: 1px solid #EF9A9A;
+    border-radius: 4px; padding: 11px 16px;
+    color: #B71C1C; font-size: 13px;
+    margin-bottom: 14px;
+  }
+
+  .section-title {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.8px;
+    text-transform: uppercase; color: var(--text-sec);
+    margin-bottom: 10px; font-family: var(--sans);
+  }
+
+  .quality-row { display: flex; align-items: center; gap: 8px; }
+  .quality-row input[type=number] { width: 80px; }
+  .quality-hint { font-size: 11px; color: var(--text-hint); line-height: 1.4; }
+
+  
+  .sat-both-table .th-f {
+    background: #1565C0;
+    color: #fff;
+    text-align: center;
+    font-style: normal;
+    letter-spacing: 0.5px;
+  }
+  .sat-both-table .th-g {
+    background: #2E7D32;
+    color: #fff;
+    text-align: center;
+    letter-spacing: 0.5px;
+  }
+  .sat-both-table .th-f em,
+  .sat-both-table .th-g em {
+    font-style: italic;
+    font-size: 13px;
+    font-weight: 700;
+    margin-left: 3px;
+    text-transform: none;
+  }
+  .sat-both-table .prop-col {
+    color: var(--text-sec);
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    min-width: 130px;
+  }
+  .sat-both-table .val-f {
+    text-align: right;
+    font-family: var(--mono);
+    color: #1565C0;
+    font-weight: 500;
+    background: #EEF4FF;
+  }
+  .sat-both-table .val-g {
+    text-align: right;
+    font-family: var(--mono);
+    color: #1B5E20;
+    font-weight: 500;
+    background: #EDF7EE;
+  }
+  .sat-both-table .sat-shared-row td {
+    background: #F8F9FA;
+    border-bottom: 1px solid var(--border);
+  }
+  .sat-both-table .divider-row td {
+    height: 3px;
+    background: var(--border);
+    padding: 0;
+    border: none;
+  }
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button { opacity: 1; }
+
+  @media (max-width: 600px) {
+    .main { flex-direction: column; height: auto; }
+    .input-zone { width: 100%; min-width: 0; border-right: none; border-bottom: 1px solid var(--border); box-shadow: none; }
+    .output-zone { min-height: 300px; }
+  }
+
+  
+  .unit-toggle { display:flex; gap:4px; margin-left:auto; }
+  .unit-btn {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 4px; color: rgba(255,255,255,0.85);
+    font-family: var(--sans); font-size: 12px; font-weight: 500;
+    padding: 5px 14px; cursor: pointer;
+    transition: all 0.15s; letter-spacing: 0.5px;
+  }
+  .unit-btn.active {
+    background: #fff; color: var(--blue-deep);
+    border-color: #fff;
+  }
+  .unit-btn:hover:not(.active) { background: rgba(255,255,255,0.25); }
+
+  
+  .sect-divider {
+    border: none; border-top: 1px solid var(--border);
+    margin: 4px 0;
+  }
+
+  
+  .sub-group {
+    background: #F0F4FF;
+    border: 1px solid #C5CAE9;
+    border-radius: 4px; padding: 10px 10px 8px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .sub-label {
+    font-size: 10px; font-weight: 500; letter-spacing: 1px;
+    text-transform: uppercase; color: #3949AB; margin-bottom: 2px;
+  }
+  
+  .input-wrap { position: relative; display: flex; }
+  .input-wrap input { padding-right: 52px; }
+  .input-unit {
+    position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+    font-size: 10px; color: var(--text-hint); font-family: var(--mono);
+    pointer-events: none; white-space: nowrap;
+  }
+  
+  .result-header {
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 6px; padding: 12px 16px;
+    margin-bottom: 14px;
+    display: flex; align-items: center; gap: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+  }
+  .result-header .rh-label { font-size: 11px; color: var(--text-hint); font-family: var(--sans); }
+  .result-header .rh-val { font-size: 13px; font-weight: 500; color: var(--text-primary); font-family: var(--mono); }
+  .result-header .rh-sep { width:1px; height: 32px; background: var(--border); }
+
+
+:where(a,button,select,input,textarea,canvas,summary,[tabindex]):focus-visible{outline:3px solid var(--accent,#1976d2);outline-offset:2px;border-radius:6px}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+</style>
+<style id="orv-movil-a11y-css">
+
+:focus-visible{outline:3px solid #ff9800!important;outline-offset:2px!important}
+[role="button"][tabindex]{cursor:pointer}
+.orv-tblwrap{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch;background:linear-gradient(to left,rgba(0,0,0,.10),rgba(0,0,0,0) 14px) right/14px 100% no-repeat local,linear-gradient(to left,rgba(0,0,0,.12),rgba(0,0,0,0) 10px) right/10px 100% no-repeat scroll}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+@media (max-width:720px){
+  
+  .orv-hdr{flex-wrap:wrap!important;height:auto!important;min-height:52px!important;
+    padding-top:8px!important;padding-bottom:8px!important;padding-left:12px!important;padding-right:12px!important;
+    row-gap:6px!important;column-gap:10px!important;overflow:visible!important}
+  .orv-hdr>*{min-width:0!important;max-width:100%!important}
+  .orv-hdr>[class*="text"],.orv-hdr>[class*="title"],.orv-hdr>div:not([class]){flex:1 1 180px!important}
+  .orv-hdr *{overflow-wrap:anywhere}
+  .orv-hdr .topbar-center{position:static!important;transform:none!important;left:auto!important;top:auto!important;
+    flex:1 1 100%!important;justify-content:flex-start!important}
+  .orv-hdr .topbar-brand{font-size:1rem!important}
+  .orv-hdr>span[style*="visibility:hidden"]{display:none!important}
+  .orv-hdr h1{font-size:.95rem!important}
+  .orv-hdr .topbar-brand+span[style*="width:1px"]{display:none!important}
+  .orv-hdr *{white-space:normal!important;text-overflow:clip!important}
+  .orv-hdr .unit-toggle{margin-left:auto!important}
+  
+  img,video{max-width:100%;height:auto}
+  .orv-nowrap-fix{white-space:normal!important;overflow-wrap:anywhere!important}
+  .orv-shrink{min-width:0!important;max-width:100%!important}
+  
+  #orvhelp-btn{right:10px!important;left:auto!important;bottom:10px!important;width:46px!important;height:46px!important;padding:0!important;
+    justify-content:center!important;font-size:0!important;gap:0!important;letter-spacing:0!important;opacity:.92}
+  #orvhelp-btn svg{width:22px!important;height:22px!important}
+  body{padding-bottom:64px!important}
+}
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <span class="topbar-brand" aria-label="TermoIA Dinámica" style="display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:1.05rem;letter-spacing:.3px;color:#fff;flex-shrink:0"><span style="display:flex;align-items:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7dd8f8" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 17 8 11 13 14 20 6"/><polyline points="17 6 20 6 20 9"/></svg></span>Termo<span style="color:#f97316"> · IA · </span>Dinámica<span style="background:rgba(255,255,255,.18);border-radius:8px;padding:4px 6px;display:flex;align-items:center"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg></span></span>
+  <span style="width:1px;height:32px;background:rgba(255,255,255,.28);flex-shrink:0"></span>
+  <div class="app-logo">H₂O</div>
+  <div>
+    <div class="app-title">Propiedades Termodinámicas del Agua</div>
+  </div>
+  <div class="unit-toggle">
+    <button class="unit-btn active" id="btn-si" onclick="setUnits('SI')">SI</button>
+    <button class="unit-btn" id="btn-en" onclick="setUnits('EN')">Inglés</button>
+  </div>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('sat')">Saturado</button>
+  <button class="tab-btn" onclick="switchTab('super')">Sobrecalentado / Comprimido</button>
+</div>
+
+<div class="main panel active" id="panel-sat">
+
+  <div class="input-zone">
+
+    <div class="field-group">
+      <div class="zone-label">Tabla de:</div>
+      <div class="radio-group">
+        <div class="radio-btn active" id="sat-var-T" onclick="setSatVar('T')">Temperatura</div>
+        <div class="radio-btn"        id="sat-var-P" onclick="setSatVar('P')">Presión</div>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <div class="zone-label" id="sat-var-label">Temperatura</div>
+      <div class="input-wrap">
+        <input type="number" id="sat-val" placeholder="ej. 100" step="any">
+        <span class="input-unit" id="sat-val-unit">°C</span>
+      </div>
+    </div>
+
+    <hr class="sect-divider">
+
+    <div class="field-group">
+      <div class="zone-label">Fase</div>
+      <div class="radio-group">
+        <div class="radio-btn active" id="phase-satboth" onclick="setPhase('satboth')">Vapor / Líquido</div>
+        <div class="radio-btn"        id="phase-two"     onclick="setPhase('twophase')">Dos Fases</div>
+      </div>
+    </div>
+
+    <div class="sub-group" id="quality-group" style="display:none">
+      <div class="sub-label">Calidad de vapor · x</div>
+      <div class="input-wrap">
+        <input type="number" id="quality-val" placeholder="0.00 – 1.00"
+               min="0" max="1" step="0.01" value="0.5">
+        <span class="input-unit">—</span>
+      </div>
+      <div class="quality-hint">0 = líquido saturado &nbsp;·&nbsp; 1 = vapor saturado</div>
+    </div>
+
+    <hr class="sect-divider">
+
+    <button class="calc-btn" onclick="calcSat()">Calcular propiedades</button>
+    <div id="sat-region-badge"></div>
+
+  </div><div class="output-zone" id="sat-output">
+    <div class="empty-state">
+      <div class="empty-icon">⊙</div>
+      <div>Seleccione una variable, introduzca su valor y presione <strong>Calcular</strong></div>
+    </div>
+  </div>
+
+</div><div class="main panel" id="panel-super">
+
+  <div class="input-zone">
+
+    <div class="field-group">
+      <div class="zone-label">Primera variable</div>
+      <select id="super-var1" onchange="onSuperVarChange()">
+        <option value="T">Temperatura</option>
+        <option value="P">Presión</option>
+        <option value="v">Volumen específico</option>
+        <option value="h">Entalpía</option>
+        <option value="u">Energía interna</option>
+        <option value="s">Entropía</option>
+      </select>
+      <div class="input-wrap" style="margin-top:4px">
+        <input type="number" id="super-val1" placeholder="valor" step="any">
+        <span class="input-unit" id="super-unit1">°C</span>
+      </div>
+    </div>
+
+    <hr class="sect-divider">
+
+    <div class="field-group">
+      <div class="zone-label">Segunda variable</div>
+      <select id="super-var2" onchange="onSuperVarChange()">
+        <option value="P">Presión</option>
+        <option value="T">Temperatura</option>
+        <option value="v">Volumen específico</option>
+        <option value="h">Entalpía</option>
+        <option value="u">Energía interna</option>
+        <option value="s">Entropía</option>
+      </select>
+      <div class="input-wrap" style="margin-top:4px">
+        <input type="number" id="super-val2" placeholder="valor" step="any">
+        <span class="input-unit" id="super-unit2">bar</span>
+      </div>
+    </div>
+
+    <hr class="sect-divider">
+
+    <button class="calc-btn" onclick="calcSuper()">Calcular propiedades</button>
+    <div id="super-region-badge"></div>
+
+  </div><div class="output-zone" id="super-output">
+    <div class="empty-state">
+      <div class="empty-icon">⊙</div>
+      <div>Seleccione dos variables, introduzca sus valores y presione <strong>Calcular</strong></div>
+    </div>
+  </div>
+
+</div><script>(function(_0x322d3b,_0x39f9d2){const _0x3264ba=_0x322d3b();while(!![]){try{const _0xe804ea=-parseInt(_4c9c210_0x1023(0x226))/0x1*(parseInt(_4c9c210_0x1023(0x1db))/0x2)+-parseInt(_4c9c210_0x1023(0x1c4))/0x3*(-parseInt(_4c9c210_0x1023(0x1cb))/0x4)+-parseInt(_4c9c210_0x1023(0x202))/0x5+-parseInt(_4c9c210_0x1023(0x1a5))/0x6*(-parseInt(_4c9c210_0x1023(0x1b9))/0x7)+-parseInt(_4c9c210_0x1023(0x1e4))/0x8*(parseInt(_4c9c210_0x1023(0x1cd))/0x9)+parseInt(_4c9c210_0x1023(0x22a))/0xa*(-parseInt(_4c9c210_0x1023(0x224))/0xb)+parseInt(_4c9c210_0x1023(0x1ad))/0xc;if(_0xe804ea===_0x39f9d2)break;else _0x3264ba['push'](_0x3264ba['shift']());}catch(_0x61b34f){_0x3264ba['push'](_0x3264ba['shift']());}}}(_4c9c210_0x1b19,0x72c39));const A2=[[0.01,0.00611,1.0002,206.136,0x0,2375.3,0.01,2501.3,2501.4,0x0,9.1562],[0x4,0.00813,1.0001,157.232,16.77,2380.9,16.78,2491.9,2508.7,0.061,9.0514],[0x5,0.00872,1.0001,147.12,20.97,2382.3,20.98,2489.6,2510.6,0.0761,9.0257],[0x6,0.00935,1.0001,137.734,25.19,2383.6,25.2,2487.2,2512.4,0.0912,9.0003],[0x8,0.01072,1.0002,120.917,33.59,2386.4,33.6,2482.5,2516.1,0.1212,8.9501],[0xa,0.01228,1.0004,106.379,0x2a,2389.2,42.01,2477.7,2519.8,0.151,8.9008],[0xb,0.01312,1.0004,99.857,46.2,2390.5,46.2,2475.4,2521.6,0.1658,8.8765],[0xc,0.01402,1.0005,93.784,50.41,2391.9,50.41,0x9a9,2523.4,0.1806,8.8524],[0xd,0.01497,1.0007,88.124,54.6,2393.3,54.6,2470.7,2525.3,0.1953,8.8285],[0xe,0.01598,1.0008,82.848,58.79,2394.7,58.8,2468.3,2527.1,0.2099,8.8048],[0xf,0.01705,1.0009,77.926,62.99,2396.1,62.99,2465.9,2528.9,0.2245,8.7814],[0x10,0.01818,1.0011,73.333,67.18,2397.4,67.19,2463.6,2530.8,0.239,8.7582],[0x11,0.01938,1.0012,69.044,71.38,2398.8,71.38,2461.2,2532.6,0.2535,8.7351],[0x12,0.02064,1.0014,65.038,75.57,2400.2,75.58,2458.8,2534.4,0.2679,8.7123],[0x13,0.02198,1.0016,61.293,79.76,2401.6,79.77,2456.5,2536.2,0.2823,8.6897],[0x14,0.02339,1.0018,57.791,83.95,2402.9,83.96,2454.1,2538.1,0.2966,8.6672],[0x15,0.02487,1.002,54.514,88.14,2404.3,88.14,2451.8,2539.9,0.3109,8.645],[0x16,0.02645,1.0022,51.447,92.32,2405.7,92.33,2449.4,2541.7,0.3251,8.6229],[0x17,0.0281,1.0024,48.574,96.51,0x967,96.52,0x98f,2543.5,0.3393,8.6011],[0x18,0.02985,1.0027,45.883,100.7,2408.4,100.7,2444.7,2545.4,0.3534,8.5794],[0x19,0.03169,1.0029,43.36,104.88,2409.8,104.89,2442.3,2547.2,0.3674,8.558],[0x1a,0.03363,1.0032,40.994,109.06,2411.1,109.07,2439.9,0x9f5,0.3814,8.5367],[0x1b,0.03567,1.0035,38.774,113.25,2412.5,113.25,2437.6,2550.8,0.3954,8.5156],[0x1c,0.03782,1.0037,36.69,117.42,2413.9,117.43,2435.2,2552.6,0.4093,8.4946],[0x1d,0.04008,1.004,34.733,121.6,2415.2,121.61,2432.8,2554.5,0.4231,8.4739],[0x1e,0.04246,1.0043,32.894,125.78,2416.6,125.79,2430.5,2556.3,0.4369,8.4533],[0x1f,0.04496,1.0046,31.165,129.96,0x972,129.97,2428.1,2558.1,0.4507,8.4329],[0x20,0.04759,1.005,29.54,134.14,2419.3,134.15,2425.7,2559.9,0.4644,8.4127],[0x21,0.05034,1.0053,28.011,138.32,2420.7,138.33,2423.4,2561.7,0.4781,8.3927],[0x22,0.05324,1.0056,26.571,142.5,0x976,142.5,0x975,2563.5,0.4917,8.3728],[0x23,0.05628,1.006,25.216,146.67,2423.4,146.68,2418.6,2565.3,0.5053,8.3531],[0x24,0.05947,1.0063,23.94,150.85,2424.7,150.86,2416.2,2567.1,0.5188,8.3336],[0x26,0.06632,1.0071,21.602,159.2,2427.4,159.21,2411.5,2570.7,0.5458,8.295],[0x28,0.07384,1.0078,19.523,167.56,2430.1,167.57,2406.7,2574.3,0.5725,8.257],[0x2d,0.09593,1.0099,15.258,188.44,2436.8,188.45,2394.8,2583.2,0.6387,8.1648],[0x32,0.1235,1.0121,12.032,209.32,2443.5,209.33,2382.7,2592.1,0.7038,8.0763],[0x37,0.1576,1.0146,9.568,230.21,2450.1,230.23,2370.7,2600.9,0.7679,7.9913],[0x3c,0.1994,1.0172,7.671,251.11,2456.6,251.13,2358.5,2609.6,0.8312,7.9096],[0x41,0.2503,1.0199,6.197,272.02,2463.1,272.06,2346.2,2618.3,0.8935,7.831],[0x46,0.3119,1.0228,5.042,292.95,2469.6,292.98,2333.8,2626.8,0.9549,7.7553],[0x4b,0.3858,1.0259,4.131,313.9,2475.9,313.93,2321.4,2635.3,1.0155,7.6824],[0x50,0.4739,1.0291,3.407,334.86,2482.2,334.91,2308.8,2643.7,1.0753,7.6122],[0x55,0.5783,1.0325,2.828,355.84,2488.4,355.9,0x8f8,2651.9,1.1343,7.5445],[0x5a,0.7014,1.036,2.361,376.85,2494.5,376.92,2283.2,2660.1,1.1925,7.4791],[0x5f,0.8455,1.0397,1.982,397.88,2500.6,397.96,2270.2,2668.1,1.25,7.4159],[0x64,1.014,1.0435,1.673,418.94,2506.5,419.04,0x8d1,2676.1,1.3069,7.3549],[0x6e,1.433,1.0516,1.21,461.14,2518.1,461.3,2230.2,2691.5,1.4185,7.2387],[0x78,1.985,1.0603,0.8919,503.5,2529.3,503.71,2202.6,2706.3,1.5276,7.1296],[0x82,2.701,1.0697,0.6685,546.02,2539.9,546.31,2174.2,2720.5,1.6344,7.0269],[0x8c,3.613,1.0797,0.5089,588.74,0x9f6,589.13,2144.7,2733.9,1.7391,6.9299],[0x96,4.758,1.0905,0.3928,631.68,2559.5,632.2,2114.3,2746.5,1.8418,6.8379],[0xa0,6.178,1.102,0.3071,674.86,2568.4,675.55,2082.6,2758.1,1.9427,6.7502],[0xaa,7.917,1.1143,0.2428,718.33,2576.5,719.21,2049.5,2768.7,2.0419,6.6663],[0xb4,10.02,1.1274,0.1941,762.09,2583.7,763.22,0x7df,2778.2,2.1396,6.5857],[0xbe,12.54,1.1414,0.1565,806.19,0xa1e,807.62,1978.8,2786.4,2.2359,6.5079],[0xc8,15.54,1.1565,0.1274,850.65,2595.3,852.45,1940.7,2793.2,2.3309,6.4323],[0xd2,19.06,1.1726,0.1044,895.53,2599.5,897.76,1900.7,2798.5,2.4248,6.3585],[0xdc,23.18,1.19,0.08619,940.87,2602.4,943.62,1858.5,2802.1,2.5178,6.2861],[0xe6,27.95,1.2088,0.07158,986.74,2603.9,990.12,1813.8,0xaf4,2.6099,6.2146],[0xf0,33.44,1.2291,0.05976,1033.2,0xa2c,1037.3,1766.5,2803.8,2.7015,6.1437],[0xfa,39.73,1.2512,0.05013,1080.4,2602.4,1085.4,1716.2,2801.5,2.7927,6.073],[0x104,46.88,1.2755,0.04221,1128.4,0xa27,1134.4,1662.5,2796.6,2.8838,6.0019],[0x10e,54.99,1.3023,0.03564,1177.4,2593.7,1184.5,1605.2,2789.7,2.9751,5.9301],[0x118,64.12,1.3321,0.03017,1227.5,2586.1,0x4d4,1543.6,2779.6,3.0668,5.8571],[0x122,74.36,1.3656,0.02557,1278.9,0xa10,1289.1,1477.1,2766.2,3.1594,5.7821],[0x12c,85.81,1.4036,0.02167,0x534,0xa03,0x540,1404.9,0xabd,3.2534,5.7045],[0x140,112.7,1.4988,0.01549,1444.6,2525.5,1461.5,1238.6,2700.1,3.448,5.5362],[0x154,145.9,1.6379,0.0108,1570.3,2464.6,1594.2,1027.9,0xa3e,3.6594,5.3357],[0x168,186.5,1.8925,0.006945,1725.2,2351.5,1760.5,720.5,0x9b1,3.9147,5.0526],[374.14,220.9,3.155,0.003155,2029.6,2029.6,2099.3,0x0,2099.3,4.4298,4.4298]],A3=[[28.96,0.04,1.004,34.8,121.45,2415.2,121.46,2432.9,2554.4,0.4226,8.4746],[36.16,0.06,1.0064,23.739,151.53,0x979,151.53,2415.9,2567.4,0.521,8.3304],[41.51,0.08,1.0084,18.103,173.87,2432.2,173.88,2403.1,0xa11,0.5926,8.2287],[45.81,0.1,1.0102,14.674,191.82,2437.9,191.83,2392.8,2584.7,0.6493,8.1502],[60.06,0.2,1.0172,7.649,251.38,2456.7,251.4,2358.3,2609.7,0.832,7.9085],[69.1,0.3,1.0223,5.229,289.2,2468.4,289.23,2336.1,2625.3,0.9439,7.7686],[75.87,0.4,1.0265,3.993,317.53,0x9ad,317.58,2319.2,2636.8,1.0259,7.67],[81.33,0.5,1.03,3.24,340.44,2483.9,340.49,2305.4,2645.9,1.091,7.5939],[85.94,0.6,1.0331,2.732,359.79,2489.6,359.86,2293.6,2653.5,1.1453,7.532],[89.95,0.7,1.036,2.365,376.63,2494.5,376.7,2283.3,0xa64,1.1919,7.4797],[93.5,0.8,1.038,2.087,391.58,2498.8,391.66,2274.1,2665.8,1.2329,7.4346],[96.71,0.9,1.041,1.869,405.06,2502.6,405.15,2265.7,2670.9,1.2695,7.3949],[99.63,0x1,1.0432,1.694,417.36,2506.1,417.46,0x8d2,2675.5,1.3026,7.3594],[111.4,1.5,1.0528,1.159,466.94,2519.7,467.11,2226.5,2693.6,1.4336,7.2233],[120.2,0x2,1.0605,0.8857,504.49,2529.5,504.7,2201.9,2706.7,1.5301,7.1271],[127.4,2.5,1.0672,0.7187,535.1,2537.2,535.37,2181.5,2716.9,1.6072,7.0527],[133.6,0x3,1.0732,0.6058,561.15,2543.6,561.47,2163.8,2725.3,1.6718,6.9919],[138.9,3.5,1.0786,0.5243,583.95,2546.9,584.33,2148.1,2732.4,1.7275,6.9405],[143.6,0x4,1.0836,0.4625,604.31,2553.6,604.74,2133.8,2738.6,1.7766,6.8959],[147.9,4.5,1.0882,0.414,622.25,2557.6,623.25,2120.7,2743.9,1.8207,6.8565],[151.9,0x5,1.0926,0.3749,639.68,2561.2,640.23,2108.5,2748.7,1.8607,6.8212],[158.9,0x6,1.1006,0.3157,669.9,2567.4,670.56,2086.3,2756.8,1.9312,6.76],[0xa5,0x7,1.108,0.2729,696.44,2572.5,697.22,2066.3,2763.5,1.9922,6.708],[170.4,0x8,1.1148,0.2404,720.22,2576.8,721.11,0x800,2769.1,2.0462,6.6628],[175.4,0x9,1.1212,0.215,741.83,2580.5,742.83,2031.1,2773.9,2.0946,6.6226],[179.9,0xa,1.1273,0.1944,761.68,2583.6,762.81,2015.3,2778.1,2.1387,6.5863],[198.3,0xf,1.1539,0.1318,843.16,2594.5,844.84,1947.3,2792.2,2.315,6.4448],[212.4,0x14,1.1767,0.09963,906.44,2600.3,908.79,1890.7,2799.5,2.4474,6.3409],[0xe0,0x19,1.1973,0.07998,959.11,2603.1,962.11,0x731,2803.1,2.5547,6.2575],[233.9,0x1e,1.2165,0.06668,1004.8,2604.1,1008.4,1795.7,2804.2,2.6457,6.1869],[242.6,0x23,1.2347,0.05707,1045.4,2603.7,1049.8,1753.7,2803.4,2.7253,6.1253],[250.4,0x28,1.2522,0.04978,1082.3,2602.3,1087.3,1714.1,2801.4,2.7964,6.0701],[257.5,0x2d,1.2692,0.04406,1116.2,2600.1,1121.9,1676.4,2798.3,2.861,6.0199],[0x108,0x32,1.2859,0.03944,1147.8,2597.1,1154.2,1640.1,2794.3,2.9202,5.9734],[275.6,0x3c,1.3187,0.03244,1205.4,2589.7,1213.4,0x623,2784.3,3.0267,5.8892],[285.9,0x46,1.3513,0.02737,1257.6,2580.5,0x4f3,1505.1,2772.1,3.1211,5.8133],[295.1,0x50,1.3842,0.02352,1305.6,2569.8,1316.6,1441.3,0xac6,3.2068,5.7432],[303.4,0x5a,1.4178,0.02048,1350.5,2557.8,1363.3,1378.9,2742.1,3.2858,5.6772],[311.1,0x64,1.4524,0.01803,0x571,2544.4,1407.6,1317.1,2724.7,3.3596,5.6141],[318.2,0x6e,1.4886,0.01599,1433.7,2529.8,1450.1,1255.5,2705.6,3.4295,5.5527],[324.8,0x78,1.5267,0.01426,0x5c1,2513.7,1491.3,1193.6,2684.9,3.4962,5.4924],[330.9,0x82,1.5671,0.01278,1511.1,2496.1,1531.5,1130.7,2662.2,3.5606,5.4323],[336.8,0x8c,1.6107,0.01149,1548.6,2476.8,1571.1,1066.5,2637.6,3.6232,5.3717],[342.2,0x96,1.6581,0.01034,1585.6,2455.5,1610.5,0x3e8,2610.5,3.6848,5.3098],[347.4,0xa0,1.7107,0.009306,1622.7,2431.7,1650.1,930.6,2580.6,3.7461,5.2455],[352.4,0xaa,1.7702,0.008364,1660.2,0x965,1690.3,856.9,2547.2,3.8079,5.1777],[357.1,0xb4,1.8397,0.007489,1698.9,2374.3,0x6c4,777.1,2509.1,3.8715,5.1044],[361.5,0xbe,1.9243,0.006657,1739.9,2338.1,1776.5,0x2b0,2464.5,3.9388,5.0228],[365.8,0xc8,2.036,0.005834,1785.6,0x8f5,1826.3,583.4,2409.7,4.0139,4.9269],[374.1,220.9,3.155,0.003155,2029.6,2029.6,2099.3,0x0,2099.3,4.4298,4.4298]],A4={0.06:{'Tsat':36.16,'d':[{'T':_4c9c210_0x1023(0x20d),'v':23.739,'u':0x979,'h':2567.4,'s':8.3304},{'T':0x50,'v':27.132,'u':2487.3,'h':2650.1,'s':8.5804},{'T':0x78,'v':30.219,'u':2544.7,'h':0xaa6,'s':8.784},{'T':0xa0,'v':33.302,'u':2602.7,'h':2802.5,'s':8.9693},{'T':0xc8,'v':36.383,'u':2661.4,'h':2879.7,'s':9.1398},{'T':0xf0,'v':39.462,'u':0xaa1,'h':2957.8,'s':9.2982},{'T':0x118,'v':42.54,'u':2781.5,'h':3036.8,'s':9.4464},{'T':0x140,'v':45.618,'u':0xb1b,'h':3116.7,'s':9.5859},{'T':0x168,'v':48.696,'u':2905.5,'h':3197.7,'s':9.718},{'T':0x190,'v':51.774,'u':0xb99,'h':3279.6,'s':9.8435},{'T':0x1b8,'v':54.851,'u':3033.5,'h':3362.6,'s':9.9633},{'T':0x1f4,'v':59.467,'u':3132.3,'h':3489.1,'s':10.1336}]},0.35:{'Tsat':72.69,'d':[{'T':_4c9c210_0x1023(0x20d),'v':4.526,'u':0x9a9,'h':2631.4,'s':7.7158},{'T':0x50,'v':4.625,'u':2483.7,'h':2645.6,'s':7.7564},{'T':0x78,'v':5.163,'u':2542.4,'h':2723.1,'s':7.9644},{'T':0xa0,'v':5.696,'u':2601.2,'h':2800.6,'s':8.1519},{'T':0xc8,'v':6.228,'u':2660.4,'h':2878.4,'s':8.3237},{'T':0xf0,'v':6.758,'u':2720.3,'h':2956.8,'s':8.4828},{'T':0x118,'v':7.287,'u':2780.9,'h':0xbdc,'s':8.6314},{'T':0x140,'v':7.815,'u':2842.5,'h':3116.1,'s':8.7712},{'T':0x168,'v':8.344,'u':2905.1,'h':3197.1,'s':8.9034},{'T':0x190,'v':8.872,'u':2968.6,'h':3279.2,'s':9.0291},{'T':0x1b8,'v':9.4,'u':3033.2,'h':3362.2,'s':9.149},{'T':0x1f4,'v':10.192,'u':3132.1,'h':3488.8,'s':9.3194}]},0.7:{'Tsat':89.95,'d':[{'T':'Sat','v':2.365,'u':2494.5,'h':0xa64,'s':7.4797},{'T':0x64,'v':2.434,'u':2509.7,'h':0xa78,'s':7.5341},{'T':0x78,'v':2.571,'u':2539.7,'h':2719.6,'s':7.6375},{'T':0xa0,'v':2.841,'u':2599.4,'h':2798.2,'s':7.8279},{'T':0xc8,'v':3.108,'u':2659.1,'h':2876.7,'s':8.0012},{'T':0xf0,'v':3.374,'u':2719.3,'h':2955.5,'s':8.1611},{'T':0x118,'v':3.64,'u':2780.2,'h':0xbdb,'s':8.3162},{'T':0x140,'v':3.905,'u':0xb1a,'h':3115.3,'s':8.4504},{'T':0x168,'v':4.17,'u':2904.6,'h':3196.5,'s':8.5828},{'T':0x190,'v':4.434,'u':2968.2,'h':3278.6,'s':8.7086},{'T':0x1b8,'v':4.698,'u':3032.9,'h':3361.8,'s':8.8286},{'T':0x1f4,'v':5.095,'u':3131.8,'h':3488.5,'s':8.9991}]},0x1:{'Tsat':99.63,'d':[{'T':_4c9c210_0x1023(0x20d),'v':1.694,'u':2506.1,'h':2675.5,'s':7.3594},{'T':0x64,'v':1.696,'u':2506.7,'h':2676.2,'s':7.3614},{'T':0x78,'v':1.793,'u':2537.3,'h':2716.6,'s':7.4668},{'T':0xa0,'v':1.984,'u':2597.8,'h':2796.2,'s':7.6597},{'T':0xc8,'v':2.172,'u':2658.1,'h':2875.3,'s':7.8343},{'T':0xf0,'v':2.359,'u':2718.5,'h':2954.5,'s':7.9949},{'T':0x118,'v':2.546,'u':2779.6,'h':3034.2,'s':8.1445},{'T':0x140,'v':2.732,'u':2841.5,'h':3114.6,'s':8.2849},{'T':0x168,'v':2.917,'u':2904.2,'h':3195.9,'s':8.4175},{'T':0x190,'v':3.103,'u':2967.9,'h':3278.2,'s':8.5435},{'T':0x1b8,'v':3.288,'u':3032.6,'h':3361.4,'s':8.6636},{'T':0x1f4,'v':3.565,'u':3131.6,'h':3488.1,'s':8.8342}]},1.5:{'Tsat':111.37,'d':[{'T':_4c9c210_0x1023(0x20d),'v':1.159,'u':2519.7,'h':2693.6,'s':7.2233},{'T':0x78,'v':1.188,'u':2533.3,'h':2711.4,'s':7.2693},{'T':0xa0,'v':1.317,'u':2595.2,'h':2792.8,'s':7.4665},{'T':0xc8,'v':1.444,'u':2656.2,'h':2872.9,'s':7.6433},{'T':0xf0,'v':1.57,'u':2717.2,'h':2952.7,'s':7.8052},{'T':0x118,'v':1.695,'u':2778.6,'h':3032.8,'s':7.9555},{'T':0x140,'v':1.819,'u':2840.6,'h':3113.5,'s':8.0964},{'T':0x168,'v':1.943,'u':2903.5,'h':0xc7b,'s':8.2293},{'T':0x190,'v':2.067,'u':2967.3,'h':3277.4,'s':8.3555},{'T':0x1b8,'v':2.191,'u':3032.1,'h':3360.7,'s':8.4757},{'T':0x1f4,'v':2.376,'u':3131.2,'h':3487.6,'s':8.6466},{'T':0x258,'v':2.685,'u':3301.7,'h':3704.3,'s':8.9101}]},0x3:{'Tsat':133.55,'d':[{'T':'Sat','v':0.6058,'u':2543.6,'h':2725.3,'s':6.9919},{'T':0xa0,'v':0.6513,'u':2587.1,'h':2782.3,'s':7.1276},{'T':0xc8,'v':0.7163,'u':2650.7,'h':2865.5,'s':7.3115},{'T':0xf0,'v':0.7805,'u':2713.1,'h':2947.3,'s':7.4774},{'T':0x118,'v':0.8438,'u':2775.4,'h':3028.6,'s':7.6299},{'T':0x140,'v':0.9067,'u':2838.1,'h':3110.1,'s':7.7722},{'T':0x168,'v':0.9685,'u':2901.4,'h':3192.2,'s':7.9061},{'T':0x190,'v':1.032,'u':2965.6,'h':0xccb,'s':8.033},{'T':0x1b8,'v':1.094,'u':3030.6,'h':3358.7,'s':8.1538},{'T':0x1f4,'v':1.187,'u':0xc3a,'h':0xd9e,'s':8.3251},{'T':0x258,'v':1.341,'u':3300.8,'h':3703.2,'s':8.5892}]},0x5:{'Tsat':151.86,'d':[{'T':_4c9c210_0x1023(0x20d),'v':0.3749,'u':2561.2,'h':2748.7,'s':6.8213},{'T':0xb4,'v':0.4045,'u':2609.7,'h':0xafc,'s':6.9656},{'T':0xc8,'v':0.4249,'u':2642.9,'h':2855.4,'s':7.0592},{'T':0xf0,'v':0.4646,'u':2707.6,'h':2939.9,'s':7.2307},{'T':0x118,'v':0.5034,'u':2771.2,'h':3022.9,'s':7.3865},{'T':0x140,'v':0.5416,'u':2834.7,'h':3105.6,'s':7.5308},{'T':0x168,'v':0.5796,'u':2898.7,'h':3188.4,'s':7.666},{'T':0x190,'v':0.6173,'u':2963.2,'h':3271.9,'s':7.7938},{'T':0x1b8,'v':0.6548,'u':3028.6,'h':0xd1c,'s':7.9152},{'T':0x1f4,'v':0.7109,'u':3128.4,'h':3483.9,'s':8.0873},{'T':0x258,'v':0.8041,'u':3299.6,'h':3701.7,'s':8.3522},{'T':0x2bc,'v':0.8969,'u':3477.5,'h':3925.9,'s':8.5952}]},0x7:{'Tsat':164.97,'d':[{'T':'Sat','v':0.2729,'u':2572.5,'h':2763.5,'s':6.708},{'T':0xb4,'v':0.2847,'u':2599.8,'h':2799.1,'s':6.788},{'T':0xc8,'v':0.2999,'u':2634.8,'h':2844.8,'s':6.8865},{'T':0xf0,'v':0.3292,'u':2701.8,'h':2932.2,'s':7.0641},{'T':0x118,'v':0.3574,'u':2766.9,'h':3017.1,'s':7.2233},{'T':0x140,'v':0.3852,'u':2831.3,'h':3100.9,'s':7.3697},{'T':0x168,'v':0.4126,'u':2895.8,'h':3184.7,'s':7.5063},{'T':0x190,'v':0.4397,'u':2960.9,'h':3268.7,'s':7.635},{'T':0x1b8,'v':0.4667,'u':3026.6,'h':3353.3,'s':7.7571},{'T':0x1f4,'v':0.507,'u':3126.8,'h':3481.7,'s':7.9299},{'T':0x258,'v':0.5738,'u':3298.5,'h':3700.2,'s':8.1956},{'T':0x2bc,'v':0.6403,'u':3476.6,'h':3924.8,'s':8.4391}]},0xa:{'Tsat':179.91,'d':[{'T':_4c9c210_0x1023(0x20d),'v':0.1944,'u':2583.6,'h':2778.1,'s':6.5865},{'T':0xc8,'v':0.206,'u':2621.9,'h':2827.9,'s':6.694},{'T':0xf0,'v':0.2275,'u':2692.9,'h':2920.4,'s':6.8817},{'T':0x118,'v':0.248,'u':2760.2,'h':3008.2,'s':7.0465},{'T':0x140,'v':0.2678,'u':2826.1,'h':3093.9,'s':7.1962},{'T':0x168,'v':0.2873,'u':2891.6,'h':3178.9,'s':7.3349},{'T':0x190,'v':0.3066,'u':2957.3,'h':3263.9,'s':7.4651},{'T':0x1b8,'v':0.3257,'u':3023.6,'h':3349.3,'s':7.5883},{'T':0x1f4,'v':0.3541,'u':3124.4,'h':3478.5,'s':7.7622},{'T':0x21c,'v':0.3729,'u':3192.6,'h':3565.6,'s':7.872},{'T':0x258,'v':0.4011,'u':3296.8,'h':3697.9,'s':8.029},{'T':0x280,'v':0.4198,'u':3367.4,'h':3787.2,'s':8.129}]},0xf:{'Tsat':198.32,'d':[{'T':_4c9c210_0x1023(0x20d),'v':0.1318,'u':2594.5,'h':2792.2,'s':6.4448},{'T':0xc8,'v':0.1325,'u':2598.1,'h':2796.8,'s':6.4546},{'T':0xf0,'v':0.1483,'u':2676.9,'h':2899.3,'s':6.6628},{'T':0x118,'v':0.1627,'u':2748.6,'h':2992.7,'s':6.8381},{'T':0x140,'v':0.1765,'u':2817.1,'h':3081.9,'s':6.9938},{'T':0x168,'v':0.1899,'u':2884.4,'h':3169.2,'s':7.1363},{'T':0x190,'v':0.203,'u':2951.3,'h':3255.8,'s':7.269},{'T':0x1b8,'v':0.216,'u':3018.5,'h':3342.5,'s':7.394},{'T':0x1f4,'v':0.2352,'u':3120.3,'h':3473.1,'s':7.5698},{'T':0x21c,'v':0.2478,'u':3189.1,'h':3560.9,'s':7.6805},{'T':0x258,'v':0.2668,'u':3293.9,'h':0xe6e,'s':7.8385},{'T':0x280,'v':0.2793,'u':3364.8,'h':3783.8,'s':7.9391}]},0x14:{'Tsat':212.42,'d':[{'T':_4c9c210_0x1023(0x20d),'v':0.09963,'u':2600.3,'h':2799.5,'s':6.3409},{'T':0xf0,'v':0.1085,'u':2659.6,'h':2876.5,'s':6.4952},{'T':0x118,'v':0.12,'u':2736.4,'h':2976.4,'s':6.6828},{'T':0x140,'v':0.1308,'u':2807.9,'h':3069.5,'s':6.8452},{'T':0x168,'v':0.1411,'u':0xb3d,'h':3159.3,'s':6.9917},{'T':0x190,'v':0.1512,'u':2945.2,'h':3247.6,'s':7.1271},{'T':0x1b8,'v':0.1611,'u':3013.4,'h':3335.6,'s':7.254},{'T':0x1f4,'v':0.1757,'u':3116.2,'h':3467.6,'s':7.4317},{'T':0x21c,'v':0.1853,'u':3185.6,'h':3556.1,'s':7.5434},{'T':0x258,'v':0.1996,'u':3290.9,'h':3690.1,'s':7.7024},{'T':0x280,'v':0.2091,'u':3362.2,'h':3780.4,'s':7.8035},{'T':0x2bc,'v':0.2232,'u':3470.9,'h':3917.4,'s':7.9487}]},0x1e:{'Tsat':233.9,'d':[{'T':_4c9c210_0x1023(0x20d),'v':0.06668,'u':2604.1,'h':2804.2,'s':6.1869},{'T':0xf0,'v':0.06821,'u':2619.7,'h':2824.3,'s':6.2265},{'T':0x118,'v':0.07714,'u':2709.9,'h':2941.3,'s':6.4462},{'T':0x140,'v':0.08501,'u':2788.4,'h':3043.4,'s':6.6245},{'T':0x168,'v':0.09233,'u':2861.7,'h':3138.7,'s':6.7801},{'T':0x190,'v':0.09938,'u':2932.8,'h':3230.9,'s':6.9212},{'T':0x1b8,'v':0.1062,'u':3002.9,'h':3321.5,'s':7.052},{'T':0x1f4,'v':0.1162,'u':0xc24,'h':3456.5,'s':7.2338},{'T':0x21c,'v':0.1227,'u':3178.4,'h':3546.6,'s':7.3474},{'T':0x258,'v':0.1324,'u':0xcd5,'h':3682.3,'s':7.5085},{'T':0x280,'v':0.1388,'u':0xd1d,'h':3773.5,'s':7.6106},{'T':0x2bc,'v':0.1484,'u':3466.5,'h':3911.7,'s':7.7571}]},0x28:{'Tsat':250.4,'d':[{'T':_4c9c210_0x1023(0x20d),'v':0.04978,'u':2602.3,'h':2801.4,'s':6.0701},{'T':0x118,'v':0.05546,'u':0xa78,'h':2901.8,'s':6.2568},{'T':0x140,'v':0.06199,'u':2767.4,'h':3015.4,'s':6.4553},{'T':0x168,'v':0.06788,'u':2845.7,'h':3117.2,'s':6.6215},{'T':0x190,'v':0.07341,'u':2919.9,'h':3213.6,'s':6.769},{'T':0x1b8,'v':0.07872,'u':2992.2,'h':3307.1,'s':6.9041},{'T':0x1f4,'v':0.08643,'u':3099.5,'h':3445.3,'s':7.0901},{'T':0x21c,'v':0.09145,'u':3171.1,'h':3536.9,'s':7.2056},{'T':0x258,'v':0.09885,'u':3279.1,'h':3674.4,'s':7.3688},{'T':0x280,'v':0.1037,'u':3351.8,'h':3766.6,'s':7.472},{'T':0x2bc,'v':0.111,'u':3462.1,'h':3905.9,'s':7.6198},{'T':0x2e4,'v':0.1157,'u':3536.6,'h':3999.6,'s':7.7141}]},0x3c:{'Tsat':275.64,'d':[{'T':'Sat','v':0.03244,'u':2589.7,'h':2784.3,'s':5.8892},{'T':0x140,'v':0.03876,'u':0xaa0,'h':2952.6,'s':6.1846},{'T':0x168,'v':0.04331,'u':2811.2,'h':3071.1,'s':6.3782},{'T':0x190,'v':0.04739,'u':2892.9,'h':3177.2,'s':6.5408},{'T':0x1b8,'v':0.05122,'u':0xb9a,'h':3277.3,'s':6.6853},{'T':0x1f4,'v':0.05665,'u':3082.2,'h':3422.2,'s':6.8803},{'T':0x21c,'v':0.06015,'u':3156.1,'h':0xdbd,'s':6.9999},{'T':0x258,'v':0.06525,'u':3266.9,'h':3658.4,'s':7.1677},{'T':0x280,'v':0.06859,'u':0xd0d,'h':3752.6,'s':7.2731},{'T':0x2bc,'v':0.07352,'u':3453.1,'h':3894.1,'s':7.4234},{'T':0x2e4,'v':0.07677,'u':3528.3,'h':3989.2,'s':7.519}]},0x50:{'Tsat':295.06,'d':[{'T':_4c9c210_0x1023(0x20d),'v':0.02352,'u':2569.8,'h':0xac6,'s':5.7432},{'T':0x140,'v':0.02682,'u':2662.7,'h':2877.2,'s':5.9489},{'T':0x168,'v':0.03089,'u':2772.7,'h':3019.8,'s':6.1819},{'T':0x190,'v':0.03432,'u':2863.8,'h':3138.3,'s':6.3634},{'T':0x1b8,'v':0.03742,'u':2946.7,'h':3246.1,'s':6.519},{'T':0x1e0,'v':0.04034,'u':3025.7,'h':3348.4,'s':6.6586},{'T':0x208,'v':0.04313,'u':3102.7,'h':3447.7,'s':6.7871},{'T':0x230,'v':0.04582,'u':3178.7,'h':3545.3,'s':6.9072},{'T':0x258,'v':0.04845,'u':3254.4,'h':0xe3a,'s':7.0206},{'T':0x280,'v':0.05102,'u':3330.1,'h':3738.3,'s':7.1283},{'T':0x2bc,'v':0.05481,'u':3443.9,'h':3882.4,'s':7.2812},{'T':0x2e4,'v':0.05729,'u':3520.4,'h':3978.7,'s':7.3782}]},0x64:{'Tsat':311.06,'d':[{'T':'Sat','v':0.01803,'u':2544.4,'h':2724.7,'s':5.6141},{'T':0x140,'v':0.01925,'u':2588.8,'h':2781.3,'s':5.7103},{'T':0x168,'v':0.02331,'u':2729.1,'h':2962.1,'s':6.006},{'T':0x190,'v':0.02641,'u':2832.4,'h':3096.5,'s':6.212},{'T':0x1b8,'v':0.02911,'u':2922.1,'h':3213.2,'s':6.3805},{'T':0x1e0,'v':0.0316,'u':3005.4,'h':3321.4,'s':6.5282},{'T':0x208,'v':0.03394,'u':3085.6,'h':3425.1,'s':6.6622},{'T':0x230,'v':0.03619,'u':3164.1,'h':0xdc6,'s':6.7864},{'T':0x258,'v':0.03837,'u':3241.7,'h':3625.3,'s':6.9029},{'T':0x280,'v':0.04048,'u':3318.9,'h':3723.7,'s':7.0131},{'T':0x2bc,'v':0.04358,'u':3434.7,'h':3870.5,'s':7.1687},{'T':0x2e4,'v':0.0456,'u':3512.1,'h':3968.1,'s':7.267}]},0x78:{'Tsat':324.75,'d':[{'T':_4c9c210_0x1023(0x20d),'v':0.01426,'u':2513.7,'h':2684.9,'s':5.4924},{'T':0x168,'v':0.01811,'u':2678.4,'h':2895.7,'s':5.8361},{'T':0x190,'v':0.02108,'u':2798.3,'h':3051.3,'s':6.0747},{'T':0x1b8,'v':0.02355,'u':2896.1,'h':3178.7,'s':6.2586},{'T':0x1e0,'v':0.02576,'u':2984.4,'h':3293.5,'s':6.4154},{'T':0x208,'v':0.02781,'u':0xbfc,'h':3401.8,'s':6.5555},{'T':0x230,'v':0.02977,'u':0xc4d,'h':3506.2,'s':6.684},{'T':0x258,'v':0.03164,'u':3228.7,'h':3608.3,'s':6.8037},{'T':0x280,'v':0.03345,'u':3307.5,'h':0xe7d,'s':6.9164},{'T':0x2bc,'v':0.0361,'u':3425.2,'h':3858.4,'s':7.0749},{'T':0x2e4,'v':0.03781,'u':3503.7,'h':3957.4,'s':7.1746}]},0x8c:{'Tsat':336.75,'d':[{'T':_4c9c210_0x1023(0x20d),'v':0.01149,'u':2476.8,'h':2637.6,'s':5.3717},{'T':0x168,'v':0.01422,'u':2617.4,'h':2816.5,'s':5.6602},{'T':0x190,'v':0.01722,'u':2760.9,'h':3001.9,'s':5.9448},{'T':0x1b8,'v':0.01954,'u':2868.6,'h':3142.2,'s':6.1474},{'T':0x1e0,'v':0.02157,'u':2962.5,'h':3264.5,'s':6.3143},{'T':0x208,'v':0.02343,'u':3049.8,'h':3377.8,'s':6.461},{'T':0x230,'v':0.02517,'u':3133.6,'h':0xd9e,'s':6.5941},{'T':0x258,'v':0.02683,'u':3215.4,'h':3591.1,'s':6.7172},{'T':0x280,'v':0.02843,'u':0xce0,'h':3694.1,'s':6.8326},{'T':0x2bc,'v':0.03075,'u':3415.7,'h':3846.2,'s':6.9939},{'T':0x2e4,'v':0.03225,'u':3495.2,'h':3946.7,'s':7.0952}]}},A5={0x19:{'Tsat':223.99,'d':[{'T':0x14,'v':0.0010006,'u':83.8,'h':86.3,'s':0.2961},{'T':0x28,'v':0.0010067,'u':167.25,'h':169.77,'s':0.5715},{'T':0x50,'v':0.001028,'u':334.29,'h':336.86,'s':1.0737},{'T':0x64,'v':0.0010423,'u':418.24,'h':420.85,'s':1.305},{'T':0x8c,'v':0.0010784,'u':587.82,'h':590.52,'s':1.7369},{'T':0xb4,'v':0.0011261,'u':761.16,'h':763.97,'s':2.1375},{'T':0xc8,'v':0.0011555,'u':849.9,'h':852.8,'s':2.3294},{'T':0xdc,'v':0.0011898,'u':940.7,'h':943.7,'s':2.5174},{'T':_4c9c210_0x1023(0x20d),'v':0.0011973,'u':959.1,'h':962.1,'s':2.5546}]},0x32:{'Tsat':263.99,'d':[{'T':0x14,'v':0.0009995,'u':83.65,'h':88.65,'s':0.2956},{'T':0x28,'v':0.0010056,'u':166.95,'h':171.97,'s':0.5705},{'T':0x50,'v':0.0010268,'u':333.72,'h':338.85,'s':1.072},{'T':0x64,'v':0.001041,'u':417.52,'h':422.72,'s':1.303},{'T':0x8c,'v':0.0010768,'u':586.76,'h':592.15,'s':1.7343},{'T':0xb4,'v':0.001124,'u':759.63,'h':765.25,'s':2.1341},{'T':0xc8,'v':0.001153,'u':848.1,'h':853.9,'s':2.3255},{'T':0xdc,'v':0.0011866,'u':938.4,'h':944.4,'s':2.5128},{'T':_4c9c210_0x1023(0x20d),'v':0.0012859,'u':1147.8,'h':1154.2,'s':2.9202}]},0x4b:{'Tsat':290.59,'d':[{'T':0x14,'v':0.0009984,'u':83.5,'h':90.99,'s':0.295},{'T':0x28,'v':0.0010045,'u':166.64,'h':174.18,'s':0.5696},{'T':0x50,'v':0.0010256,'u':333.15,'h':340.84,'s':1.0704},{'T':0x64,'v':0.0010397,'u':416.81,'h':424.62,'s':1.3011},{'T':0x8c,'v':0.0010752,'u':585.72,'h':593.78,'s':1.7317},{'T':0xb4,'v':0.0011219,'u':758.13,'h':766.55,'s':2.1308},{'T':0xdc,'v':0.0011835,'u':936.2,'h':945.1,'s':2.5083},{'T':0x104,'v':0.0012696,'u':1124.4,'h':0x46e,'s':2.8763},{'T':_4c9c210_0x1023(0x20d),'v':0.0013677,'u':0x502,'h':1292.2,'s':3.1649}]},0x64:{'Tsat':311.06,'d':[{'T':0x14,'v':0.0009972,'u':83.36,'h':93.33,'s':0.2945},{'T':0x28,'v':0.0010034,'u':166.35,'h':176.38,'s':0.5686},{'T':0x50,'v':0.0010245,'u':332.59,'h':342.83,'s':1.0688},{'T':0x64,'v':0.0010385,'u':416.12,'h':426.5,'s':1.2992},{'T':0x8c,'v':0.0010737,'u':584.68,'h':595.42,'s':1.7292},{'T':0xb4,'v':0.0011199,'u':756.65,'h':767.84,'s':2.1275},{'T':0xdc,'v':0.0011805,'u':934.1,'h':945.9,'s':2.5039},{'T':0x104,'v':0.0012645,'u':1121.1,'h':1133.7,'s':2.8699},{'T':_4c9c210_0x1023(0x20d),'v':0.0014524,'u':0x571,'h':1407.6,'s':3.3596}]},0x96:{'Tsat':342.24,'d':[{'T':0x14,'v':0.000995,'u':83.06,'h':97.99,'s':0.2934},{'T':0x28,'v':0.0010013,'u':165.76,'h':180.78,'s':0.5666},{'T':0x50,'v':0.0010222,'u':331.48,'h':346.81,'s':1.0656},{'T':0x64,'v':0.0010361,'u':414.74,'h':430.28,'s':1.2955},{'T':0x8c,'v':0.0010707,'u':582.66,'h':598.72,'s':1.7242},{'T':0xb4,'v':0.0011159,'u':753.76,'h':770.5,'s':2.121},{'T':0xdc,'v':0.0011748,'u':929.9,'h':947.5,'s':2.4953},{'T':0x104,'v':0.001255,'u':1114.6,'h':1133.4,'s':2.8576},{'T':0x12c,'v':0.001377,'u':1316.6,'h':1337.3,'s':3.226},{'T':_4c9c210_0x1023(0x20d),'v':0.0016581,'u':1585.6,'h':1610.5,'s':3.6848}]},0xc8:{'Tsat':365.81,'d':[{'T':0x14,'v':0.0009928,'u':82.77,'h':102.62,'s':0.2923},{'T':0x28,'v':0.0009992,'u':165.17,'h':185.16,'s':0.5646},{'T':0x50,'v':0.0010199,'u':330.4,'h':350.8,'s':1.0624},{'T':0x64,'v':0.0010337,'u':413.39,'h':434.06,'s':1.2917},{'T':0x8c,'v':0.0010678,'u':580.69,'h':602.04,'s':1.7193},{'T':0xb4,'v':0.001112,'u':750.95,'h':773.2,'s':2.1147},{'T':0xdc,'v':0.0011693,'u':925.9,'h':949.3,'s':2.487},{'T':0x104,'v':0.0012462,'u':1108.6,'h':1133.5,'s':2.8459},{'T':0x12c,'v':0.0013596,'u':1306.1,'h':1333.3,'s':3.2071},{'T':_4c9c210_0x1023(0x20d),'v':0.002036,'u':1785.6,'h':1826.3,'s':4.0139}]},0xfa:{'Tsat':null,'d':[{'T':0x14,'v':0.0009907,'u':82.47,'h':107.24,'s':0.2911},{'T':0x28,'v':0.0009971,'u':164.6,'h':189.52,'s':0.5626},{'T':0x64,'v':0.0010313,'u':412.08,'h':437.85,'s':1.2881},{'T':0xc8,'v':0.0011344,'u':834.5,'h':862.8,'s':2.2961}]},0x12c:{'Tsat':null,'d':[{'T':0x14,'v':0.0009886,'u':82.17,'h':111.84,'s':0.2899},{'T':0x28,'v':0.0009951,'u':164.04,'h':193.89,'s':0.5607},{'T':0x64,'v':0.001029,'u':410.78,'h':441.66,'s':1.2844},{'T':0xc8,'v':0.0011302,'u':831.4,'h':865.3,'s':2.2893},{'T':0x12c,'v':0.0013304,'u':1287.9,'h':1327.8,'s':3.1741}]}};A5[0xfa][_4c9c210_0x1023(0x221)]=null,A5[0x12c][_4c9c210_0x1023(0x221)]=null;let SYS='SI';const UNITS={'SI':{'T':'°C','P':_4c9c210_0x1023(0x1af),'v':_4c9c210_0x1023(0x20f),'u':_4c9c210_0x1023(0x22e),'h':'kJ/kg','s':_4c9c210_0x1023(0x213)},'EN':{'T':'°F','P':'psia','v':_4c9c210_0x1023(0x212),'u':_4c9c210_0x1023(0x1de),'h':_4c9c210_0x1023(0x1de),'s':_4c9c210_0x1023(0x1f3)}};function toEN(_0x2e15e1,_0x297cce){if(_0x2e15e1===undefined||_0x2e15e1===null||isNaN(_0x2e15e1))return NaN;switch(_0x297cce){case'T':return _0x2e15e1*0x9/0x5+0x20;case'P':return _0x2e15e1*14.5038;case'v':return _0x2e15e1*16.0185;case'u':case'h':return _0x2e15e1*0.429923;case's':return _0x2e15e1*0.238846;default:return _0x2e15e1;}}function toSI(_0x8dc518,_0x4766ec){if(_0x8dc518===undefined||_0x8dc518===null||isNaN(_0x8dc518))return NaN;switch(_0x4766ec){case'T':return(_0x8dc518-0x20)*0x5/0x9;case'P':return _0x8dc518/14.5038;case'v':return _0x8dc518/16.0185;case'u':case'h':return _0x8dc518/0.429923;case's':return _0x8dc518/0.238846;default:return _0x8dc518;}}function dispVal(_0x5bd5db,_0x18b022){return SYS==='SI'?_0x5bd5db:toEN(_0x5bd5db,_0x18b022);}function inputToSI(_0x183604,_0x13447a){return SYS==='SI'?_0x183604:toSI(_0x183604,_0x13447a);}function unitLabel(_0x4edbf0){return UNITS[SYS][_0x4edbf0]||'';}function lerp(_0x1679dc,_0x14961f,_0x4cb4b4,_0x57f94,_0x493c2f){return _0x57f94+(_0x493c2f-_0x57f94)*(_0x1679dc-_0x14961f)/(_0x4cb4b4-_0x14961f);}function interpArray(_0x49df72,_0x1a56c2,_0x12082e){const _0x1efaa8=_0x1a56c2(_0x49df72[0x0]),_0x265d50=_0x1a56c2(_0x49df72[_0x49df72[_4c9c210_0x1023(0x1b8)]-0x1]),_0x1acf6f=1e-9*Math[_4c9c210_0x1023(0x1dc)](0x1,Math[_4c9c210_0x1023(0x205)](_0x265d50));if(_0x12082e<_0x1efaa8-_0x1acf6f||_0x12082e>_0x265d50+_0x1acf6f)return null;if(_0x12082e<=_0x1efaa8)return _0x49df72[0x0];if(_0x12082e>=_0x265d50)return _0x49df72[_0x49df72['length']-0x1];for(let _0xc21ea0=0x0;_0xc21ea0<_0x49df72[_4c9c210_0x1023(0x1b8)]-0x1;_0xc21ea0++){const _0x515137=_0x1a56c2(_0x49df72[_0xc21ea0]),_0x489d7e=_0x1a56c2(_0x49df72[_0xc21ea0+0x1]);if(_0x12082e>=_0x515137&&_0x12082e<=_0x489d7e){const _0x19dc55=(_0x12082e-_0x515137)/(_0x489d7e-_0x515137),_0x6f6bb2={};return Object[_4c9c210_0x1023(0x1fd)](_0x49df72[_0xc21ea0])[_4c9c210_0x1023(0x1cc)](_0x131fa3=>{if(typeof _0x49df72[_0xc21ea0][_0x131fa3]===_4c9c210_0x1023(0x1d5))_0x6f6bb2[_0x131fa3]=_0x49df72[_0xc21ea0][_0x131fa3]+(_0x49df72[_0xc21ea0+0x1][_0x131fa3]-_0x49df72[_0xc21ea0][_0x131fa3])*_0x19dc55;else _0x6f6bb2[_0x131fa3]=_0x49df72[_0xc21ea0][_0x131fa3];}),_0x6f6bb2;}}return null;}function satByT(_0x1bae0e){const _0x4d5eab=A2,_0x3fe4ca=_0x4d5eab[_4c9c210_0x1023(0x1b8)];if(_0x1bae0e<_0x4d5eab[0x0][0x0]||_0x1bae0e>_0x4d5eab[_0x3fe4ca-0x1][0x0])return null;return interpArray(_0x4d5eab,_0x5cd32d=>_0x5cd32d[0x0],_0x1bae0e);}function unpackSatRow(_0x1ba42a){return{'T':_0x1ba42a[0x0],'P':_0x1ba42a[0x1],'vf':_0x1ba42a[0x2]*0.001,'vg':_0x1ba42a[0x3],'uf':_0x1ba42a[0x4],'ug':_0x1ba42a[0x5],'hf':_0x1ba42a[0x6],'hfg':_0x1ba42a[0x7],'hg':_0x1ba42a[0x8],'sf':_0x1ba42a[0x9],'sg':_0x1ba42a[0xa]};}function satByP(_0x1831f2){const _0x12f3e9=A3,_0x55bf61=_0x12f3e9[_4c9c210_0x1023(0x1b8)];if(_0x1831f2<_0x12f3e9[0x0][0x1]||_0x1831f2>_0x12f3e9[_0x55bf61-0x1][0x1])return null;return interpArray(_0x12f3e9,_0x12a85f=>_0x12a85f[0x1],_0x1831f2);}function unpackA3Row(_0x20d5d6){return{'T':_0x20d5d6[0x0],'P':_0x20d5d6[0x1],'vf':_0x20d5d6[0x2]*0.001,'vg':_0x20d5d6[0x3],'uf':_0x20d5d6[0x4],'ug':_0x20d5d6[0x5],'hf':_0x20d5d6[0x6],'hfg':_0x20d5d6[0x7],'hg':_0x20d5d6[0x8],'sf':_0x20d5d6[0x9],'sg':_0x20d5d6[0xa]};}function getSatProps(_0x25230c,_0x590ff9,_0x4d3e48,_0x30b692){let _0x4fee27;if(_0x25230c==='T'){_0x4fee27=satByT(_0x590ff9);if(!_0x4fee27)return{'error':_4c9c210_0x1023(0x1f6)+_0x590ff9['toFixed'](0x2)+_4c9c210_0x1023(0x1ef)};_0x4fee27=unpackSatRow(_0x4fee27);}else{_0x4fee27=satByP(_0x590ff9);if(!_0x4fee27)return{'error':'Presión\x20'+_0x590ff9['toFixed'](0x4)+_4c9c210_0x1023(0x1d6)};_0x4fee27=unpackA3Row(_0x4fee27);}const {T:_0x2cc003,P:_0x4fcddb,vf:_0xc3af3d,vg:_0x4afdc0,uf:_0x527dd8,ug:_0x23a9f6,hf:_0x56286a,hfg:_0x4ef7ab,hg:_0x3d2960,sf:_0x3f6dee,sg:_0x2b43ea}=_0x4fee27;if(_0x4d3e48===_4c9c210_0x1023(0x1d0))return{'T':_0x2cc003,'P':_0x4fcddb,'vf':_0xc3af3d,'vg':_0x4afdc0,'uf':_0x527dd8,'ug':_0x23a9f6,'hf':_0x56286a,'hfg':_0x4ef7ab,'hg':_0x3d2960,'sf':_0x3f6dee,'sg':_0x2b43ea,'region':'sat_both'};if(_0x4d3e48===_4c9c210_0x1023(0x1b1)){if(_0x30b692<0x0||_0x30b692>0x1)return{'error':'La\x20calidad\x20x\x20debe\x20estar\x20entre\x200\x20y\x201'};return{'T':_0x2cc003,'P':_0x4fcddb,'x':_0x30b692,'v':_0xc3af3d+_0x30b692*(_0x4afdc0-_0xc3af3d),'u':_0x527dd8+_0x30b692*(_0x23a9f6-_0x527dd8),'h':_0x56286a+_0x30b692*_0x4ef7ab,'s':_0x3f6dee+_0x30b692*(_0x2b43ea-_0x3f6dee),'region':_4c9c210_0x1023(0x1b1)};}return{'error':'Fase\x20no\x20reconocida'};}const A4keys=Object[_4c9c210_0x1023(0x1fd)](A4)[_4c9c210_0x1023(0x1c5)](Number)[_4c9c210_0x1023(0x1a4)]((_0x365785,_0x257c37)=>_0x365785-_0x257c37),A5keys=Object[_4c9c210_0x1023(0x1fd)](A5)[_4c9c210_0x1023(0x1c5)](Number)[_4c9c210_0x1023(0x1a4)]((_0x54c7d4,_0x16fdfb)=>_0x54c7d4-_0x16fdfb);function getA4BlockData(_0x1950fc){const _0x4acea4=A4[_0x1950fc];return _0x4acea4['d']['map'](_0x45f00c=>{const _0x299860=_0x45f00c['T']==='Sat'?_0x4acea4[_4c9c210_0x1023(0x221)]:_0x45f00c['T'];return{'T':_0x299860,'v':_0x45f00c['v'],'u':_0x45f00c['u'],'h':_0x45f00c['h'],'s':_0x45f00c['s']};});}function interpA4AtP(_0x509f05,_0x2e5691){const _0x4cb74a=getA4BlockData(_0x509f05);return interpArray(_0x4cb74a,_0x5baef8=>_0x5baef8['T'],_0x2e5691);}function interpA4(_0x4e2b69,_0x34a485){const _0x34de62=A4keys,_0x52d64e=1e-9;if(_0x34a485<_0x34de62[0x0]-_0x52d64e||_0x34a485>_0x34de62[_0x34de62[_4c9c210_0x1023(0x1b8)]-0x1]+_0x52d64e)return null;let _0x2943a7=0x0;while(_0x2943a7<_0x34de62[_4c9c210_0x1023(0x1b8)]-0x1&&_0x34de62[_0x2943a7+0x1]<_0x34a485)_0x2943a7++;if(_0x2943a7===_0x34de62[_4c9c210_0x1023(0x1b8)]-0x1)_0x2943a7--;const _0x307d97=_0x34de62[_0x2943a7],_0x58501a=_0x34de62[_0x2943a7+0x1];if(Math[_4c9c210_0x1023(0x205)](_0x307d97-_0x34a485)<_0x52d64e)return interpA4AtP(_0x307d97,_0x4e2b69);if(Math[_4c9c210_0x1023(0x205)](_0x58501a-_0x34a485)<_0x52d64e)return interpA4AtP(_0x58501a,_0x4e2b69);let _0x36223a=_0x4e2b69,_0x2ef718=_0x4e2b69;if(_0x4e2b69<A4[_0x58501a][_4c9c210_0x1023(0x221)]){const _0x5a8348=TsatFromP(_0x34a485);if(_0x5a8348===null)return null;const _0x391956=_0x4e2b69-_0x5a8348;if(_0x391956<-0.05)return null;_0x36223a=A4[_0x307d97][_4c9c210_0x1023(0x221)]+Math[_4c9c210_0x1023(0x1dc)](_0x391956,0x0),_0x2ef718=A4[_0x58501a][_4c9c210_0x1023(0x221)]+Math[_4c9c210_0x1023(0x1dc)](_0x391956,0x0);}const _0x1942b0=interpA4AtP(_0x307d97,_0x36223a),_0x2a5657=interpA4AtP(_0x58501a,_0x2ef718);if(!_0x1942b0||!_0x2a5657)return null;const _0x55502f=(_0x34a485-_0x307d97)/(_0x58501a-_0x307d97),_0x33d883=Math[_4c9c210_0x1023(0x1c6)](_0x34a485/_0x307d97)/Math[_4c9c210_0x1023(0x1c6)](_0x58501a/_0x307d97);return{'T':_0x4e2b69,'v':Math['exp'](Math[_4c9c210_0x1023(0x1c6)](_0x1942b0['v'])+(Math[_4c9c210_0x1023(0x1c6)](_0x2a5657['v'])-Math[_4c9c210_0x1023(0x1c6)](_0x1942b0['v']))*_0x33d883),'u':_0x1942b0['u']+(_0x2a5657['u']-_0x1942b0['u'])*_0x55502f,'h':_0x1942b0['h']+(_0x2a5657['h']-_0x1942b0['h'])*_0x55502f,'s':_0x1942b0['s']+(_0x2a5657['s']-_0x1942b0['s'])*_0x33d883};}function blockTmaxA4(_0x20a9c4){const _0x2be6ce=A4[_0x20a9c4]['d'],_0x320451=_0x2be6ce[_0x2be6ce[_4c9c210_0x1023(0x1b8)]-0x1];return _0x320451['T']===_4c9c210_0x1023(0x20d)?A4[_0x20a9c4]['Tsat']:_0x320451['T'];}function _4c9c210_0x1023(_0x354a99,_0x585d0c){const _0x1b197e=_4c9c210_0x1b19();return _4c9c210_0x1023=function(_0x102377,_0x585d64){_0x102377=_0x102377-0x19e;let _0x1151c9=_0x1b197e[_0x102377];return _0x1151c9;},_4c9c210_0x1023(_0x354a99,_0x585d0c);}function rangeMsgA4(_0x4d0294,_0x210c88){const _0x177a44=A4keys,_0x4ff1c5=_0x177a44[_4c9c210_0x1023(0x203)](_0x1d1463=>Math[_4c9c210_0x1023(0x205)](_0x1d1463-_0x210c88)<1e-9);let _0x4f2895=0x0;while(_0x4f2895<_0x177a44['length']-0x1&&_0x177a44[_0x4f2895+0x1]<_0x210c88)_0x4f2895++;if(_0x4f2895===_0x177a44[_4c9c210_0x1023(0x1b8)]-0x1)_0x4f2895--;const _0x719a83=_0x4ff1c5!==undefined?blockTmaxA4(_0x4ff1c5):Math[_4c9c210_0x1023(0x1f0)](blockTmaxA4(_0x177a44[_0x4f2895]),blockTmaxA4(_0x177a44[Math['min'](_0x4f2895+0x1,_0x177a44[_4c9c210_0x1023(0x1b8)]-0x1)]));return'Estado\x20fuera\x20del\x20intervalo\x20de\x20la\x20Tabla\x20A-4\x20(T\x20=\x20'+_0x4d0294[_4c9c210_0x1023(0x1a3)](0x1)+_4c9c210_0x1023(0x1cf)+_0x210c88[_4c9c210_0x1023(0x1a3)](0x3)+_4c9c210_0x1023(0x1bd)+(_4c9c210_0x1023(0x200)+_0x719a83+'\x20°C.\x20')+'La\x20aplicación\x20no\x20extrapola\x20fuera\x20de\x20la\x20tabla.';}function bisectRoot(_0x251435,_0x3d61f7,_0x1ae308){let _0x1e8024=_0x251435(_0x3d61f7),_0x2fb8ee=_0x251435(_0x1ae308);if(!isFinite(_0x1e8024)||!isFinite(_0x2fb8ee)||_0x1e8024*_0x2fb8ee>0x0)return null;for(let _0x2d2b3c=0x0;_0x2d2b3c<0x50;_0x2d2b3c++){const _0x570324=0.5*(_0x3d61f7+_0x1ae308),_0x3b03b8=_0x251435(_0x570324);if(!isFinite(_0x3b03b8))return null;_0x1e8024*_0x3b03b8<=0x0?(_0x1ae308=_0x570324,_0x2fb8ee=_0x3b03b8):(_0x3d61f7=_0x570324,_0x1e8024=_0x3b03b8);if(Math[_4c9c210_0x1023(0x205)](_0x1ae308-_0x3d61f7)<1e-9*Math[_4c9c210_0x1023(0x1dc)](0x1,Math[_4c9c210_0x1023(0x205)](_0x570324)))break;}return 0.5*(_0x3d61f7+_0x1ae308);}function getA5BlockData(_0x54044b){return A5[_0x54044b]['d']['map'](_0x11dc8d=>{const _0x31d10c=_0x11dc8d['T']===_4c9c210_0x1023(0x20d)?A5[_0x54044b][_4c9c210_0x1023(0x221)]:_0x11dc8d['T'];return{'T':_0x31d10c,'v':_0x11dc8d['v'],'u':_0x11dc8d['u'],'h':_0x11dc8d['h'],'s':_0x11dc8d['s']};})[_4c9c210_0x1023(0x230)](_0x21b79e=>_0x21b79e['T']!==null);}function interpA5(_0xfb0d5,_0x38d04d){const _0x200473=A5keys;if(_0x38d04d<_0x200473[0x0]||_0x38d04d>_0x200473[_0x200473['length']-0x1])return null;let _0x1ef386=0x0;while(_0x1ef386<_0x200473[_4c9c210_0x1023(0x1b8)]-0x1&&_0x200473[_0x1ef386+0x1]<_0x38d04d)_0x1ef386++;if(_0x1ef386===_0x200473[_4c9c210_0x1023(0x1b8)]-0x1)_0x1ef386--;const _0x883d56=_0x200473[_0x1ef386],_0x353030=_0x200473[_0x1ef386+0x1],_0x2e809e=_0x16e620=>{const _0x186ac3=getA5BlockData(_0x16e620);return interpArray(_0x186ac3,_0x2da58c=>_0x2da58c['T'],_0xfb0d5);};if(Math[_4c9c210_0x1023(0x205)](_0x883d56-_0x38d04d)<1e-9)return _0x2e809e(_0x883d56);if(Math[_4c9c210_0x1023(0x205)](_0x353030-_0x38d04d)<1e-9)return _0x2e809e(_0x353030);let _0x9d705=_0x883d56,_0x385f22=_0x2e809e(_0x883d56);if(!_0x385f22&&A5[_0x883d56][_4c9c210_0x1023(0x221)]!=null&&_0xfb0d5>A5[_0x883d56][_4c9c210_0x1023(0x221)]){const _0x462cde=satByT(_0xfb0d5);if(!_0x462cde)return null;const _0x5553e3=unpackSatRow(_0x462cde);if(!(_0x5553e3['P']<_0x38d04d))return null;_0x9d705=_0x5553e3['P'],_0x385f22={'v':_0x5553e3['vf'],'u':_0x5553e3['uf'],'h':_0x5553e3['hf'],'s':_0x5553e3['sf']};}const _0x315e38=_0x2e809e(_0x353030);if(!_0x385f22||!_0x315e38)return null;const _0x70ada8=(_0x38d04d-_0x9d705)/(_0x353030-_0x9d705);return{'T':_0xfb0d5,'v':_0x385f22['v']+(_0x315e38['v']-_0x385f22['v'])*_0x70ada8,'u':_0x385f22['u']+(_0x315e38['u']-_0x385f22['u'])*_0x70ada8,'h':_0x385f22['h']+(_0x315e38['h']-_0x385f22['h'])*_0x70ada8,'s':_0x385f22['s']+(_0x315e38['s']-_0x385f22['s'])*_0x70ada8};}function TsatFromP(_0x5eac46){const _0x4d3324=satByP(_0x5eac46);return _0x4d3324?_0x4d3324[0x0]:null;}function PsatFromT(_0x5865d1){const _0x366f8e=satByT(_0x5865d1);return _0x366f8e?_0x366f8e[0x1]:null;}function _4c9c210_0x1b19(){const _0x86e79=['Vol.\x20específico','super-output','\x20parecen\x20estar\x20fuera\x20del\x20dominio\x20de\x20la\x20Tabla\x20A-4\x20(vapor\x20sobrecalentado)','\x20bar).\x20La\x20aplicación\x20no\x20extrapola\x20fuera\x20de\x20la\x20tabla.','254nVWmBN','max','<tr>\x0a\x20\x20\x20\x20\x20\x20<td>','Btu/lbm','ej.\x20100','Entalpía','phase-satboth','sat-var-label','</td>\x0a\x20\x20\x20\x20\x20\x20<td>','1052176fBxAlD','quality-group','°C\x20fuera\x20del\x20rango','\x0a\x20\x20\x20\x20\x20\x20</tbody>\x0a\x20\x20\x20\x20</table>','flatMap','label','value','super-val2','super-var2','</td>\x0a\x20\x20\x20\x20\x20\x20<td\x20class=\x22unit-col\x22>','Vapor\x20sobrecalentado','°C\x20fuera\x20del\x20rango\x20(0.01\x20–\x20374.14°C)','min','<div\x20class=\x22msg-error\x22>⚠\x20','\x20°C,\x20P\x20≈\x20','Btu/lbm·°R','btn-en','Energía\x20interna','Temperatura\x20','Refinamiento\x20iterativo\x20fallido','remove','sat-val','Presión\x20','display','r-comp','keys','</td>\x0a\x20\x20\x20\x20</tr>','</span></div>','Para\x20esta\x20presión\x20la\x20temperatura\x20máxima\x20tabulada\x20en\x20los\x20bloques\x20vecinos\x20es\x20≈\x20','Los\x20valores\x20','1637950ZkEfjz','find','\x0a\x20\x20\x20\x20<div\x20style=\x22display:flex;align-items:center;gap:10px;margin-bottom:14px\x22>\x0a\x20\x20\x20\x20\x20\x20<span\x20class=\x22section-title\x22\x20style=\x22margin:0\x22>Estado\x20termodinámico\x20saturado</span>\x0a\x20\x20\x20\x20\x20\x20<span\x20style=\x22font-size:11px;color:var(--text-hint);font-family:var(--mono)\x22>','abs','<tr>\x0a\x20\x20\x20\x20\x20\x20<td\x20class=\x22prop-col\x22>','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<tr\x20class=\x22divider-row\x22><td\x20colspan=\x224\x22></td></tr>\x0a\x20\x20\x20\x20\x20\x20\x20\x20','ej.\x201.0','Vapor\x20saturado','\x20bar\x20tiene\x20resolución\x20reducida\x20(≤\x205\x20puntos\x20de\x20temperatura).\x20Los\x20valores\x20interpolados\x20pueden\x20diferir\x20ligeramente\x20de\x20tablas\x20más\x20completas.','push','classList','Sat','Ingrese\x20ambos\x20valores','m³/kg','sat-val-unit','Calidad\x20x\x20debe\x20ser\x200\x20–\x201','ft³/lbm','kJ/kg·K','panel-','Frontera\x20de\x20saturación','quality-val','error','Entropía','Solución\x20próxima\x20al\x20límite\x20de\x20la\x20Tabla\x20A-4\x20(T\x20≈\x20','Sistema\x20Internacional','phase-two','.\x20Verifique\x20que\x20el\x20estado\x20pertenece\x20a\x20la\x20zona\x20de\x20vapor\x20sobrecalentado.','sat-output','saturated_boundary','r-sat','Desconocida','Tsat','Ingrese\x20un\x20valor','textContent','11yMOExb','</span>\x0a\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20<table\x20class=\x22output-table\x20sat-both-table\x22>\x0a\x20\x20\x20\x20\x20\x20<thead>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<tr>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<th\x20class=\x22prop-col\x22>Propiedad</th>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<th\x20class=\x22th-f\x22>Líq\x20sat.\x20<em>f</em></th>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<th\x20class=\x22th-g\x22>Vap\x20sat.\x20<em>g</em></th>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<th>Unidad</th>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</tr>\x0a\x20\x20\x20\x20\x20\x20</thead>\x0a\x20\x20\x20\x20\x20\x20<tbody>\x0a\x20\x20\x20\x20\x20\x20\x20\x20','3131XhkHLd','<tr\x20class=\x22sat-shared-row\x22>\x0a\x20\x20\x20\x20\x20\x20<td\x20class=\x22prop-col\x22>','style','Agua\x20saturada\x20·\x20liq.\x20+\x20vap.','4962530otCunk','\x20bar\x20supera\x20el\x20límite\x20de\x20la\x20Tabla\x20A-5\x20(','<span\x20class=\x22region-badge\x20r-error\x22>Error</span>','querySelectorAll','kJ/kg','Presión','filter','sat-region-badge','Entalpía\x20evap.','valf','.panel','superheated','compressed_approx','super','toFixed','sort','3570744qOFkYP','r-crit','Tabla\x20A-5\x20a\x20','</div>','r-super','Temperatura','warning','hideF','11336772IoPVup','super-var1','bar','join','twophase','toggle','sat_both','<span\x20class=\x22region-badge\x20','Sistema\x20Inglés','super-val1','Líquido\x20saturado','length','7kGnboE','prop','active','valg','\x20bar).\x20','super-region-badge','Calidad\x20de\x20vapor','No\x20se\x20encontró\x20convergencia\x20para\x20','sat','none','compressed','3Odkgbx','map','log','r-two','trim','\x20bar)','\x20en\x20zona\x20sobrecalentada\x20(dentro\x20del\x20intervalo\x20de\x20la\x20tabla)','2711144rcCdeQ','forEach','36EgMHMB','getElementById','\x20°C,\x20P\x20=\x20','satboth','.tab-btn','Sin\x20solución:\x20T=','innerHTML','concat','number','\x20bar\x20fuera\x20del\x20rango\x20(0.04\x20–\x20220.9\x20bar)'];_4c9c210_0x1b19=function(){return _0x86e79;};return _4c9c210_0x1b19();}function getRegionTP(_0x34dfe4,_0x366191){const _0x37d9dd=TsatFromP(_0x366191);if(_0x37d9dd===null)return _0x366191>220.9?'superheated':_4c9c210_0x1023(0x1a0);const _0xe0a077=0.05;if(Math[_4c9c210_0x1023(0x205)](_0x34dfe4-_0x37d9dd)<_0xe0a077)return _4c9c210_0x1023(0x21e);return _0x34dfe4>_0x37d9dd?_4c9c210_0x1023(0x1a0):_4c9c210_0x1023(0x1c3);}function superByTP(_0x59705c,_0x1b754b){const _0x582f62=getRegionTP(_0x59705c,_0x1b754b);if(_0x582f62===_4c9c210_0x1023(0x1a0)||_0x582f62===_4c9c210_0x1023(0x21e)){if(_0x1b754b>A4keys[A4keys[_4c9c210_0x1023(0x1b8)]-0x1])return{'error':'Presión\x20'+_0x1b754b+'\x20bar\x20supera\x20el\x20límite\x20de\x20la\x20Tabla\x20A-4\x20('+A4keys[A4keys[_4c9c210_0x1023(0x1b8)]-0x1]+_4c9c210_0x1023(0x1c9)};if(_0x1b754b<A4keys[0x0])return{'error':'Presión\x20'+_0x1b754b+'\x20bar\x20inferior\x20al\x20límite\x20de\x20la\x20Tabla\x20A-4\x20('+A4keys[0x0]+'\x20bar)'};const _0x2cc5c3=interpA4(_0x59705c,_0x1b754b);if(!_0x2cc5c3)return{'error':rangeMsgA4(_0x59705c,_0x1b754b)};return{'T':_0x59705c,'P':_0x1b754b,'v':_0x2cc5c3['v'],'u':_0x2cc5c3['u'],'h':_0x2cc5c3['h'],'s':_0x2cc5c3['s'],'region':'superheated'};}if(_0x1b754b<A5keys[0x0]){const _0x4d0b41=satByT(_0x59705c);if(!_0x4d0b41)return{'error':'T='+_0x59705c+_4c9c210_0x1023(0x1e6)};const _0x2a8c6b=unpackSatRow(_0x4d0b41);return{'T':_0x59705c,'P':_0x1b754b,'v':_0x2a8c6b['vf'],'u':_0x2a8c6b['uf'],'h':_0x2a8c6b['hf']+(_0x1b754b-_0x2a8c6b['P'])*0x64*_0x2a8c6b['vf'],'s':_0x2a8c6b['sf'],'region':_4c9c210_0x1023(0x1a1)};}if(_0x1b754b>A5keys[A5keys[_4c9c210_0x1023(0x1b8)]-0x1])return{'error':_4c9c210_0x1023(0x1fa)+_0x1b754b+_4c9c210_0x1023(0x22b)+A5keys[A5keys[_4c9c210_0x1023(0x1b8)]-0x1]+_4c9c210_0x1023(0x1c9)};const _0x3247c7=interpA5(_0x59705c,_0x1b754b);if(!_0x3247c7)return{'error':'Estado\x20fuera\x20del\x20intervalo\x20de\x20la\x20Tabla\x20A-5\x20(T\x20=\x20'+_0x59705c[_4c9c210_0x1023(0x1a3)](0x1)+'\x20°C,\x20P\x20=\x20'+_0x1b754b['toFixed'](0x2)+_4c9c210_0x1023(0x1da)};const _0x58688a=_0x1b754b>=0xfa?_4c9c210_0x1023(0x1a7)+_0x1b754b[_4c9c210_0x1023(0x1a3)](0x0)+_4c9c210_0x1023(0x20a):undefined;return{'T':_0x59705c,'P':_0x1b754b,'v':_0x3247c7['v'],'u':_0x3247c7['u'],'h':_0x3247c7['h'],'s':_0x3247c7['s'],'region':_4c9c210_0x1023(0x1c3),'warning':_0x58688a};}function inverseOneKnown(_0x3a79c0,_0x40ccc1,_0x2688fe,_0x54abd1){const _0x4e248f=(_0x26cfef,_0x21515b)=>{const _0x5b8790=interpA4(_0x26cfef,_0x21515b);return _0x5b8790?_0x5b8790[_0x2688fe]-_0x54abd1:NaN;};if(_0x3a79c0==='T'){const _0x2d756d=_0x40ccc1,_0x57cd7e=PsatFromT(_0x2d756d),_0x4bfc96=Math[_4c9c210_0x1023(0x1f0)](A4keys[A4keys[_4c9c210_0x1023(0x1b8)]-0x1],_0x57cd7e!==null?_0x57cd7e*0.99999:Infinity),_0x5b4001=A4keys[_4c9c210_0x1023(0x230)](_0x3fe5df=>_0x3fe5df<_0x4bfc96)[_4c9c210_0x1023(0x1d4)]([_0x4bfc96]);for(let _0x154419=0x0;_0x154419<_0x5b4001[_4c9c210_0x1023(0x1b8)]-0x1;_0x154419++){const _0xa8ced4=bisectRoot(_0x14e5d3=>_0x4e248f(_0x2d756d,_0x14e5d3),_0x5b4001[_0x154419],_0x5b4001[_0x154419+0x1]);if(_0xa8ced4!==null){const _0x34a595=interpA4(_0x2d756d,_0xa8ced4);return{'T':_0x2d756d,'P':_0xa8ced4,'v':_0x34a595['v'],'u':_0x34a595['u'],'h':_0x34a595['h'],'s':_0x34a595['s'],'region':_4c9c210_0x1023(0x1a0)};}}return{'error':_4c9c210_0x1023(0x1d2)+_0x2d756d[_4c9c210_0x1023(0x1a3)](0x1)+'\x20°C\x20con\x20'+_0x2688fe+'='+_0x54abd1[_4c9c210_0x1023(0x1a3)](0x4)+_4c9c210_0x1023(0x1ca)};}else{const _0x5a24a6=_0x40ccc1,_0x4819a5=TsatFromP(_0x5a24a6),_0x38eaa=[...new Set(A4keys[_4c9c210_0x1023(0x1e8)](_0x17a2ef=>A4[_0x17a2ef]['d'][_4c9c210_0x1023(0x1c5)](_0x23fa7e=>_0x23fa7e['T']===_4c9c210_0x1023(0x20d)?A4[_0x17a2ef][_4c9c210_0x1023(0x221)]:_0x23fa7e['T'])))][_4c9c210_0x1023(0x1a4)]((_0x57e99a,_0x318002)=>_0x57e99a-_0x318002),_0x18f2ed=(_0x4819a5!==null?_0x4819a5:_0x38eaa[0x0])+0.001,_0x1a2a5b=[_0x18f2ed]['concat'](_0x38eaa[_4c9c210_0x1023(0x230)](_0xf78ad9=>_0xf78ad9>_0x18f2ed));for(let _0x4b7d16=0x0;_0x4b7d16<_0x1a2a5b[_4c9c210_0x1023(0x1b8)]-0x1;_0x4b7d16++){const _0x1422ad=bisectRoot(_0x1759a3=>_0x4e248f(_0x1759a3,_0x5a24a6),_0x1a2a5b[_0x4b7d16],_0x1a2a5b[_0x4b7d16+0x1]);if(_0x1422ad!==null){const _0x3d08ea=interpA4(_0x1422ad,_0x5a24a6);return{'T':_0x1422ad,'P':_0x5a24a6,'v':_0x3d08ea['v'],'u':_0x3d08ea['u'],'h':_0x3d08ea['h'],'s':_0x3d08ea['s'],'region':_4c9c210_0x1023(0x1a0)};}}return{'error':'Sin\x20solución:\x20P='+_0x5a24a6[_4c9c210_0x1023(0x1a3)](0x2)+'\x20bar\x20con\x20'+_0x2688fe+'='+_0x54abd1[_4c9c210_0x1023(0x1a3)](0x4)+'\x20en\x20zona\x20sobrecalentada\x20(dentro\x20del\x20intervalo\x20de\x20la\x20tabla)'};}}function inverseTwoProps(_0x243fe1,_0x53cd13,_0x2c726c,_0x5274bb){const _0x15d202=A4keys,_0x23576d=[...new Set(_0x15d202[_4c9c210_0x1023(0x1e8)](_0x7aa164=>A4[_0x7aa164]['d'][_4c9c210_0x1023(0x1c5)](_0x405941=>_0x405941['T']==='Sat'?A4[_0x7aa164]['Tsat']:_0x405941['T'])))]['sort']((_0xb5d4b5,_0x15bcbd)=>_0xb5d4b5-_0x15bcbd);let _0x5c1b49=Infinity,_0x97eb7=null,_0x588edc=null;for(const _0x254e57 of _0x15d202){for(const _0x129b58 of _0x23576d){const _0x6f78ca=interpA4(_0x129b58,_0x254e57);if(!_0x6f78ca)continue;const _0x3bfd8d=_0x6f78ca[_0x243fe1],_0x30fd44=_0x6f78ca[_0x2c726c];if(_0x3bfd8d===undefined||_0x30fd44===undefined)continue;const _0x1e7c9e=Math[_4c9c210_0x1023(0x205)]((_0x3bfd8d-_0x53cd13)/Math['max'](Math[_4c9c210_0x1023(0x205)](_0x53cd13),0x1))+Math['abs']((_0x30fd44-_0x5274bb)/Math[_4c9c210_0x1023(0x1dc)](Math['abs'](_0x5274bb),0x1));_0x1e7c9e<_0x5c1b49&&(_0x5c1b49=_0x1e7c9e,_0x97eb7=_0x129b58,_0x588edc=_0x254e57);}}if(_0x97eb7===null||_0x5c1b49>0x2)return{'error':_4c9c210_0x1023(0x201)+_0x243fe1+'='+_0x53cd13[_4c9c210_0x1023(0x1a3)](0x4)+',\x20'+_0x2c726c+'='+_0x5274bb[_4c9c210_0x1023(0x1a3)](0x4)+_4c9c210_0x1023(0x1d9)};let _0x8638c4=_0x97eb7,_0x3657a5=_0x588edc,_0x282863=![];for(let _0xb51950=0x0;_0xb51950<0x50;_0xb51950++){const _0xd644ed=interpA4(_0x8638c4,_0x3657a5);if(!_0xd644ed)break;const _0x46e212=0.2,_0x5b8650=0.2,_0x2616a5=interpA4(_0x8638c4+_0x46e212,_0x3657a5),_0x2f5ea1=interpA4(_0x8638c4,_0x3657a5+_0x5b8650);if(!_0x2616a5||!_0x2f5ea1)break;const _0x1c9110=_0xd644ed[_0x243fe1]-_0x53cd13,_0x803df5=_0xd644ed[_0x2c726c]-_0x5274bb,_0x658402=Math[_4c9c210_0x1023(0x205)](_0x1c9110/Math[_4c9c210_0x1023(0x1dc)](Math[_4c9c210_0x1023(0x205)](_0x53cd13),1e-10)),_0x3fb434=Math[_4c9c210_0x1023(0x205)](_0x803df5/Math[_4c9c210_0x1023(0x1dc)](Math[_4c9c210_0x1023(0x205)](_0x5274bb),1e-10));if(_0x658402<0.00001&&_0x3fb434<0.00001){_0x282863=!![];break;}const _0x26772c=(_0x2616a5[_0x243fe1]-_0xd644ed[_0x243fe1])/_0x46e212,_0xc70145=(_0x2f5ea1[_0x243fe1]-_0xd644ed[_0x243fe1])/_0x5b8650,_0x305da4=(_0x2616a5[_0x2c726c]-_0xd644ed[_0x2c726c])/_0x46e212,_0x4e008c=(_0x2f5ea1[_0x2c726c]-_0xd644ed[_0x2c726c])/_0x5b8650,_0xc547cf=_0x26772c*_0x4e008c-_0xc70145*_0x305da4;if(Math[_4c9c210_0x1023(0x205)](_0xc547cf)<1e-12)break;_0x8638c4-=(_0x1c9110*_0x4e008c-_0x803df5*_0xc70145)/_0xc547cf,_0x3657a5-=(_0x26772c*_0x803df5-_0x305da4*_0x1c9110)/_0xc547cf,_0x8638c4=Math[_4c9c210_0x1023(0x1dc)](_0x23576d[0x0],Math[_4c9c210_0x1023(0x1f0)](_0x23576d[_0x23576d['length']-0x1],_0x8638c4)),_0x3657a5=Math[_4c9c210_0x1023(0x1dc)](_0x15d202[0x0],Math[_4c9c210_0x1023(0x1f0)](_0x15d202[_0x15d202[_4c9c210_0x1023(0x1b8)]-0x1],_0x3657a5));}const _0xa83415=interpA4(_0x8638c4,_0x3657a5);if(!_0xa83415)return{'error':_4c9c210_0x1023(0x1f7)};const _0x390738=Math[_4c9c210_0x1023(0x205)]((_0xa83415[_0x243fe1]-_0x53cd13)/Math[_4c9c210_0x1023(0x1dc)](Math[_4c9c210_0x1023(0x205)](_0x53cd13),1e-10))+Math[_4c9c210_0x1023(0x205)]((_0xa83415[_0x2c726c]-_0x5274bb)/Math[_4c9c210_0x1023(0x1dc)](Math[_4c9c210_0x1023(0x205)](_0x5274bb),1e-10));if(_0x390738>0.05)return{'error':_4c9c210_0x1023(0x1c0)+_0x243fe1+'='+_0x53cd13[_4c9c210_0x1023(0x1a3)](0x4)+',\x20'+_0x2c726c+'='+_0x5274bb['toFixed'](0x4)+_4c9c210_0x1023(0x21c)};const _0xae022d=_0x8638c4<=_0x23576d[0x0]+0.5||_0x8638c4>=_0x23576d[_0x23576d['length']-0x1]-0.5,_0x87be56=_0x3657a5<=_0x15d202[0x0]+0.01||_0x3657a5>=_0x15d202[_0x15d202['length']-0x1]-0.01,_0x271491=!_0x282863||_0xae022d||_0x87be56?_4c9c210_0x1023(0x219)+_0x8638c4[_4c9c210_0x1023(0x1a3)](0x1)+_4c9c210_0x1023(0x1f2)+_0x3657a5[_4c9c210_0x1023(0x1a3)](0x2)+'\x20bar).\x20Resultado\x20orientativo;\x20confirme\x20con\x20tablas\x20extendidas.':undefined;return{'T':_0x8638c4,'P':_0x3657a5,'v':_0xa83415['v'],'u':_0xa83415['u'],'h':_0xa83415['h'],'s':_0xa83415['s'],'region':_4c9c210_0x1023(0x1a0),'warning':_0x271491};}let satVarType='T',phaseType=_4c9c210_0x1023(0x1d0),lastSatResult_si=null,lastSatPhase=null,lastSuperResult_si=null;const PROP_NAMES={'T':_4c9c210_0x1023(0x1aa),'P':_4c9c210_0x1023(0x22f),'v':_4c9c210_0x1023(0x1d7),'u':_4c9c210_0x1023(0x1f5),'h':_4c9c210_0x1023(0x1e0),'s':_4c9c210_0x1023(0x218),'x':_4c9c210_0x1023(0x1bf)},REGION_LABELS={'sat_both':[_4c9c210_0x1023(0x229),'r-sat'],'vapor_sat':[_4c9c210_0x1023(0x209),_4c9c210_0x1023(0x21f)],'liquid_sat':[_4c9c210_0x1023(0x1b7),_4c9c210_0x1023(0x21f)],'twophase':['Mezcla\x20líquido–vapor',_4c9c210_0x1023(0x1c7)],'superheated':[_4c9c210_0x1023(0x1ee),_4c9c210_0x1023(0x1a9)],'compressed':['Líquido\x20comprimido',_4c9c210_0x1023(0x1fc)],'compressed_approx':['Líquido\x20comprimido\x20(aprox.)',_4c9c210_0x1023(0x1fc)],'saturated_boundary':[_4c9c210_0x1023(0x215),_4c9c210_0x1023(0x1a6)]};function setUnits(_0x4c8e04){SYS=_0x4c8e04,document[_4c9c210_0x1023(0x1ce)]('btn-si')[_4c9c210_0x1023(0x20c)][_4c9c210_0x1023(0x1b2)](_4c9c210_0x1023(0x1bb),_0x4c8e04==='SI'),document['getElementById'](_4c9c210_0x1023(0x1f4))['classList'][_4c9c210_0x1023(0x1b2)](_4c9c210_0x1023(0x1bb),_0x4c8e04==='EN'),updateSatUnitLabels(),updateSuperUnitLabels();if(lastSatResult_si){if(lastSatPhase===_4c9c210_0x1023(0x1d0))renderSatBoth(_4c9c210_0x1023(0x21d),lastSatResult_si,_4c9c210_0x1023(0x231));else renderResult(_4c9c210_0x1023(0x21d),lastSatResult_si,'sat-region-badge');}if(lastSuperResult_si)renderResult(_4c9c210_0x1023(0x1d8),lastSuperResult_si,_4c9c210_0x1023(0x1be));}function updateSatUnitLabels(){const _0x353a3=satVarType==='T';document[_4c9c210_0x1023(0x1ce)](_4c9c210_0x1023(0x210))[_4c9c210_0x1023(0x223)]=_0x353a3?unitLabel('T'):unitLabel('P');}function updateSuperUnitLabels(){const _0x4f4a29=document[_4c9c210_0x1023(0x1ce)](_4c9c210_0x1023(0x1ae))['value'],_0x248c75=document[_4c9c210_0x1023(0x1ce)](_4c9c210_0x1023(0x1ec))[_4c9c210_0x1023(0x1ea)];document[_4c9c210_0x1023(0x1ce)]('super-unit1')[_4c9c210_0x1023(0x223)]=unitLabel(_0x4f4a29),document[_4c9c210_0x1023(0x1ce)]('super-unit2')[_4c9c210_0x1023(0x223)]=unitLabel(_0x248c75);}function switchTab(_0x4f0436){document[_4c9c210_0x1023(0x22d)](_4c9c210_0x1023(0x1d1))[_4c9c210_0x1023(0x1cc)]((_0x5bb162,_0x586839)=>{_0x5bb162[_4c9c210_0x1023(0x20c)]['toggle'](_4c9c210_0x1023(0x1bb),_0x586839===0x0&&_0x4f0436===_4c9c210_0x1023(0x1c1)||_0x586839===0x1&&_0x4f0436===_4c9c210_0x1023(0x1a2));}),document[_4c9c210_0x1023(0x22d)](_4c9c210_0x1023(0x19f))['forEach'](_0x56097d=>_0x56097d[_4c9c210_0x1023(0x20c)][_4c9c210_0x1023(0x1f8)](_4c9c210_0x1023(0x1bb))),document[_4c9c210_0x1023(0x1ce)](_4c9c210_0x1023(0x214)+_0x4f0436)[_4c9c210_0x1023(0x20c)]['add'](_4c9c210_0x1023(0x1bb));}function setSatVar(_0x3ebb95){satVarType=_0x3ebb95,['T','P'][_4c9c210_0x1023(0x1cc)](_0x3c1ec7=>{document['getElementById']('sat-var-'+_0x3c1ec7)[_4c9c210_0x1023(0x20c)][_4c9c210_0x1023(0x1b2)](_4c9c210_0x1023(0x1bb),_0x3c1ec7===_0x3ebb95);});const _0x1d94a2=_0x3ebb95==='T'?_4c9c210_0x1023(0x1aa):'Presión';document[_4c9c210_0x1023(0x1ce)](_4c9c210_0x1023(0x1e2))[_4c9c210_0x1023(0x223)]=_0x1d94a2,document['getElementById'](_4c9c210_0x1023(0x1f9))['placeholder']=_0x3ebb95==='T'?_4c9c210_0x1023(0x1df):_4c9c210_0x1023(0x208),updateSatUnitLabels();}function setPhase(_0x44d8fc){phaseType=_0x44d8fc;const _0x3fc802={'satboth':_4c9c210_0x1023(0x1e1),'twophase':_4c9c210_0x1023(0x21b)};['satboth',_4c9c210_0x1023(0x1b1)]['forEach'](_0x5de49a=>{const _0x1d5828=document[_4c9c210_0x1023(0x1ce)](_0x3fc802[_0x5de49a]);if(_0x1d5828)_0x1d5828[_4c9c210_0x1023(0x20c)][_4c9c210_0x1023(0x1b2)](_4c9c210_0x1023(0x1bb),_0x5de49a===_0x44d8fc);}),document[_4c9c210_0x1023(0x1ce)](_4c9c210_0x1023(0x1e5))[_4c9c210_0x1023(0x228)][_4c9c210_0x1023(0x1fb)]=_0x44d8fc===_4c9c210_0x1023(0x1b1)?'flex':_4c9c210_0x1023(0x1c2);}function onSuperVarChange(){const _0x1015e6=document[_4c9c210_0x1023(0x1ce)](_4c9c210_0x1023(0x1ae))['value'],_0x3884c6=document[_4c9c210_0x1023(0x1ce)]('super-var2')[_4c9c210_0x1023(0x1ea)];if(_0x1015e6===_0x3884c6){const _0x4221f0=['T','P','v','h','u','s'];document[_4c9c210_0x1023(0x1ce)](_4c9c210_0x1023(0x1ec))[_4c9c210_0x1023(0x1ea)]=_0x4221f0[_4c9c210_0x1023(0x203)](_0x5b7026=>_0x5b7026!==_0x1015e6);}updateSuperUnitLabels();}function fmt(_0x18c0e6,_0x5f0446){if(_0x18c0e6===undefined||_0x18c0e6===null||isNaN(_0x18c0e6))return'—';if(_0x5f0446==='v')return _0x18c0e6[_4c9c210_0x1023(0x1a3)](0x6);if(_0x5f0446==='s')return _0x18c0e6[_4c9c210_0x1023(0x1a3)](0x4);if(_0x5f0446==='x')return _0x18c0e6[_4c9c210_0x1023(0x1a3)](0x4);if(_0x5f0446==='P')return _0x18c0e6[_4c9c210_0x1023(0x1a3)](0x4);return _0x18c0e6['toFixed'](0x2);}function renderResult(_0x883a0e,_0x14edfc,_0x1cb1bf){const _0x28b684=document[_4c9c210_0x1023(0x1ce)](_0x883a0e),_0x5b638a=document[_4c9c210_0x1023(0x1ce)](_0x1cb1bf);if(_0x14edfc['error']){_0x28b684[_4c9c210_0x1023(0x1d3)]=_4c9c210_0x1023(0x1f1)+_0x14edfc[_4c9c210_0x1023(0x217)]+_4c9c210_0x1023(0x1a8),_0x5b638a[_4c9c210_0x1023(0x1d3)]='<span\x20class=\x22region-badge\x20r-error\x22>Error</span>';return;}const _0x2f93b8=REGION_LABELS[_0x14edfc['region']]||[_4c9c210_0x1023(0x220),_4c9c210_0x1023(0x21f)];_0x5b638a[_4c9c210_0x1023(0x1d3)]=_4c9c210_0x1023(0x1b4)+_0x2f93b8[0x1]+'\x22>'+_0x2f93b8[0x0]+'</span>';const _0x4c130d=['T','P','v','u','h','s'];if(_0x14edfc['x']!==undefined)_0x4c130d[_4c9c210_0x1023(0x20b)]('x');let _0x574160='';_0x4c130d[_4c9c210_0x1023(0x1cc)](_0x38df9a=>{if(_0x14edfc[_0x38df9a]===undefined)return;const _0x468925=_0x38df9a==='x'?_0x14edfc[_0x38df9a]:dispVal(_0x14edfc[_0x38df9a],_0x38df9a);_0x574160+=_4c9c210_0x1023(0x1dd)+PROP_NAMES[_0x38df9a]+_4c9c210_0x1023(0x1e3)+fmt(_0x468925,_0x38df9a)+_4c9c210_0x1023(0x1ed)+(_0x38df9a==='x'?'—':unitLabel(_0x38df9a))+_4c9c210_0x1023(0x1fe);});const _0x55ec67=SYS==='SI'?_4c9c210_0x1023(0x21a):_4c9c210_0x1023(0x1b5),_0x3e36ab=_0x14edfc[_4c9c210_0x1023(0x1ab)]?'<div\x20class=\x22msg-warning\x22><span\x20class=\x22warn-icon\x22>⚠</span><span>'+_0x14edfc[_4c9c210_0x1023(0x1ab)]+_4c9c210_0x1023(0x1ff):'';_0x28b684[_4c9c210_0x1023(0x1d3)]='\x0a\x20\x20\x20\x20<div\x20style=\x22display:flex;align-items:center;gap:10px;margin-bottom:14px\x22>\x0a\x20\x20\x20\x20\x20\x20<span\x20class=\x22section-title\x22\x20style=\x22margin:0\x22>Estado\x20termodinámico</span>\x0a\x20\x20\x20\x20\x20\x20<span\x20style=\x22font-size:11px;color:var(--text-hint);font-family:var(--mono)\x22>'+_0x55ec67+'</span>\x0a\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20'+_0x3e36ab+'\x0a\x20\x20\x20\x20<table\x20class=\x22output-table\x22>\x0a\x20\x20\x20\x20\x20\x20<thead><tr><th>Propiedad</th><th>Valor</th><th>Unidad</th></tr></thead>\x0a\x20\x20\x20\x20\x20\x20<tbody>'+_0x574160+'</tbody>\x0a\x20\x20\x20\x20</table>';}function renderSatBoth(_0x21e176,_0x43657a,_0x9ee913){const _0x419a88=document[_4c9c210_0x1023(0x1ce)](_0x21e176),_0x10bc89=document[_4c9c210_0x1023(0x1ce)](_0x9ee913);if(_0x43657a['error']){_0x419a88[_4c9c210_0x1023(0x1d3)]=_4c9c210_0x1023(0x1f1)+_0x43657a[_4c9c210_0x1023(0x217)]+_4c9c210_0x1023(0x1a8),_0x10bc89[_4c9c210_0x1023(0x1d3)]=_4c9c210_0x1023(0x22c);return;}const _0x161f82=REGION_LABELS[_4c9c210_0x1023(0x1b3)];_0x10bc89[_4c9c210_0x1023(0x1d3)]=_4c9c210_0x1023(0x1b4)+_0x161f82[0x1]+'\x22>'+_0x161f82[0x0]+'</span>';const {T:_0x4cb111,P:_0x21e0b1,vf:_0x199295,vg:_0x51fbc6,uf:_0x53ed56,ug:_0x310abd,hf:_0x39de19,hfg:_0x213a93,hg:_0x35e5de,sf:_0x18dc94,sg:_0x2bd546}=_0x43657a,_0x44347c=[{'label':_4c9c210_0x1023(0x1aa),'valf':_0x4cb111,'valg':_0x4cb111,'prop':'T'},{'label':_4c9c210_0x1023(0x22f),'valf':_0x21e0b1,'valg':_0x21e0b1,'prop':'P'}],_0x26d5c1=[{'label':_4c9c210_0x1023(0x1d7),'valf':_0x199295,'valg':_0x51fbc6,'prop':'v'},{'label':_4c9c210_0x1023(0x1f5),'valf':_0x53ed56,'valg':_0x310abd,'prop':'u'},{'label':'Entalpía','valf':_0x39de19,'valg':_0x35e5de,'prop':'h'},{'label':_4c9c210_0x1023(0x232),'valf':0x0,'valg':_0x213a93,'prop':'h','hideF':!![],'labelF':'—'},{'label':_4c9c210_0x1023(0x218),'valf':_0x18dc94,'valg':_0x2bd546,'prop':'s'}];let _0x3861d0=_0x44347c['map'](_0x1bbe2b=>{const _0xdd5a1e=dispVal(_0x1bbe2b['valf'],_0x1bbe2b['prop']);return _4c9c210_0x1023(0x227)+_0x1bbe2b[_4c9c210_0x1023(0x1e9)]+'</td>\x0a\x20\x20\x20\x20\x20\x20<td\x20colspan=\x222\x22\x20style=\x22text-align:center;color:#1667b7;font-weight:500\x22>'+fmt(_0xdd5a1e,_0x1bbe2b[_4c9c210_0x1023(0x1ba)])+'</td>\x0a\x20\x20\x20\x20\x20\x20<td\x20class=\x22unit-col\x22>'+unitLabel(_0x1bbe2b[_4c9c210_0x1023(0x1ba)])+'</td>\x0a\x20\x20\x20\x20</tr>';})[_4c9c210_0x1023(0x1b0)](''),_0x1f5636=_0x26d5c1[_4c9c210_0x1023(0x1c5)](_0x49e45d=>{const _0x193bbf=_0x49e45d[_4c9c210_0x1023(0x1ac)]?'—':fmt(dispVal(_0x49e45d[_4c9c210_0x1023(0x19e)],_0x49e45d['prop']),_0x49e45d[_4c9c210_0x1023(0x1ba)]),_0x3dce85=fmt(dispVal(_0x49e45d[_4c9c210_0x1023(0x1bc)],_0x49e45d['prop']),_0x49e45d[_4c9c210_0x1023(0x1ba)]);return _4c9c210_0x1023(0x206)+_0x49e45d[_4c9c210_0x1023(0x1e9)]+'</td>\x0a\x20\x20\x20\x20\x20\x20<td\x20class=\x22val-f\x22>'+_0x193bbf+'</td>\x0a\x20\x20\x20\x20\x20\x20<td\x20class=\x22val-g\x22>'+_0x3dce85+_4c9c210_0x1023(0x1ed)+unitLabel(_0x49e45d[_4c9c210_0x1023(0x1ba)])+_4c9c210_0x1023(0x1fe);})[_4c9c210_0x1023(0x1b0)]('');const _0x4557ea=SYS==='SI'?_4c9c210_0x1023(0x21a):_4c9c210_0x1023(0x1b5);_0x419a88[_4c9c210_0x1023(0x1d3)]=_4c9c210_0x1023(0x204)+_0x4557ea+_4c9c210_0x1023(0x225)+_0x3861d0+_4c9c210_0x1023(0x207)+_0x1f5636+_4c9c210_0x1023(0x1e7);}function calcSat(){const _0x16633b=document[_4c9c210_0x1023(0x1ce)](_4c9c210_0x1023(0x1f9))[_4c9c210_0x1023(0x1ea)][_4c9c210_0x1023(0x1c8)]();if(!_0x16633b){alert(_4c9c210_0x1023(0x222));return;}const _0x30af01=parseFloat(_0x16633b),_0x4121d8=inputToSI(_0x30af01,satVarType);let _0x4678b8=undefined;if(phaseType===_4c9c210_0x1023(0x1b1)){_0x4678b8=parseFloat(document[_4c9c210_0x1023(0x1ce)](_4c9c210_0x1023(0x216))[_4c9c210_0x1023(0x1ea)]);if(isNaN(_0x4678b8)||_0x4678b8<0x0||_0x4678b8>0x1){alert(_4c9c210_0x1023(0x211));return;}}const _0x57f2db=getSatProps(satVarType,_0x4121d8,phaseType,_0x4678b8);lastSatResult_si=_0x57f2db,lastSatPhase=phaseType,phaseType===_4c9c210_0x1023(0x1d0)?renderSatBoth('sat-output',_0x57f2db,'sat-region-badge'):renderResult(_4c9c210_0x1023(0x21d),_0x57f2db,_4c9c210_0x1023(0x231));}function calcSuper(){const _0x11c08f=document[_4c9c210_0x1023(0x1ce)](_4c9c210_0x1023(0x1ae))[_4c9c210_0x1023(0x1ea)],_0x190231=document['getElementById'](_4c9c210_0x1023(0x1ec))[_4c9c210_0x1023(0x1ea)],_0x5afac0=parseFloat(document[_4c9c210_0x1023(0x1ce)](_4c9c210_0x1023(0x1b6))[_4c9c210_0x1023(0x1ea)]),_0x36298a=parseFloat(document[_4c9c210_0x1023(0x1ce)](_4c9c210_0x1023(0x1eb))[_4c9c210_0x1023(0x1ea)]);if(isNaN(_0x5afac0)||isNaN(_0x36298a)){alert(_4c9c210_0x1023(0x20e));return;}const _0x140c83=inputToSI(_0x5afac0,_0x11c08f),_0x2d3537=inputToSI(_0x36298a,_0x190231);let _0xc27a47;if(_0x11c08f==='T'&&_0x190231==='P'||_0x11c08f==='P'&&_0x190231==='T'){const _0x503fac=_0x11c08f==='T'?_0x140c83:_0x2d3537,_0x423874=_0x11c08f==='P'?_0x140c83:_0x2d3537;_0xc27a47=superByTP(_0x503fac,_0x423874);}else{if(_0x11c08f==='T'||_0x11c08f==='P')_0xc27a47=inverseOneKnown(_0x11c08f,_0x140c83,_0x190231,_0x2d3537);else _0x190231==='T'||_0x190231==='P'?_0xc27a47=inverseOneKnown(_0x190231,_0x2d3537,_0x11c08f,_0x140c83):_0xc27a47=inverseTwoProps(_0x11c08f,_0x140c83,_0x190231,_0x2d3537);}lastSuperResult_si=_0xc27a47,renderResult('super-output',_0xc27a47,_4c9c210_0x1023(0x1be));}onSuperVarChange(),updateSatUnitLabels();</script>
+
+<style id="orvhelp-css">
+#orvhelp-btn{position:fixed;right:18px;bottom:18px;z-index:99990;display:inline-flex;align-items:center;gap:7px;
+ background:#1976d2;color:#fff;border:none;border-radius:999px;padding:10px 18px;font:600 .85rem/1 'Segoe UI',system-ui,sans-serif;
+ letter-spacing:.05em;cursor:pointer;box-shadow:0 4px 16px rgba(20,40,80,.28);transition:filter .15s}
+#orvhelp-btn:hover{filter:brightness(1.12)}
+#orvhelp-overlay{position:fixed;inset:0;z-index:99991;background:rgba(15,25,40,.55);display:none;align-items:center;justify-content:center;padding:18px}
+#orvhelp-overlay.open{display:flex}
+#orvhelp-panel{background:#fff;color:#1a2233;max-width:580px;width:100%;max-height:85vh;overflow-y:auto;border-radius:14px;
+ box-shadow:0 18px 60px rgba(10,20,40,.35);font-family:'Segoe UI',system-ui,sans-serif}
+#orvhelp-head{display:flex;align-items:center;justify-content:space-between;gap:10px;
+ background:linear-gradient(90deg,#1565c0,#1e88e5);color:#fff;padding:14px 20px;border-radius:14px 14px 0 0}
+#orvhelp-head h2{margin:0;font-size:1.02rem;font-weight:600}
+#orvhelp-close{background:rgba(255,255,255,.18);border:none;color:#fff;font-size:1.15rem;line-height:1;
+ border-radius:8px;width:30px;height:30px;cursor:pointer}
+#orvhelp-body{padding:16px 22px 20px;font-size:.9rem;line-height:1.55}
+#orvhelp-body h3{margin:14px 0 6px;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;color:#1565c0}
+#orvhelp-body ol{margin:4px 0 0;padding-left:20px}
+#orvhelp-body ol li{margin-bottom:6px}
+#orvhelp-tip{margin-top:14px;background:#e3f0fd;border-left:4px solid #1976d2;border-radius:8px;padding:10px 14px;font-size:.84rem;color:#1a2233}
+</style>
+
+<button id="orvhelp-btn" type="button" aria-haspopup="dialog" aria-controls="orvhelp-overlay">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.4 2.3c-.8.3-1.4 1-1.4 1.9v.3"/><line x1="11.5" y1="17" x2="11.51" y2="17"/></svg>AYUDA</button>
+<div id="orvhelp-overlay" role="dialog" aria-modal="true" aria-labelledby="orvhelp-title">
+  <div id="orvhelp-panel">
+    <div id="orvhelp-head"><h2 id="orvhelp-title">Ayuda · Tablas de Vapor (Agua)</h2>
+      <button id="orvhelp-close" type="button" aria-label="Cerrar ayuda">&#215;</button></div>
+    <div id="orvhelp-body">
+      <h3>¿Qué es esta aplicación?</h3>
+      <p>Tablas del agua en saturación y vapor sobrecalentado, con interpolación de propiedades.</p>
+      <h3>Cómo se usa</h3>
+      <ol><li>Seleccione la pestaña o región de interés (saturación, sobrecalentado, etc.).</li><li>Ingrese el valor de entrada (temperatura o presión) en el campo correspondiente.</li><li>Lea las propiedades en la fila resaltada; si el valor no está tabulado, la aplicación interpola o puede agregar una fila personalizada con «+ Ver».</li><li>Copie los valores a su solución cuidando las unidades indicadas en los encabezados.</li></ol>
+      <div id="orvhelp-tip"><b>Sugerencia didáctica.</b> Resuelva el enunciado y los ejercicios de esta aplicación disponibles en el índice del Compendio ORV, y verifique sus resultados con la propia herramienta.</div>
+    </div>
+  </div>
+</div>
+<script id="orvhelp-js">function _4c9c211_0x115e(_0x4ec961,_0x3670de){var _0x1be892=_4c9c211_0x1be8();return _4c9c211_0x115e=function(_0x115e04,_0x508ed0){_0x115e04=_0x115e04-0x199;var _0x5e4e65=_0x1be892[_0x115e04];return _0x5e4e65;},_4c9c211_0x115e(_0x4ec961,_0x3670de);}function _4c9c211_0x1be8(){var _0x13258b=['5451632WArKDZ','2043054qLBJiy','7209188WBdksM','4311505NHDdYk','keydown','classList','orvhelp-btn','orvhelp-close','168711qwKuus','16488YsbXWL','key','click','Escape','remove','open','addEventListener','16sQmwJy','orvhelp-overlay','10563sgpWDV','getElementById','25496WcvKox'];_4c9c211_0x1be8=function(){return _0x13258b;};return _4c9c211_0x1be8();}(function(_0x3462d6,_0x19e8a8){var _0xb0c9bc=_0x3462d6();while(!![]){try{var _0x46bc37=-parseInt(_4c9c211_0x115e(0x19c))/0x1*(parseInt(_4c9c211_0x115e(0x1a4))/0x2)+parseInt(_4c9c211_0x115e(0x1a6))/0x3+-parseInt(_4c9c211_0x115e(0x1a9))/0x4+-parseInt(_4c9c211_0x115e(0x1ac))/0x5+-parseInt(_4c9c211_0x115e(0x1aa))/0x6+-parseInt(_4c9c211_0x115e(0x1ab))/0x7+parseInt(_4c9c211_0x115e(0x1a8))/0x8*(parseInt(_4c9c211_0x115e(0x19d))/0x9);if(_0x46bc37===_0x19e8a8)break;else _0xb0c9bc['push'](_0xb0c9bc['shift']());}catch(_0x1dffb4){_0xb0c9bc['push'](_0xb0c9bc['shift']());}}}(_4c9c211_0x1be8,0xdaf2f),(function(){var _0x4e70f7=document[_4c9c211_0x115e(0x1a7)](_4c9c211_0x115e(0x19a)),_0xd895eb=document[_4c9c211_0x115e(0x1a7)](_4c9c211_0x115e(0x1a5)),_0x3563cb=document[_4c9c211_0x115e(0x1a7)](_4c9c211_0x115e(0x19b));function _0x58f7a4(){_0xd895eb[_4c9c211_0x115e(0x199)]['add'](_4c9c211_0x115e(0x1a2));}function _0x4843b0(){_0xd895eb[_4c9c211_0x115e(0x199)][_4c9c211_0x115e(0x1a1)](_4c9c211_0x115e(0x1a2));}_0x4e70f7[_4c9c211_0x115e(0x1a3)](_4c9c211_0x115e(0x19f),_0x58f7a4),_0x3563cb[_4c9c211_0x115e(0x1a3)](_4c9c211_0x115e(0x19f),_0x4843b0),_0xd895eb['addEventListener']('click',function(_0x481096){if(_0x481096['target']===_0xd895eb)_0x4843b0();}),document[_4c9c211_0x115e(0x1a3)](_4c9c211_0x115e(0x1ad),function(_0x201547){if(_0x201547[_4c9c211_0x115e(0x19e)]===_4c9c211_0x115e(0x1a0))_0x4843b0();});}()));</script>
+<script id="orv-movil-a11y-js">function _4c9c212_0x49e8(){var _0x3fd8b2=['readyState','.topbar,.app-header','type','region','keydown','orvFlex','DOMContentLoaded','6mbbrGs','previousElementSibling','replace','contains','aria-labelledby','259238xWKjiU','orv-shrink','nodeType','data-tip','orvKb','radio','svg','TABLE','right','649409PiMYdu','options','closest','getBoundingClientRect','orvGrid','Spacebar','getAttribute','gridTemplateColumns','.js-plotly-plot,.orv-tblwrap,svg','input:not([type=hidden]),select,textarea','dataset','title','test','repeat(auto-fit,minmax(min(100%,260px),1fr))','nextSibling','92574zHfIAl','grid','clientHeight','clientWidth','classList','slice','indexOf','Enter','Tabla\x20desplazable\x20horizontalmente','display','key','role','row','placeholder','.js-plotly-plot','appendChild','1268311eOSRzY','Cargar\x20archivo','tabindex','click','Ayuda','section,fieldset,.card,.panel,.sb-section,.ctrl-group,.grp,div[class*=section]','.topbar-brand','textContent','overflowY','forEach','querySelectorAll','orv-hdr','hasAttribute','701048qKHSAP','add','input,select,textarea,button,a[href],[onclick]','fixed','scrollHeight','84kdzTVF','label','15EKPLSp','trim','width','resize','orv-tblwrap','input,select,textarea,button,a[href],[tabindex]','862864FJLUgd','Seleccionar:\x20','parentElement','orv-nowrap-fix','input,select,textarea','preventDefault','querySelector','none','SELECT','style','Región\x20desplazable','Aplicación\x20integrada\x20','label[for=\x22','h1,h2,h3,h4,h5,legend,.sec-title,.section-title,[class*=title]','body','78MKJpqf','className','tagName','flexWrap','documentElement','408LiJnaX','aria-label','4536830MzHCLJ','wrap','div','setAttribute','scrollWidth','getElementById','length','addedNodes','overflowX','file','[role=\x22img\x22]','whiteSpace','group','addEventListener'];_4c9c212_0x49e8=function(){return _0x3fd8b2;};return _4c9c212_0x49e8();}function _4c9c212_0x6aeb(_0x54b13f,_0x1de169){var _0x49e877=_4c9c212_0x49e8();return _4c9c212_0x6aeb=function(_0x6aebbc,_0x139991){_0x6aebbc=_0x6aebbc-0x160;var _0x5ddc20=_0x49e877[_0x6aebbc];return _0x5ddc20;},_4c9c212_0x6aeb(_0x54b13f,_0x1de169);}(function(_0x53170b,_0x77df4f){var _0x1a6cdd=_0x53170b();while(!![]){try{var _0x224079=parseInt(_4c9c212_0x6aeb(0x1c0))/0x1+-parseInt(_4c9c212_0x6aeb(0x17a))/0x2*(parseInt(_4c9c212_0x6aeb(0x1b2))/0x3)+-parseInt(_4c9c212_0x6aeb(0x187))/0x4*(parseInt(_4c9c212_0x6aeb(0x181))/0x5)+-parseInt(_4c9c212_0x6aeb(0x196))/0x6*(-parseInt(_4c9c212_0x6aeb(0x1b7))/0x7)+-parseInt(_4c9c212_0x6aeb(0x19b))/0x8*(-parseInt(_4c9c212_0x6aeb(0x1cf))/0x9)+-parseInt(_4c9c212_0x6aeb(0x19d))/0xa+-parseInt(_4c9c212_0x6aeb(0x16d))/0xb*(-parseInt(_4c9c212_0x6aeb(0x17f))/0xc);if(_0x224079===_0x77df4f)break;else _0x1a6cdd['push'](_0x1a6cdd['shift']());}catch(_0x32934a){_0x1a6cdd['push'](_0x1a6cdd['shift']());}}}(_4c9c212_0x49e8,0xa14b9),(function(){'use strict';var _0x1ed50b=0x2d0;function _0x539fd4(_0xd2f8a){return(_0xd2f8a&&_0xd2f8a[_4c9c212_0x6aeb(0x174)]||'')[_4c9c212_0x6aeb(0x1b4)](/\s+/g,'\x20')[_4c9c212_0x6aeb(0x182)]();}function _0x53b41b(){var _0x150cba=document[_4c9c212_0x6aeb(0x18d)](_4c9c212_0x6aeb(0x173));if(_0x150cba){var _0x308e32=_0x150cba[_4c9c212_0x6aeb(0x189)];if(_0x308e32&&_0x308e32[_4c9c212_0x6aeb(0x161)][_4c9c212_0x6aeb(0x1b5)]('brand-block')&&_0x308e32[_4c9c212_0x6aeb(0x189)])_0x308e32=_0x308e32[_4c9c212_0x6aeb(0x189)];if(_0x308e32&&_0x308e32!==document[_4c9c212_0x6aeb(0x195)])_0x308e32['classList'][_4c9c212_0x6aeb(0x17b)](_4c9c212_0x6aeb(0x178));}document['querySelectorAll'](_4c9c212_0x6aeb(0x1ac))['forEach'](function(_0xe5f9fa){_0xe5f9fa[_4c9c212_0x6aeb(0x161)][_4c9c212_0x6aeb(0x17b)](_4c9c212_0x6aeb(0x178));});}function _0x272ad5(){var _0x5cd90c=document[_4c9c212_0x6aeb(0x1a2)]('orvhelp-btn');if(_0x5cd90c&&!_0x5cd90c[_4c9c212_0x6aeb(0x1c6)](_4c9c212_0x6aeb(0x19c)))_0x5cd90c[_4c9c212_0x6aeb(0x1a0)]('aria-label',_4c9c212_0x6aeb(0x171));}var _0xc71215={'BUTTON':0x1,'A':0x1,'INPUT':0x1,'SELECT':0x1,'TEXTAREA':0x1,'LABEL':0x1,'OPTION':0x1,'SUMMARY':0x1,'DETAILS':0x1};function _0x27a1d6(_0x4bc9c2){(_0x4bc9c2||document)['querySelectorAll']('[onclick]')[_4c9c212_0x6aeb(0x176)](function(_0x3aac48){if(_0xc71215[_0x3aac48[_4c9c212_0x6aeb(0x198)]]||_0x3aac48[_4c9c212_0x6aeb(0x1ca)][_4c9c212_0x6aeb(0x1bb)])return;if(_0x3aac48['querySelector'](_4c9c212_0x6aeb(0x17c)))return;var _0x1e9d09=_0x3aac48[_4c9c212_0x6aeb(0x189)]&&_0x3aac48[_4c9c212_0x6aeb(0x189)][_4c9c212_0x6aeb(0x1c2)](_4c9c212_0x6aeb(0x1a7));if(_0x1e9d09)_0x1e9d09['setAttribute'](_4c9c212_0x6aeb(0x168),_4c9c212_0x6aeb(0x1a9));if(_0x3aac48['closest'](_4c9c212_0x6aeb(0x1bd))&&_0x3aac48[_4c9c212_0x6aeb(0x198)]['toLowerCase']()!=='svg'&&!_0x3aac48[_4c9c212_0x6aeb(0x1c6)](_4c9c212_0x6aeb(0x168))){}_0x3aac48['dataset'][_4c9c212_0x6aeb(0x1bb)]='1';if(!_0x3aac48[_4c9c212_0x6aeb(0x1c6)]('role'))_0x3aac48['setAttribute'](_4c9c212_0x6aeb(0x168),'button');if(!_0x3aac48['hasAttribute'](_4c9c212_0x6aeb(0x16f)))_0x3aac48[_4c9c212_0x6aeb(0x1a0)]('tabindex','0');if(!_0x3aac48['getAttribute']('aria-label')&&!_0x539fd4(_0x3aac48)){var _0x195472=_0x3aac48['getAttribute'](_4c9c212_0x6aeb(0x1cb))||_0x3aac48[_4c9c212_0x6aeb(0x1c6)](_4c9c212_0x6aeb(0x1ba))||'';if(_0x195472)_0x3aac48[_4c9c212_0x6aeb(0x1a0)](_4c9c212_0x6aeb(0x19c),_0x195472);}_0x3aac48['addEventListener'](_4c9c212_0x6aeb(0x1af),function(_0x1c04e2){if(_0x1c04e2['target']!==_0x3aac48)return;(_0x1c04e2['key']===_4c9c212_0x6aeb(0x164)||_0x1c04e2[_4c9c212_0x6aeb(0x167)]==='\x20'||_0x1c04e2[_4c9c212_0x6aeb(0x167)]===_4c9c212_0x6aeb(0x1c5))&&(_0x1c04e2[_4c9c212_0x6aeb(0x18c)](),_0x3aac48[_4c9c212_0x6aeb(0x170)]());});});}function _0x72b683(_0x1db613){if(_0x1db613[_4c9c212_0x6aeb(0x1c6)]('aria-label')||_0x1db613[_4c9c212_0x6aeb(0x1c6)](_4c9c212_0x6aeb(0x1b6))||_0x1db613[_4c9c212_0x6aeb(0x1c6)](_4c9c212_0x6aeb(0x1cb)))return!![];if(_0x1db613['id'])try{if(document[_4c9c212_0x6aeb(0x18d)](_4c9c212_0x6aeb(0x193)+CSS['escape'](_0x1db613['id'])+'\x22]'))return!![];}catch(_0x1ef342){}if(_0x1db613['closest'](_4c9c212_0x6aeb(0x180))&&_0x539fd4(_0x1db613[_4c9c212_0x6aeb(0x1c2)](_4c9c212_0x6aeb(0x180))))return!![];return![];}function _0x29287f(_0x1fe737){var _0x4c8a3d=_0x1fe737,_0x566a13=0x0;while(_0x4c8a3d&&_0x566a13<0x4){var _0x384e47=_0x4c8a3d[_4c9c212_0x6aeb(0x1b3)];while(_0x384e47){if(!_0x384e47['querySelector'](_4c9c212_0x6aeb(0x18b))&&!/^(INPUT|SELECT|TEXTAREA|BUTTON)$/[_4c9c212_0x6aeb(0x1cc)](_0x384e47[_4c9c212_0x6aeb(0x198)])){var _0xdb632e=_0x539fd4(_0x384e47);if(_0xdb632e&&_0xdb632e[_4c9c212_0x6aeb(0x1a3)]<=0x5a)return _0xdb632e;}if(_0x384e47[_4c9c212_0x6aeb(0x18d)]&&_0x384e47['querySelector'](_4c9c212_0x6aeb(0x18b)))break;_0x384e47=_0x384e47[_4c9c212_0x6aeb(0x1b3)];}_0x4c8a3d=_0x4c8a3d[_4c9c212_0x6aeb(0x189)],_0x566a13++;if(_0x4c8a3d&&_0x4c8a3d[_4c9c212_0x6aeb(0x177)](_4c9c212_0x6aeb(0x18b))[_4c9c212_0x6aeb(0x1a3)]>0x1)break;}if(_0x1fe737[_4c9c212_0x6aeb(0x1ad)]===_4c9c212_0x6aeb(0x1a6))return _4c9c212_0x6aeb(0x16e);var _0x36b73b=_0x1fe737[_4c9c212_0x6aeb(0x1c2)](_4c9c212_0x6aeb(0x172));if(_0x36b73b){var _0x148b13=_0x36b73b[_4c9c212_0x6aeb(0x18d)](_4c9c212_0x6aeb(0x194));if(_0x148b13&&_0x539fd4(_0x148b13)&&_0x539fd4(_0x148b13)[_4c9c212_0x6aeb(0x1a3)]<=0x5a)return _0x539fd4(_0x148b13);}if(_0x1fe737['tagName']===_4c9c212_0x6aeb(0x18f)&&_0x1fe737[_4c9c212_0x6aeb(0x1c1)][_4c9c212_0x6aeb(0x1a3)])return _4c9c212_0x6aeb(0x188)+_0x539fd4(_0x1fe737[_4c9c212_0x6aeb(0x1c1)][0x0]);return _0x1fe737[_4c9c212_0x6aeb(0x1c6)](_4c9c212_0x6aeb(0x16a))||_0x1fe737[_4c9c212_0x6aeb(0x1c6)]('name')||'';}function _0x4d5459(_0x86f576){(_0x86f576||document)[_4c9c212_0x6aeb(0x177)](_4c9c212_0x6aeb(0x1c9))['forEach'](function(_0x39097b){if(_0x72b683(_0x39097b))return;var _0x479133=_0x29287f(_0x39097b);if(!_0x479133&&_0x39097b[_4c9c212_0x6aeb(0x1ad)]==='checkbox'||!_0x479133&&_0x39097b[_4c9c212_0x6aeb(0x1ad)]===_4c9c212_0x6aeb(0x1bc)){var _0x18c3c0=_0x39097b[_4c9c212_0x6aeb(0x1ce)];_0x479133=_0x18c3c0?_0x539fd4(_0x18c3c0[_4c9c212_0x6aeb(0x1b9)]===0x3?{'textContent':_0x18c3c0['nodeValue']}:_0x18c3c0):'';}if(_0x479133)_0x39097b['setAttribute'](_4c9c212_0x6aeb(0x19c),_0x479133[_4c9c212_0x6aeb(0x162)](0x0,0x5a));});}function _0x1d4e48(){document[_4c9c212_0x6aeb(0x177)]('table')[_4c9c212_0x6aeb(0x176)](function(_0x145ca7){var _0x1f6e95=_0x145ca7['parentElement'];if(!_0x1f6e95||_0x1f6e95[_4c9c212_0x6aeb(0x161)][_4c9c212_0x6aeb(0x1b5)](_4c9c212_0x6aeb(0x185))||_0x145ca7['closest'](_4c9c212_0x6aeb(0x16b)))return;if(_0x145ca7['getBoundingClientRect']()[_4c9c212_0x6aeb(0x183)]>_0x1f6e95[_4c9c212_0x6aeb(0x160)]+0x2){var _0x31b92f=document['createElement'](_4c9c212_0x6aeb(0x19f));_0x31b92f[_4c9c212_0x6aeb(0x197)]=_4c9c212_0x6aeb(0x185),_0x31b92f[_4c9c212_0x6aeb(0x1a0)](_4c9c212_0x6aeb(0x16f),'0'),_0x31b92f[_4c9c212_0x6aeb(0x1a0)](_4c9c212_0x6aeb(0x168),'region'),_0x31b92f['setAttribute'](_4c9c212_0x6aeb(0x19c),_4c9c212_0x6aeb(0x165)),_0x1f6e95['insertBefore'](_0x31b92f,_0x145ca7),_0x31b92f[_4c9c212_0x6aeb(0x16c)](_0x145ca7);}});}function _0x489db7(){var _0x3c6c76=document[_4c9c212_0x6aeb(0x19a)][_4c9c212_0x6aeb(0x160)];if(_0x3c6c76>_0x1ed50b)return;_0x1d4e48();for(var _0x58c053=0x0;_0x58c053<0x3;_0x58c053++){if(document[_4c9c212_0x6aeb(0x19a)][_4c9c212_0x6aeb(0x1a1)]<=_0x3c6c76+0x1)return;var _0xb32b6e=document[_4c9c212_0x6aeb(0x195)][_4c9c212_0x6aeb(0x177)]('*'),_0x3329c7=![];for(var _0x2f0a23=0x0;_0x2f0a23<_0xb32b6e[_4c9c212_0x6aeb(0x1a3)];_0x2f0a23++){var _0x4019c4=_0xb32b6e[_0x2f0a23];if(_0x4019c4['closest'](_4c9c212_0x6aeb(0x1c8)))continue;var _0x295a9b=getComputedStyle(_0x4019c4);if(_0x295a9b['position']===_4c9c212_0x6aeb(0x17d)||_0x295a9b[_4c9c212_0x6aeb(0x166)]===_4c9c212_0x6aeb(0x18e))continue;var _0x4cfbad=_0x4019c4[_4c9c212_0x6aeb(0x1c3)]();if(_0x4cfbad[_4c9c212_0x6aeb(0x1bf)]<=_0x3c6c76+0x1||_0x4cfbad[_4c9c212_0x6aeb(0x183)]===0x0)continue;if(_0x4019c4[_4c9c212_0x6aeb(0x198)]===_4c9c212_0x6aeb(0x1be)&&!_0x4019c4[_4c9c212_0x6aeb(0x189)]['classList']['contains'](_4c9c212_0x6aeb(0x185))){var _0x59d70c=document['createElement']('div');_0x59d70c[_4c9c212_0x6aeb(0x197)]=_4c9c212_0x6aeb(0x185),_0x59d70c['setAttribute'](_4c9c212_0x6aeb(0x16f),'0'),_0x59d70c[_4c9c212_0x6aeb(0x1a0)]('role','region'),_0x59d70c[_4c9c212_0x6aeb(0x1a0)]('aria-label','Tabla\x20desplazable\x20horizontalmente'),_0x4019c4['parentNode']['insertBefore'](_0x59d70c,_0x4019c4),_0x59d70c['appendChild'](_0x4019c4),_0x3329c7=!![];continue;}(_0x295a9b[_4c9c212_0x6aeb(0x1a8)]==='nowrap'||_0x295a9b[_4c9c212_0x6aeb(0x1a8)]==='pre')&&(_0x4019c4['classList'][_4c9c212_0x6aeb(0x17b)](_4c9c212_0x6aeb(0x18a)),_0x3329c7=!![]);_0x4cfbad[_4c9c212_0x6aeb(0x183)]>_0x3c6c76&&(_0x4019c4[_4c9c212_0x6aeb(0x161)]['add'](_4c9c212_0x6aeb(0x1b8)),_0x3329c7=!![],_0x295a9b['display'][_4c9c212_0x6aeb(0x163)]('grid')>=0x0&&(_0x4019c4['style'][_4c9c212_0x6aeb(0x1c7)]=_4c9c212_0x6aeb(0x1cd)),_0x295a9b[_4c9c212_0x6aeb(0x166)][_4c9c212_0x6aeb(0x163)]('flex')>=0x0&&_0x295a9b[_4c9c212_0x6aeb(0x199)]==='nowrap'&&(_0x4019c4[_4c9c212_0x6aeb(0x190)][_4c9c212_0x6aeb(0x199)]=_4c9c212_0x6aeb(0x19e)));var _0x532edf=_0x4019c4[_4c9c212_0x6aeb(0x189)];while(_0x532edf&&_0x532edf!==document[_4c9c212_0x6aeb(0x195)]){var _0x4d3725=getComputedStyle(_0x532edf);if(_0x4d3725[_4c9c212_0x6aeb(0x166)][_4c9c212_0x6aeb(0x163)](_4c9c212_0x6aeb(0x1d0))>=0x0&&!_0x532edf[_4c9c212_0x6aeb(0x1ca)]['orvGrid']){_0x532edf['dataset'][_4c9c212_0x6aeb(0x1c4)]='1',_0x532edf['style'][_4c9c212_0x6aeb(0x1c7)]=_4c9c212_0x6aeb(0x1cd),_0x3329c7=!![];break;}if(_0x4d3725[_4c9c212_0x6aeb(0x166)]['indexOf']('flex')>=0x0&&_0x4d3725[_4c9c212_0x6aeb(0x199)]==='nowrap'&&_0x4d3725['flexDirection']['indexOf'](_4c9c212_0x6aeb(0x169))===0x0&&!_0x532edf[_4c9c212_0x6aeb(0x1ca)][_4c9c212_0x6aeb(0x1b0)]){_0x532edf[_4c9c212_0x6aeb(0x1ca)][_4c9c212_0x6aeb(0x1b0)]='1',_0x532edf[_4c9c212_0x6aeb(0x190)]['flexWrap']='wrap',_0x3329c7=!![];break;}_0x532edf=_0x532edf[_4c9c212_0x6aeb(0x189)];}}if(!_0x3329c7)return;}}function _0x2c8e94(){document['querySelectorAll']('iframe:not([title])')['forEach'](function(_0x47472d,_0x511412){_0x47472d[_4c9c212_0x6aeb(0x1a0)](_4c9c212_0x6aeb(0x1cb),_4c9c212_0x6aeb(0x192)+(_0x511412+0x1));}),document[_4c9c212_0x6aeb(0x177)]('body\x20*')[_4c9c212_0x6aeb(0x176)](function(_0x48ba37){if(_0x48ba37[_4c9c212_0x6aeb(0x1ca)]['orvScroll']||_0x48ba37[_4c9c212_0x6aeb(0x179)](_4c9c212_0x6aeb(0x16f)))return;var _0x3b275b=getComputedStyle(_0x48ba37);if(!/(auto|scroll)/['test'](_0x3b275b[_4c9c212_0x6aeb(0x1a5)]+_0x3b275b[_4c9c212_0x6aeb(0x175)]))return;if(_0x48ba37[_4c9c212_0x6aeb(0x1a1)]<=_0x48ba37[_4c9c212_0x6aeb(0x160)]+0x1&&_0x48ba37[_4c9c212_0x6aeb(0x17e)]<=_0x48ba37[_4c9c212_0x6aeb(0x1d1)]+0x1)return;if(_0x48ba37[_4c9c212_0x6aeb(0x18d)](_4c9c212_0x6aeb(0x186)))return;_0x48ba37[_4c9c212_0x6aeb(0x1ca)]['orvScroll']='1',_0x48ba37[_4c9c212_0x6aeb(0x1a0)](_4c9c212_0x6aeb(0x16f),'0');if(!_0x48ba37[_4c9c212_0x6aeb(0x1c6)](_4c9c212_0x6aeb(0x168)))_0x48ba37[_4c9c212_0x6aeb(0x1a0)](_4c9c212_0x6aeb(0x168),_4c9c212_0x6aeb(0x1ae));if(!_0x48ba37[_4c9c212_0x6aeb(0x1c6)](_4c9c212_0x6aeb(0x19c)))_0x48ba37[_4c9c212_0x6aeb(0x1a0)]('aria-label',_4c9c212_0x6aeb(0x191));});}var _0x293076=null;function _0x9a4980(){if(_0x293076)return;_0x293076=setTimeout(function(){_0x293076=null,_0x44f7f6(![]);},0xfa);}function _0x44f7f6(_0x5dbc57){_0x5dbc57&&(_0x53b41b(),_0x272ad5()),_0x27a1d6(),_0x4d5459(),_0x489db7(),_0x2c8e94();}function _0x10ecac(){_0x44f7f6(!![]),setTimeout(function(){_0x44f7f6(![]);},0x384);try{new MutationObserver(function(_0x438687){for(var _0x4ab343=0x0;_0x4ab343<_0x438687['length'];_0x4ab343++){if(_0x438687[_0x4ab343][_4c9c212_0x6aeb(0x1a4)]&&_0x438687[_0x4ab343]['addedNodes'][_4c9c212_0x6aeb(0x1a3)]){_0x9a4980();break;}}})['observe'](document[_4c9c212_0x6aeb(0x195)],{'childList':!![],'subtree':!![]});}catch(_0x29103e){}window[_4c9c212_0x6aeb(0x1aa)](_4c9c212_0x6aeb(0x184),_0x9a4980);}if(document[_4c9c212_0x6aeb(0x1ab)]==='loading')document[_4c9c212_0x6aeb(0x1aa)](_4c9c212_0x6aeb(0x1b1),_0x10ecac);else _0x10ecac();}()));</script>
+</body>
+</html>
