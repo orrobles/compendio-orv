@@ -246,7 +246,7 @@ Se conservan `07 Ciclos de potencia y refrigeracion/Ciclo Rankine_ORV.html` y `0
 3. **Simulador de volumen de control.** El código está compilado (minificado) y su interpolación cerca de la saturación no se modificó. Solo se corrigieron los datos.
 4. **En celular, con limitaciones:**
    - Las gráficas de Plotly funcionan, pero en 390 px quedan estrechas y algunas etiquetas de los ejes se enciman.
-   - Las tres subaplicaciones que la Suite de ecuaciones de estado carga dentro de marcos no recibieron la capa.
+   - ~~Las tres subaplicaciones que la Suite de ecuaciones de estado carga dentro de marcos no recibieron la capa.~~ **Resuelto el 20-oct-2026:** las tres tienen ahora la capa de celular y accesibilidad. En la Calculadora de estado desaparecieron 3 fallas de accesibilidad (2 campos sin etiqueta y 1 lista sin nombre) y el desborde horizontal en celular (508 px de contenido en 352 px de pantalla).
 5. **No validado:** la carta de compresibilidad generalizada (datos promediados) y las calculadoras de puntos de los diagramas de agua. Los datos de estas últimas sí se verificaron y su lógica de interpolación ya devuelve `null` fuera de rango.
 
 ## 5. Cómo validar y sustituir
@@ -274,4 +274,25 @@ Las aplicaciones ya no descargan nada al abrirse. Plotly 2.27.0 (20 aplicaciones
 - **Respaldo:** si se usa un archivo HTML suelto, sin la carpeta `lib/` (por ejemplo, subido individualmente a Moodle), la aplicación descarga las bibliotecas de internet como antes.
 - **Al publicar** el compendio (GitHub Pages, Moodle como carpeta, memoria USB), incluya la carpeta `lib/`.
 - **Comprobación:** la prueba `pruebas/04-sin-internet.spec.js` bloquea toda conexión y verifica que las 38 aplicaciones y el índice funcionen, con sus gráficas, ecuaciones y fuentes. `npm run bibliotecas` informa si alguna aplicación vuelve a depender de internet.
+
+## 8. Unidad 09 «Rankine · Modalidades» (21 de octubre de 2026)
+
+Se incorporó `09 Rankine Modalidades/Rankine Mejorado_ORV.html` (Rankine Mejorado v5.1), que reúne siete configuraciones del ciclo: simple, recalentamiento, regeneración con calentador abierto o cerrado, recalentamiento con extracción en la turbina de alta, en la de baja o en ambas, y ciclo supercrítico, con análisis exergético y banco de validación integrado.
+
+**Cómo se verificó.** Se contrastó con CoolProp (formulación IAPWS-IF97) en 4 410 ciclos de las siete configuraciones, en todo el intervalo de los controles (P_max de 20 a 300 bar, T_max de 300 a 700 °C, P_c de 0.05 a 5 bar, η_T y η_P ideales y reales), y se comparó el resultado en SI y en unidades inglesas.
+
+| Defecto encontrado en la v5.0 | Efecto | Corrección |
+|---|---|---|
+| El vapor sobrecalentado por debajo de 0.5 bar se leía en la isobara de 0.5 bar | En ciclos con recalentamiento y descarga sobrecalentada, η hasta 12.8 puntos menor (20 bar/600 °C, P_r = 2 bar, P_c = 0.05 bar: 28.1 % en lugar de 40.4 %) | Isobaras IF97 de 0.04, 0.1 y 0.2 bar |
+| La isobara superior se extrapolaba por debajo de su T de saturación (cerca de la campana y del punto crítico) | Error en h de hasta 32 kJ/kg | Interpolación sobre la isoterma en ln p, con el vapor saturado como nodo; isobaras de 190, 210, 230 y 240 bar; inversión por bisección |
+| Con T_max ≤ T_sat(P_max) la turbina recibía líquido saturado | Resultados sin sentido físico, sin aviso | Entrada de vapor saturado (x = 1) con aviso; en ciclo supercrítico, T ≥ 400 °C |
+| Calentador cerrado: agua de alimentación como líquido saturado a T_3 | η hasta 0.91 puntos fuera | Líquido comprimido mediante las relaciones de Maxwell (0.14 puntos) |
+| Tabla de saturación con cinco entradas mal transcritas de Moran A-3 (4.5, 120, 140 y 160 bar), ocho presiones ausentes y dos filas cercanas al punto crítico erróneas | Hasta 9.8 kJ/kg | Filas de la fuente única (`datos/agua.json`) e IF97 cerca del punto crítico; interpolación en ln p; s_c = 4.4070 kJ/kg·K |
+| Tablas inglesas con isobaras de presión redondeada (7 psia para 0.5 bar = 7.25 psia) | Pequeñas diferencias entre SI e inglés | Derivadas de las SI con factores exactos al cargar la página (diferencia en η: 0.0000 puntos) |
+| Cursor de los diagramas: mostraba la isobara tabulada más próxima | Presión y temperatura aproximadas | Búsqueda continua |
+| Desborde de 589 px en celular; 64 fallas de contraste | — | Capa común de celular y accesibilidad; fuentes desde `lib/` |
+
+**Resultado.** Error máximo en η frente a IAPWS-IF97 de 0.02 puntos en seis configuraciones y de 0.14 puntos con calentador cerrado; banco de validación integrado 12/12 (motor), 12/12 (literatura) y 40/40 (invariantes). Se añadieron seis casos a `pruebas/02-casos-validados.spec.js`.
+
+**Fuente de datos.** La tabla de saturación coincide con Moran A-3 de la fuente única; las de vapor sobrecalentado y supercrítico son IAPWS-IF97, propias de esta aplicación (no forman parte de `datos/agua.json`).
 

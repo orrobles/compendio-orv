@@ -8,7 +8,7 @@ Oscar Robles Vásquez · Departamento de Ingeniería Química · CUCEI, Universi
 ---
 
 ## Qué contiene
-38 aplicaciones web organizadas en las ocho unidades del curso:
+39 aplicaciones web organizadas en las nueve unidades del curso:
 
 | Unidad | Tema |
 |---|---|
@@ -20,6 +20,7 @@ Oscar Robles Vásquez · Departamento de Ingeniería Química · CUCEI, Universi
 | 06 | Análisis de exergía |
 | 07 | Ciclos de potencia y refrigeración |
 | 08 | Psicrometría |
+| 09 | Rankine · Modalidades: siete configuraciones del ciclo Rankine, incluido el ciclo supercrítico |
 
 Las aplicaciones se usan desde el navegador, en computadora o celular, y no requieren instalación ni registro.
 
