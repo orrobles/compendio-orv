@@ -296,3 +296,30 @@ Se incorporó `09 Rankine Modalidades/Rankine Mejorado_ORV.html` (Rankine Mejora
 
 **Fuente de datos.** La tabla de saturación coincide con Moran A-3 de la fuente única; las de vapor sobrecalentado y supercrítico son IAPWS-IF97, propias de esta aplicación (no forman parte de `datos/agua.json`).
 
+
+## 9. Refrigerantes en el simulador de ciclos por volumen de control (26 de octubre de 2026)
+
+`04 Primera ley y volumen de control/Vol control ciclo termodinamico_ORV.html` trabajaba solo con agua y aire. Ahora el selector de sustancia (encabezado y medidores) incluye **R-134a, R-410A, R-290 (propano) y R-717 (amoniaco)**, en unidades SI e inglesas.
+
+**Datos.** Tablas generadas con CoolProp 8.0 (R-134a: Tillner-Roth y Baehr; R-410A como pseudo-fluido puro de Lemmon; propano: Lemmon et al.; amoniaco: Gao et al.), con la **referencia ASHRAE** (h = 0 y s = 0 en líquido saturado a −40 °C), la misma de `R134aTables_ORV`, de los diagramas del R-134a y del ciclo de refrigeración:
+- saturación de −60 °C al punto crítico (cada 2 K, más fino cerca del punto crítico) y por presión (≈ 70 presiones, escala logarítmica);
+- vapor sobrecalentado en 44–56 isobaras por fluido (hasta 0.96 P_c), con sobrecalentamientos de 0 a 250 K y hasta 200 °C (250 °C en amoniaco);
+- líquido comprimido: propiedades del líquido saturado a la misma T corregidas con (∂v/∂P)_T, (∂h/∂P)_T y (∂s/∂P)_T.
+Las tablas inglesas se derivan de las SI al cargar la página (la referencia ASHRAE coincide, porque −40 °C = −40 °F). u se calcula como h − Pv.
+
+**Interpolación.** El vapor sobrecalentado se interpola a sobrecalentamiento constante (ΔT = T − T_sat) entre isobaras, lineal en ln P para u, h, s y en 1/P para v. Así la isobara superior no se extrapola por debajo de su saturación (el defecto que se corrigió en el Rankine Mejorado). El motor de pares (cualquier par de x, T, P, v, u, h, s), los medidores, la selección de fase y los diagramas T-s, P-v, T-v y h-s (con campana e isóbaras guía) funcionan igual que con agua.
+
+**Cómo se verificó.**
+| Prueba | Resultado |
+|---|---|
+| 1 200 estados al azar (300 por fluido) contra CoolProp | h: error máx. 0.9 kJ/kg (vapor) y 1.3 kJ/kg (líquido comprimido, amoniaco); inversiones (P,h) y (P,s): T con error ≤ 0.6 K |
+| Ciclo ideal −10/45 °C, compresor isentrópico, los cuatro fluidos, SI e inglés | COP con error ≤ 0.11 % (R-134a 3.516 / 3.516; R-410A 3.245 / 3.249; R-290 3.451 / 3.452; R-717 3.806 / 3.807) |
+| Çengel, Ej. 11-1 (R-134a, 0.14 / 0.8 MPa) | h₁ = 239.18, h₂ = 275.40, h₃ = 95.50 kJ/kg; x₄ = 0.3225; COP = 3.97 |
+| Plantillas existentes (agua y aire) | Resultados idénticos a la versión anterior |
+
+**Limitaciones.** Por encima de la presión crítica se usa la isobara tabulada más próxima (con aviso en el estado). Con fase «Automática», los pares (T, h) y (T, u) en líquido comprimido son casi indeterminados (h apenas depende de P) y se interpretan como mezcla de título ≈ 0, igual que con agua; para resolverlos elija la fase «Líquido».
+
+**Otros cambios en la misma aplicación.**
+- Nueva plantilla «Refrigeración R-134a — Analizado» (Çengel, Ej. 11-1).
+- **Corrección del panel de COP.** Calculaba COP_R = Q_cedido/W (que es el COP de bomba de calor) y aparecía también en ciclos de potencia. Ahora COP_R = Q_L/W y COP_BC = Q_H/W, y solo se muestra en ciclos sin turbina. La plantilla «Refrigeración — Analizado» (agua) decía COP ≈ 5.0; el valor correcto es ≈ 4.8.
+- Respaldo de la versión anterior: `Respaldo/Vol control ciclo termodinamico_ORV_antes_refrigerantes_2026-10-26.html`.
