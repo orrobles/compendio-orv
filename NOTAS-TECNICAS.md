@@ -6,11 +6,20 @@ Revisión técnica asistida por Claude. **Validada por el autor, Oscar Robles, e
 
 Esta carpeta contiene las **38 aplicaciones** del compendio (41 originales menos 3 copias repetidas, sección 3) y el índice `index.html`, con el mismo nombre y en la misma subcarpeta que en `00 Compendio ORV`. También reúne, en `Copias repetidas corregidas/`, las tres copias repetidas ya corregidas, y en `Respaldo/`, el índice anterior. La carpeta se llamó originalmente `00 Compendio ORV - Corregido 2026-10-18`; el autor la renombró `00 Compendio ORV Verificado`. Todas recibieron la capa de adaptación a celular y accesibilidad (sección 2), y 21 de ellas además tienen correcciones de cálculo o de datos (sección 1). Los originales no se tocaron. Cada archivo corregido incluye al inicio, dentro de `<head>`, un comentario `[Corrección 2026-10-18]` que resume lo que cambió.
 
+## Actualización de noviembre de 2026
+
+- **Agua.** Todas las tablas internas del agua se recalcularon nodo por nodo con la formulación IAPWS-95 (CoolProp 8.0), en la misma rejilla de presiones y temperaturas: tablas de vapor, los nueve diagramas de propiedades, el cuestionario de vapor, el ciclo Rankine y el simulador de volumen de control. Rankine Mejorado usa IAPWS-IF97. Punto crítico: 373.95 °C y 220.64 bar. Frente a la versión anterior las diferencias son, en general, menores de 0.5 %.
+- **Gases ideales.** Las tablas del aire (h, u, s°) y los calores específicos se calcularon con el c<sub>p0</sub> de CoolProp; para CH₄, C₂H₂, C₂H₄, NH₃, NO, NO₂ y SO₃ se usan los polinomios NASA Glenn. Para el aire se conserva la referencia convencional h = 300.19 kJ/kg y s° = 1.70203 kJ/kg·K a 300 K.
+- **Textos.** Las aplicaciones ya no remiten a tablas, ejemplos ni capítulos de libros de texto. Rankine Mejorado cita a Arce y Vieira (2017), y el simulador de volumen de control y Rankine Mejorado reconocen el laboratorio virtual CyclePad (Forbus et al., 1999).
+- **Verificación.** Las tablas de 23 aplicaciones coinciden con la fuente única (22 697 valores); el banco de validación de Rankine Mejorado da 12/12 casos y 40/40 invariantes.
+
+Las secciones siguientes conservan el registro de octubre de 2026; donde mencionan la fuente de una tabla, describen la situación de esa fecha.
+
 ## Cómo se verificó
 
 - Cada tabla interna se comparó, valor por valor, con las formulaciones de referencia vigentes, calculadas con CoolProp:
   - agua: IAPWS-95;
-  - R-134a: Tillner-Roth y Baehr, con la referencia ASHRAE, que es la misma que usa Moran;
+  - R-134a: Tillner-Roth y Baehr, con la referencia ASHRAE;
   - aire húmedo: ASHRAE / Hyland–Wexler.
 - Los cálculos de cada aplicación se ejecutaron en un navegador automático sobre rejillas de cientos de estados, antes y después de la corrección.
 - Las 41 aplicaciones (incluidas las 3 copias retiradas después) cargan sin errores de JavaScript, tanto en escritorio como en celular. En escritorio, su aspecto no cambia, salvo donde cambiaron los datos o donde se oscurecieron colores de texto por contraste.
@@ -31,7 +40,7 @@ Esta carpeta contiene las **38 aplicaciones** del compendio (41 originales menos
 | Líquido comprimido con T > Tsat del bloque inferior | 40 bar y 240 °C → h = 1008.7 kJ/kg | h = 1038.3 kJ/kg (referencia: 1037.6) |
 | Búsquedas inversas con T o P conocida (regla de tres lineal) | — | Bisección sobre la interpolación corregida |
 
-Los valores en los nodos de las tablas de Moran & Shapiro **no cambian**.
+Los valores en los nodos de la tabla **no cambiaron** con estas correcciones (en noviembre de 2026 la tabla se regeneró con IAPWS-95; véase la actualización al inicio).
 
 ### `02 Sustancias puras/R134aTables_ORV.html`
 
@@ -39,13 +48,13 @@ Se aplicaron las mismas correcciones de interpolación que en la tabla de vapor:
 
 - Fuera de la tabla ahora aparece un aviso. Antes, por ejemplo, 8 bar y 150 °C devolvía los datos de 140 °C.
 
-**Cambio de fuente (revisión 3, a solicitud del autor):** las Tablas A-10, A-11 y A-12 se recalcularon con la formulación actual de Tillner-Roth y Baehr (CoolProp), con referencia ASHRAE (h = s = 0 en líquido saturado a −40 °C). Se conservó la misma rejilla de temperaturas y presiones.
+**Cambio de fuente (revisión 3, a solicitud del autor):** las tablas de saturación (por temperatura y por presión) y de vapor sobrecalentado se recalcularon con la formulación actual de Tillner-Roth y Baehr (CoolProp), con referencia ASHRAE (h = s = 0 en líquido saturado a −40 °C). Se conservó la misma rejilla de temperaturas y presiones.
 
-- Antes había diferencias de hasta 3 kJ/kg en h y de 0.013 kJ/kg·K en s respecto de la formulación actual, porque la tabla del libro proviene de una formulación anterior.
+- Antes había diferencias de hasta 3 kJ/kg en h y de 0.013 kJ/kg·K en s respecto de la formulación actual, porque la tabla anterior provenía de una formulación previa.
 - Ahora los valores tabulados coinciden con la referencia (desviación mediana de 0.001 %).
 - Los valores interpolados tienen un error máximo de 0.3 % en v y de 0.13 % en h; antes era de 7.3 % en v y de 1.6 % en h.
 - La tabla y los nueve diagramas del R-134a usan ahora la misma fuente.
-- **Para el curso:** los valores ya no coinciden dígito a dígito con las Tablas A-10 a A-12 de Moran; la diferencia es de 1 % como máximo. Sí coinciden, prácticamente, con las Tablas A-11 a A-13 de Çengel, que usan la misma referencia.
+- **Para el curso:** los valores pueden diferir hasta en 1 % de tablas impresas basadas en formulaciones anteriores.
 
 ### `08 Psicrometria/Carta_Psicrometrica_ORV.html`
 
@@ -59,7 +68,7 @@ Se aplicaron las mismas correcciones de interpolación que en la tabla de vapor:
 
 Los dos archivos eran idénticos y siguen siéndolo.
 
-**Tabla A-4 interna con valores erróneos**, por ejemplo:
+**Tabla interna de vapor sobrecalentado con valores erróneos**, por ejemplo:
 
 | Estado | Valor erróneo | Valor correcto |
 |---|---|---|
@@ -67,7 +76,7 @@ Los dos archivos eran idénticos y siguen siéndolo.
 | 160 bar y 360 °C | h = 2617 kJ/kg | 2715.8 kJ/kg |
 
 Se sustituyó por dos fuentes:
-- de 0.06 a 140 bar, la Tabla A-4 de Moran & Shapiro, la misma de `SteamTables_ORV`, que ya estaba validada;
+- de 0.06 a 140 bar, la misma tabla de `SteamTables_ORV`, que ya estaba validada;
 - 160, 180 y 200 bar, valores IAPWS-95 redondeados a la precisión de la tabla.
 
 La versión en unidades inglesas se regeneró por conversión exacta.
@@ -94,10 +103,10 @@ Los resultados en SI y en unidades inglesas coinciden entre sí.
 
 **Problema:**
 - Las tablas internas en unidades inglesas tenían errores de hasta 29 % en v y de hasta 38 kJ/kg en h.
-- Los bloques SI por encima de 16 bar, que no existen en la Tabla A-12 de Moran, tenían errores de hasta 11 % en v y 15 kJ/kg en u.
+- Los bloques SI por encima de 16 bar, que no existían en la tabla impresa de referencia, tenían errores de hasta 11 % en v y 15 kJ/kg en u.
 
 **Corrección (revisión 2, a partir del diagrama de Mollier):**
-- En la primera versión se conservaron los bloques SI hasta 16 bar (Moran) y se recalcularon los demás. La Tabla A-12 de Moran proviene de una formulación anterior que difiere hasta en 3 kJ/kg en h y 0.013 kJ/kg·K en s. Al unir ambas fuentes, la curva de vapor saturado mostraba un quiebre entre 16 y 18 bar: en el diagrama h-s, la curva retrocedía en s.
+- En la primera versión se conservaron los bloques SI hasta 16 bar de la tabla impresa y se recalcularon los demás. Esa tabla proviene de una formulación anterior que difiere hasta en 3 kJ/kg en h y 0.013 kJ/kg·K en s. Al unir ambas fuentes, la curva de vapor saturado mostraba un quiebre entre 16 y 18 bar: en el diagrama h-s, la curva retrocedía en s.
 - Ahora todas las tablas de los 9 diagramas, en SI y en unidades inglesas, provienen de una sola formulación: Tillner-Roth y Baehr (CoolProp), con referencia ASHRAE (h = s = 0 en líquido saturado a −40 °C). Se conservó la rejilla de presiones y temperaturas.
 - Con esto, la curva de vapor saturado del R-134a es continua. Tiene el máximo físico de hg ≈ 281 kJ/kg cerca de 24 bar y es casi vertical a baja presión, como corresponde a este refrigerante.
 - **Diagrama h-s (Mollier):** se añadió la línea de líquido saturado. Las isobaras se trazan desde x = 0, de modo que sin ella la cúpula quedaba abierta.
@@ -117,7 +126,7 @@ Los resultados en SI y en unidades inglesas coinciden entre sí.
 **Tabla inglesa de vapor sobrecalentado:** estaba corrupta.
 - Solo tenía 12 bloques, y varios mezclaban filas de dos o tres presiones. Por ejemplo, el bloque de 1 psia contenía filas de 10 y 20 psia.
 - Había errores de hasta 95 % en v y filas con T = 2 °F.
-- Se reconstruyó con IAPWS-95 en la rejilla de la Tabla A-6E de Çengel (1 a 6000 psia), con el vapor saturado como primera fila.
+- Se reconstruyó con IAPWS-95 en una rejilla de 1 a 6000 psia, con el vapor saturado como primera fila.
 
 **Tabla inglesa de saturación por presión:** la columna `sg` contenía en realidad s_fg. Se corrigió como sg = sf + sfg en las 71 filas (el error previo llegaba a 84 %).
 
@@ -138,7 +147,7 @@ Los resultados en SI y en unidades inglesas coinciden entre sí.
 
 **Estado de referencia unificado (decisión del autor, validada):**
 - Las tablas internas de los cuatro refrigerantes usaban la referencia por omisión de CoolProp: IIR en R134a, R410A y R290 (h = 200 kJ/kg y s = 1 kJ/kg·K en líquido saturado a 0 °C), y otra distinta en R717.
-- Ahora los cuatro usan la convención ASHRAE: h = 0 y s = 0 en líquido saturado a −40 °C. Es la misma de `R134aTables_ORV`, de los diagramas del R-134a y de las tablas del R-134a de Moran y de Çengel.
+- Ahora los cuatro usan la convención ASHRAE: h = 0 y s = 0 en líquido saturado a −40 °C. Es la misma de `R134aTables_ORV` y de los diagramas del R-134a.
 - Es un desplazamiento constante por fluido: Δh = 148.144 (R134a), 142.245 (R410A), 105.123 (R290) y 164.617 kJ/kg (R717). Se verificó contra CoolProp con referencia ASHRAE.
 - COP, flujo másico, T₂ y título no cambian; la diferencia máxima, en 16 casos, fue de 1.6 × 10⁻¹³.
 - Ejemplo con R-134a, T_evap = −10 °C, T_cond = 45 °C y 5 K de sobrecalentamiento y de subenfriamiento: h₁ pasa de 396.93 a 248.79 kJ/kg y h₃ de 256.30 a 108.15 kJ/kg. Estos valores ya se pueden comparar con la tabla.
@@ -258,14 +267,14 @@ Se conservan `07 Ciclos de potencia y refrigeracion/Ciclo Rankine_ORV.html` y `0
 
 ## 6. Fuente única de datos (19 de octubre de 2026)
 
-Las tablas del agua y del R-134a de 23 aplicaciones se alimentan ahora de `datos/agua.json` y `datos/r134a.json`, en la carpeta raíz del proyecto (véase `datos/LEEME.md`). Al unificarlas cambiaron 611 valores en 10 aplicaciones; ninguno afecta las tablas de Moran ni del R-134a que validó el autor:
+Las tablas del agua y del R-134a de 23 aplicaciones se alimentan ahora de `datos/agua.json` y `datos/r134a.json`, en la carpeta raíz del proyecto (véase `datos/LEEME.md`). Al unificarlas cambiaron 611 valores en 10 aplicaciones; ninguno afectó las tablas que había validado el autor:
 
-- **Diagramas del agua (9):** las temperaturas de saturación en unidades inglesas se unificaron a IAPWS-95 (cambios ≤ 0.15 °F); además se corrigieron 4 valores SI que no coincidían con la Tabla A-4 de Moran (por ejemplo, u a 40 bar y 700 °C: 3461.3 → 3462.1 kJ/kg).
-- **Ciclo Rankine:** la tabla de saturación y las isobaras de 160 a 200 bar coinciden ahora con las tablas de Moran, como el resto del compendio. El error de la eficiencia frente a IAPWS-95 bajó de 0.073 % a 0.057 % (360 casos).
+- **Diagramas del agua (9):** las temperaturas de saturación en unidades inglesas se unificaron a IAPWS-95 (cambios ≤ 0.15 °F); además se corrigieron 4 valores SI que no coincidían con la tabla de vapor sobrecalentado (por ejemplo, u a 40 bar y 700 °C: 3461.3 → 3462.1 kJ/kg).
+- **Ciclo Rankine:** la tabla de saturación y las isobaras de 160 a 200 bar coinciden ahora con la fuente única, como el resto del compendio. El error de la eficiencia frente a IAPWS-95 bajó de 0.073 % a 0.057 % (360 casos).
 
 Para comprobar en cualquier momento que las aplicaciones siguen coincidiendo con la fuente: `npm run verificar`.
 
-**Decisiones del autor (19-oct-2026):** se conservan las dos fuentes del agua (Moran para SteamTables, diagramas y Rankine; IAPWS-95 para Balance de entropía y Análisis de exergía) y los dos orígenes de las tablas del agua en unidades inglesas. Véase `datos/LEEME.md`.
+**Decisiones del autor (19-oct-2026):** se conservaron entonces dos fuentes para el agua. En noviembre de 2026 todas las tablas del agua se unificaron en IAPWS-95 (véase la actualización al inicio).
 
 ## 7. Funcionamiento sin internet (19 de octubre de 2026)
 
@@ -287,14 +296,14 @@ Se incorporó `09 Rankine Modalidades/Rankine Mejorado_ORV.html` (Rankine Mejora
 | La isobara superior se extrapolaba por debajo de su T de saturación (cerca de la campana y del punto crítico) | Error en h de hasta 32 kJ/kg | Interpolación sobre la isoterma en ln p, con el vapor saturado como nodo; isobaras de 190, 210, 230 y 240 bar; inversión por bisección |
 | Con T_max ≤ T_sat(P_max) la turbina recibía líquido saturado | Resultados sin sentido físico, sin aviso | Entrada de vapor saturado (x = 1) con aviso; en ciclo supercrítico, T ≥ 400 °C |
 | Calentador cerrado: agua de alimentación como líquido saturado a T_3 | η hasta 0.91 puntos fuera | Líquido comprimido mediante las relaciones de Maxwell (0.14 puntos) |
-| Tabla de saturación con cinco entradas mal transcritas de Moran A-3 (4.5, 120, 140 y 160 bar), ocho presiones ausentes y dos filas cercanas al punto crítico erróneas | Hasta 9.8 kJ/kg | Filas de la fuente única (`datos/agua.json`) e IF97 cerca del punto crítico; interpolación en ln p; s_c = 4.4070 kJ/kg·K |
+| Tabla de saturación con cinco entradas mal transcritas (4.5, 120, 140 y 160 bar), ocho presiones ausentes y dos filas cercanas al punto crítico erróneas | Hasta 9.8 kJ/kg | Filas de la fuente única (`datos/agua.json`) e IF97 cerca del punto crítico; interpolación en ln p; s_c = 4.4070 kJ/kg·K |
 | Tablas inglesas con isobaras de presión redondeada (7 psia para 0.5 bar = 7.25 psia) | Pequeñas diferencias entre SI e inglés | Derivadas de las SI con factores exactos al cargar la página (diferencia en η: 0.0000 puntos) |
 | Cursor de los diagramas: mostraba la isobara tabulada más próxima | Presión y temperatura aproximadas | Búsqueda continua |
 | Desborde de 589 px en celular; 64 fallas de contraste | — | Capa común de celular y accesibilidad; fuentes desde `lib/` |
 
 **Resultado.** Error máximo en η frente a IAPWS-IF97 de 0.02 puntos en seis configuraciones y de 0.14 puntos con calentador cerrado; banco de validación integrado 12/12 (motor), 12/12 (literatura) y 40/40 (invariantes). Se añadieron seis casos a `pruebas/02-casos-validados.spec.js`.
 
-**Fuente de datos.** La tabla de saturación coincide con Moran A-3 de la fuente única; las de vapor sobrecalentado y supercrítico son IAPWS-IF97, propias de esta aplicación (no forman parte de `datos/agua.json`).
+**Fuente de datos.** La tabla de saturación coincide con la fuente única (IAPWS-IF97 desde noviembre de 2026); las de vapor sobrecalentado y supercrítico son IAPWS-IF97, propias de esta aplicación (no forman parte de `datos/agua.json`).
 
 
 ## 9. Refrigerantes en el simulador de ciclos por volumen de control (26 de octubre de 2026)
@@ -314,12 +323,12 @@ Las tablas inglesas se derivan de las SI al cargar la página (la referencia ASH
 |---|---|
 | 1 200 estados al azar (300 por fluido) contra CoolProp | h: error máx. 0.9 kJ/kg (vapor) y 1.3 kJ/kg (líquido comprimido, amoniaco); inversiones (P,h) y (P,s): T con error ≤ 0.6 K |
 | Ciclo ideal −10/45 °C, compresor isentrópico, los cuatro fluidos, SI e inglés | COP con error ≤ 0.11 % (R-134a 3.516 / 3.516; R-410A 3.245 / 3.249; R-290 3.451 / 3.452; R-717 3.806 / 3.807) |
-| Çengel, Ej. 11-1 (R-134a, 0.14 / 0.8 MPa) | h₁ = 239.18, h₂ = 275.40, h₃ = 95.50 kJ/kg; x₄ = 0.3225; COP = 3.97 |
+| Ciclo ideal de R-134a, 0.14 / 0.8 MPa | h₁ = 239.18, h₂ = 275.40, h₃ = 95.50 kJ/kg; x₄ = 0.3225; COP = 3.97 |
 | Plantillas existentes (agua y aire) | Resultados idénticos a la versión anterior |
 
 **Limitaciones.** Por encima de la presión crítica se usa la isobara tabulada más próxima (con aviso en el estado). Con fase «Automática», los pares (T, h) y (T, u) en líquido comprimido son casi indeterminados (h apenas depende de P) y se interpretan como mezcla de título ≈ 0, igual que con agua; para resolverlos elija la fase «Líquido».
 
 **Otros cambios en la misma aplicación.**
-- Nueva plantilla «Refrigeración R-134a — Analizado» (Çengel, Ej. 11-1).
+- Nueva plantilla «Refrigeración R-134a — Analizado».
 - **Corrección del panel de COP.** Calculaba COP_R = Q_cedido/W (que es el COP de bomba de calor) y aparecía también en ciclos de potencia. Ahora COP_R = Q_L/W y COP_BC = Q_H/W, y solo se muestra en ciclos sin turbina. La plantilla «Refrigeración — Analizado» (agua) decía COP ≈ 5.0; el valor correcto es ≈ 4.8.
 - Respaldo de la versión anterior: `Respaldo/Vol control ciclo termodinamico_ORV_antes_refrigerantes_2026-10-26.html`.
